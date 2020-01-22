@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ ! -z "${1}" ]]; then
+	cd "${1}"
+fi
+
+OUTPUT=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+if [[ -z ${OUTPUT} ]]; then
+	echo "(git: none)"
+else
+	echo "(git: ${OUTPUT})"
+fi
