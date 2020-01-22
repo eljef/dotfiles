@@ -36,6 +36,10 @@ install :
 # install_real installs the dotfiles
 install_real :
 	cd ~
+	rm -f .tmux.conf .tmux.dev.conf .tmux.split.conf
+	ln -sf "$(TOPDIR)/dotfiles/tmux.conf" .tmux.conf
+	ln -sf "$(TOPDIR)/dotfiles/tmux.dev.conf" .tmux.dev.conf
+	ln -sf "$(TOPDIR)/dotfiles/tmux.split.conf" .tmux.split.conf
 	rm -f .vimrc
 	ln -sf "$(TOPDIR)/dotfiles/vimrc" .vimrc
 	rm -rf .vim
