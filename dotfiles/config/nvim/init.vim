@@ -1,6 +1,6 @@
 set shell=bash
 
-set rtp+=~/.vim/colors/dracula
+set rtp+=~/.config/nvim/colors/dracula
 
 set nocompatible
 filetype on
@@ -60,11 +60,11 @@ let g:dracula_colorterm=1
 
 " nerdtree settings
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
-let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
 

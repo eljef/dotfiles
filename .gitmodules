@@ -16,3 +16,7 @@
 [submodule "dotfiles/vim/pack/jef/start/vim-surround"]
 	path = dotfiles/vim/pack/jef/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule "dotfiles/vim/pack/jef/start/coc"]
+	path = dotfiles/vim/pack/jef/start/coc
+	url = https://github.com/neoclide/coc.nvim.git
+	branch = release
