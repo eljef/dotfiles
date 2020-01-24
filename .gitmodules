@@ -13,3 +13,6 @@
 [submodule "vim/pack/jef/start/vim-go"]
 	path = dotfiles/vim/pack/jef/start/vim-go
 	url = https://github.com/fatih/vim-go
+[submodule "dotfiles/vim/pack/jef/start/vim-surround"]
+	path = dotfiles/vim/pack/jef/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
