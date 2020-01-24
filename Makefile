@@ -3,7 +3,7 @@
 VERSION := 0.0.1
 
 NULL :=
-TOPDIR := $(abspath $(lastword $(MAKEFILE_LIST)))
+TOPDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 # all runs help
 all : help
@@ -35,13 +35,6 @@ install :
 
 # install_real installs the dotfiles
 install_real :
-	cd ~
-	rm -f .tmux.conf .tmux.dev.conf .tmux.split.conf
-	ln -sf "$(TOPDIR)/dotfiles/tmux.conf" .tmux.conf
-	ln -sf "$(TOPDIR)/dotfiles/tmux.dev.conf" .tmux.dev.conf
-	ln -sf "$(TOPDIR)/dotfiles/tmux.split.conf" .tmux.split.conf
-	rm -f .vimrc
-	ln -sf "$(TOPDIR)/dotfiles/vimrc" .vimrc
-	rm -rf .vim
-	ln -sf "$(TOPDIR)/dotfiles/vim" .vim
+	$(info $(NULL))
+	install/install.py -b "$(TOPDIR)"
 
