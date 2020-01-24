@@ -1,0 +1,23 @@
+if [[ ":$PATH:" != *":$HOME/Bin:"* ]]; then
+    export PATH="${PATH}:${HOME}/Bin"
+fi
+
+if [[ "$GOPATH" != "$HOME/Projects/go" ]]; then
+    export GOPATH="${HOME}/Projects/go"
+fi
+
+if [[ ":$PATH:" != *":$GOPATH/bin:"* ]]; then
+    export PATH="${PATH}:${GOPATH}/bin"
+fi
+
+# include files in .bash_exports
+if [ -d .bash_exports ]; then
+    pushd .bash_exports > /dev/null
+    for file in * ; do
+        if [ -f "${file}" ]; then
+            . "$file"
+        fi
+    done
+    popd > /dev/null
+fi
+

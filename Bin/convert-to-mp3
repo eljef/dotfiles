@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ ! -z "$(ls -1 *.m4a 2>/dev/null)" ]; then
+    for i in *.m4a
+    do
+        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.m4a}.mp3\""
+        ffmpeg -i "${i}" -ab 320k "${i%.m4a}.mp3" > /dev/null 2>&1
+    done
+elif [ ! -z "$(ls -1 *.mp4 2>/dev/null)" ]; then
+    for i in *.mp4
+    do
+        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.mp4}.mp3\""
+        ffmpeg -i "${i}" -ab 320k "${i%.mp4}.mp3" > /dev/null 2>&1
+    done
+elif [ ! -z "$(ls -1 *.flac 2>/dev/null)" ]; then
+    for i in *.flac
+    do
+        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.flac}.mp3\""
+        ffmpeg -i "${i}" -ab 320k "${i%.flac}.mp3" > /dev/null 2>&1
+    done
+fi
+

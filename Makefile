@@ -37,4 +37,7 @@ install :
 install_real :
 	$(info $(NULL))
 	install/install.py -b "$(TOPDIR)"
+	install -d -m 0700 "${HOME}/Bin"
+	install -m 0700 "$(TOPDIR)/Bin/tmux-git-branch" "${HOME}/Bin/tmux-git-branch"
+	install -m 0700 "$(TOPDIR)/Bin/convert-to-mp3" "${HOME}/Bin/convert-to-mp3"
 
