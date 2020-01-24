@@ -20,33 +20,3 @@
 	path = dotfiles/vim/pack/jef/start/coc
 	url = https://github.com/neoclide/coc.nvim.git
 	branch = release
-[submodule "dotfiles/vim/pack/jef/start/coc-json"]
-	path = dotfiles/vim/pack/jef/start/coc-json
-	url = https://github.com/neoclide/coc-json.git
-[submodule "dotfiles/vim/pack/jef/start/coc-tsserver"]
-	path = dotfiles/vim/pack/jef/start/coc-tsserver
-	url = https://github.com/neoclide/coc-tsserver
-[submodule "dotfiles/vim/pack/jef/start/coc-html"]
-	path = dotfiles/vim/pack/jef/start/coc-html
-	url = https://github.com/neoclide/coc-html
-[submodule "dotfiles/vim/pack/jef/start/coc-css"]
-	path = dotfiles/vim/pack/jef/start/coc-css
-	url = https://github.com/neoclide/coc-css
-[submodule "dotfiles/vim/pack/jef/start/coc-vetur"]
-	path = dotfiles/vim/pack/jef/start/coc-vetur
-	url = https://github.com/neoclide/coc-vetur
-[submodule "dotfiles/vim/pack/jef/start/coc-rls"]
-	path = dotfiles/vim/pack/jef/start/coc-rls
-	url = https://github.com/neoclide/coc-rls
-[submodule "dotfiles/vim/pack/jef/start/coc-yaml"]
-	path = dotfiles/vim/pack/jef/start/coc-yaml
-	url = https://github.com/neoclide/coc-yaml
-[submodule "dotfiles/vim/pack/jef/start/coc-python"]
-	path = dotfiles/vim/pack/jef/start/coc-python
-	url = https://github.com/neoclide/coc-python
-[submodule "dotfiles/vim/pack/jef/start/coc-highlight"]
-	path = dotfiles/vim/pack/jef/start/coc-highlight
-	url = https://github.com/neoclide/coc-highlight
-[submodule "dotfiles/vim/pack/jef/start/coc-markdownlint"]
-	path = dotfiles/vim/pack/jef/start/coc-markdownlint
-	url = https://github.com/fannheyward/coc-markdownlint

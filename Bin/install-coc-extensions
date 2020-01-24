@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "vim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'"
+vim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'
+echo "nvim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'"
+nvim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'
+
