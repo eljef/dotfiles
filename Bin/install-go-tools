@@ -30,7 +30,22 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
               'gitlab.com/opennota/check/cmd/varcheck'
               'github.com/cweill/gotests/...'
               'honnef.co/go/tools/...'
-              'golang.org/x/tools/cmd/goimports')
+              'github.com/klauspost/asmfmt/cmd/asmfmt'
+              'github.com/go-delve/delve/cmd/dlv'
+              'github.com/davidrjenni/reftools/cmd/fillstruct'
+              'github.com/davidrjenni/reftools/cmd/fillswitch'
+              'github.com/davidrjenni/reftools/cmd/fixplurals'
+              'github.com/rogpeppe/godef'
+              'github.com/zmb3/gogetdoc'
+              'github.com/fatih/gomodifytags'
+              'golang.org/x/tools/cmd/goimports'
+              'golang.org/x/tools/cmd/gorename'
+              'github.com/jstemmer/gotags'
+              'golang.org/x/tools/cmd/guru'
+              'github.com/koron/iferr'
+              'github.com/josharian/impl'
+              'honnef.co/go/tools/cmd/keyify'
+              'github.com/fatih/motion')
 
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"

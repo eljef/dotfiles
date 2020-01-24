@@ -58,6 +58,7 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
 
 	install -d -m 0700 "${HOME}/.vim"
+	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
 	@if [ -d "${HOME}/.vim/colors" ]; then \
 			echo "rm -rf ${HOME}/.vim/colors"; \
 			rm -rf "${HOME}/.vim/colors"; \
@@ -71,6 +72,7 @@ install_real :
 
 	install -d -m 0700 "${HOME}/.config/nvim"
 	install -m 0600 "$(TOPDIR)/dotfiles/config/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
+	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.config/nvim/coc-settings.json"
 	@if [ -d "${HOME}/.config/nvim/colors" ]; then \
 			echo "rm -rf ${HOME}/.config/nvim/colors"; \
 			rm -rf "${HOME}/.config/nvim/colors"; \
@@ -81,6 +83,7 @@ install_real :
 			fi
 	cp -R "$(TOPDIR)/dotfiles/vim/colors" "${HOME}/.config/nvim"
 	cp -R "$(TOPDIR)/dotfiles/vim/pack" "${HOME}/.config/nvim"
+
 
 	@echo
 
