@@ -35,6 +35,9 @@ set nowritebackup
 
 set mouse=a
 
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
+
 set colorcolumn=80,120
 
 set list
