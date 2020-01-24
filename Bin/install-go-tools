@@ -29,7 +29,8 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
               'mvdan.cc/unparam'
               'gitlab.com/opennota/check/cmd/varcheck'
               'github.com/cweill/gotests/...'
-              'honnef.co/go/tools/...')
+              'honnef.co/go/tools/...'
+              'golang.org/x/tools/cmd/goimports')
 
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
@@ -37,6 +38,10 @@ do
     echo "go get -u ${getpath}"
     go get -u ${getpath}
 done
+
+# install gopls
+echo "go get golang.org/x/tools/gopls@latest"
+GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 # build gocritic because it has to be different from all of the other tools...
 echo "Building gocritic"
