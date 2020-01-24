@@ -72,3 +72,7 @@ let g:auto_save=1
 let g:auto_save_silent=1
 let g:auto_save_write_all_buffers=1
 
+" vim-go
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
