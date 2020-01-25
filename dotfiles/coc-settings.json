@@ -1,4 +1,8 @@
 {
+    "diagnostic-languageserver.filetypes": {
+        "markdown": ["write-good", "markdowntool"],
+        "sh": "shellcheck"
+    },
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,

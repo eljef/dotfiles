@@ -1,7 +1,6 @@
 #!/bin/bash
+# installs COC packages for both neovim and vim.
+#
 
-echo "vim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'"
-vim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'
-echo "nvim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'"
-nvim -c 'CocInstall -sync coc-css coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-tsserver coc-vetur coc-yaml|q'
+nvim -c 'CocInstall -sync coc-css coc-diagnostic coc-docker coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-sh coc-tsserver coc-vetur coc-yaml|q'
 

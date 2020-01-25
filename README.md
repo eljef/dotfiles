@@ -19,22 +19,32 @@ them up-to-date for my development purposes.
 
 ## dependencies
 
-#### neovim/vim
+### neovim/vim
 
-Run the `install-coc-extensions` script.
+Run the `install-coc-extensions` script. (Note: This will take a while to run.
+During running, the screen will appear blank.)
 
 Install your distributions packages for:
+
 * node.js
 * npm
+* shellcheck
 
-#### golang
+Install your distributions packages or use node/npm to install:
+
+* bash-language-server
+* markdownlint
+* write-good
+
+### golang
 
 Run the `install-go-tools` script.
 
-#### python
+### python
+
 You'll need to install your distributions packages for:
+
 * python-black
 * flake8
 * pylint
-
 
