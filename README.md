@@ -19,8 +19,8 @@ them up-to-date for my development purposes.
 Run the `install-coc-extensions` script.
 
 Install your distributions packages for:
-node.js
-npm
+* node.js
+* npm
 
 #### golang
 
