@@ -7,6 +7,11 @@ Nothing special or out of the ordinary.
 
 Run `make init` to pull dependencies.
 
+## Installing
+
+I don't use anything to manage my dotfiles. I'm simple and uncultured. I use a
+Makefile to install them. You can too with `make install`.
+
 ## scripts
 
 I've also included some scripts that I use for setting up systems and keeping
