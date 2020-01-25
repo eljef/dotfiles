@@ -1,5 +1,9 @@
 {
     "python.jediEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.pythonPath": "/usr/bin/python",
     "languageserver": {
         "golang": {
             "command": "gopls",
@@ -8,3 +12,4 @@
         }
     }
 }
+

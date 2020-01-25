@@ -10,8 +10,6 @@ filetype plugin on
 filetype plugin indent on
 set backspace=indent,eol,start
 
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
 set omnifunc=syntaxcomplete#Complete
 
 set encoding=utf-8
@@ -48,6 +46,7 @@ set list
 set listchars=tab:>-,trail:.
 
 " ==== specific file type settings =============================================
+autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
 " ==== plugin settings =========================================================
@@ -63,6 +62,8 @@ let g:dracula_inverse=1
 let g:dracula_colorterm=1
 
 " coc settings
+let g:coc_node_path='/usr/bin/node'
+
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
