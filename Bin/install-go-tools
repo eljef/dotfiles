@@ -51,7 +51,7 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
 for getpath in "${GO_GET_PATHS[@]}"
 do
     echo "go get -u ${getpath}"
-    go get -u ${getpath}
+    go get -u "${getpath}"
 done
 
 # install gopls
@@ -60,12 +60,12 @@ GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 # build gocritic because it has to be different from all of the other tools...
 echo "Building gocritic"
-cd "${GOPATH}/src/github.com/go-critic/go-critic"
+cd "${GOPATH}/src/github.com/go-critic/go-critic" || exit 1
 PATH="${GOPATH}/bin:${PATH}" make gocritic
 mv gocritic "${GOPATH}/bin"
 
 # copy the build binaries to the real GOPATH
-cd "${GOPATH}/bin"
+cd "${GOPATH}/bin" || exit 1
 export GOPATH="${OLD_GO_PATH}"
 for i in *
 do
@@ -75,9 +75,9 @@ done
 
 # cleanup, which includes fixing permissions because the source download
 # sets weird permissions
-cd /tmp/go
+cd /tmp/go || exit 1
 find . -type d -print0 | xargs -0 chmod 0755
 find . -type f -print0 | xargs -0 chmod 0644
-cd /tmp
+cd /tmp || exit 1
 rm -rf go
 

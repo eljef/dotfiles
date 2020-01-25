@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ ! -z "${1}" ]]; then
-	cd "${1}"
+if [[ -n "${1}" ]]; then
+	cd "${1}" || exit 1
 fi
 
 OUTPUT=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
@@ -10,3 +10,4 @@ if [[ -z ${OUTPUT} ]]; then
 else
 	echo "(git: ${OUTPUT})"
 fi
+
