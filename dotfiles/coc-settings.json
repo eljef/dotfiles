@@ -3,6 +3,11 @@
         "markdown": ["write-good", "markdowntool"],
         "sh": "shellcheck"
     },
+    "diagnostic-languageserver.linters": {
+        "write-good": {
+            "args": [ "--text=%text", "--no-passive" ]
+        }
+    },
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
