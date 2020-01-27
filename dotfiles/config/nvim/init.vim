@@ -51,7 +51,7 @@ autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
 " ==== plugin settings =========================================================
 
-" darcula settings
+" dracula settings
 :syntax on
 colorscheme dracula
 let g:dracula_bold=1
@@ -60,6 +60,10 @@ let g:dracula_underline=1
 let g:dracula_undercurl=1
 let g:dracula_inverse=1
 let g:dracula_colorterm=1
+
+" color settings after dracula
+hi! Normal ctermbg=NONE
+hi! NonText ctermbg=NONE
 
 " coc settings
 let g:coc_node_path='/usr/bin/node'

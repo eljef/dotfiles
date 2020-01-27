@@ -58,6 +58,10 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.conf" "${HOME}/.tmux.split.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
 
+	install -d -m 0700 "${HOME}/.local/share/konsole"
+	install -m 0600 "$(TOPDIR)/dotfiles/local/share/konsole/dracula.colorscheme" \
+			"${HOME}/.local/share/konsole/dracula.colorscheme"
+
 	install -d -m 0700 "${HOME}/.vim"
 	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
 	@if [ -d "${HOME}/.vim/colors" ]; then \
