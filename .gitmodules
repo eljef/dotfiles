@@ -23,3 +23,6 @@
 [submodule "dotfiles/vim/pack/jef/start/vim-toml"]
 	path = dotfiles/vim/pack/jef/start/vim-toml
 	url = https://github.com/cespare/vim-toml
+[submodule "dotfiles/vim/pack/jef/start/auto-pairs"]
+	path = dotfiles/vim/pack/jef/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs
