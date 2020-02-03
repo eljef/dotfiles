@@ -45,8 +45,6 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/bash_exports/export_visual" "${HOME}/.bash_exports/export_visual"
 
 	install -d -m 0700 "${HOME}/Bin"
-	install -m 0700 "$(TOPDIR)/Bin/create-bash-file" "${HOME}/Bin/create-bash-file"
-	install -m 0700 "$(TOPDIR)/Bin/create-go-file" "${HOME}/Bin/create-go-file"
 	install -m 0700 "$(TOPDIR)/Bin/convert-to-mp3" "${HOME}/Bin/convert-to-mp3"
 	install -m 0700 "$(TOPDIR)/Bin/install-coc-extensions" "${HOME}/Bin/install-coc-extensions"
 	install -m 0700 "$(TOPDIR)/Bin/install-go-tools" "${HOME}/Bin/install-go-tools"
