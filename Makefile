@@ -49,6 +49,7 @@ install_real :
 	install -m 0700 "$(TOPDIR)/Bin/convert-to-mp3" "${HOME}/Bin/convert-to-mp3"
 	install -m 0700 "$(TOPDIR)/Bin/install-coc-extensions" "${HOME}/Bin/install-coc-extensions"
 	install -m 0700 "$(TOPDIR)/Bin/install-go-tools" "${HOME}/Bin/install-go-tools"
+	install -m 0700 "$(TOPDIR)/Bin/read-md" "${HOME}/Bin/read-md"
 	install -m 0700 "$(TOPDIR)/Bin/tmux-git-branch" "${HOME}/Bin/tmux-git-branch"
 
 	install -m 0600 "$(TOPDIR)/dotfiles/bash_profile" "${HOME}/.bash_profile"
