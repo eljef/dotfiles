@@ -47,6 +47,7 @@ set listchars=tab:>-,trail:.
 
 " ==== specific file type settings =============================================
 autocmd FileType go set noexpandtab shiftwidth=8 tabstop=8 softtabstop=0
+au FileType go nmap <leader>g <Plug>(go-def-split)
 autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
