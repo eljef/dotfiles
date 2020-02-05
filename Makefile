@@ -1,4 +1,4 @@
-.PHONY: all help init install install_real
+.PHONY: all help init install install_real update
 
 VERSION := 0.0.1
 
@@ -13,10 +13,11 @@ help :
 	$(info $(NULL))
 	$(info ** Available Targets **)
 	$(info $(NULL))
-	$(info $(NULL)	all		- runs help)
+	$(info $(NULL)	all	- runs help)
 	$(info $(NULL)	help	- this message)
 	$(info $(NULL)	init	- initializes the submodules)
 	$(info $(NULL)	install	- installs dotfiles)
+	$(info $(NULL)	update	- updates submodules)
 	$(info $(NULL))
 	@:
 
@@ -92,3 +93,8 @@ install_real :
 
 	@echo
 
+# Update submodules
+update :
+	$(info $(NULL))
+	git submodule update --recursive --remote
+	@echo
