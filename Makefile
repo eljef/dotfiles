@@ -58,6 +58,7 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.conf" "${HOME}/.tmux.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.dev.conf" "${HOME}/.tmux.dev.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.conf" "${HOME}/.tmux.split.conf"
+	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.2k.conf" "${HOME}/.tmux.split.2k.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
 
 	install -d -m 0700 "${HOME}/.local/share/konsole"
