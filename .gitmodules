@@ -26,3 +26,6 @@
 [submodule "dotfiles/vim/pack/jef/start/auto-pairs"]
 	path = dotfiles/vim/pack/jef/start/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs
+[submodule "dotfiles/vim/pack/jef/start/vim-devicons"]
+	path = dotfiles/vim/pack/jef/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
