@@ -19,6 +19,11 @@ them up-to-date for my development purposes.
 
 ## dependencies
 
+### git
+
+Install your distributions packages for:
+* diff-so-fancy
+
 ### neovim/vim
 
 Run the `install-coc-extensions` script. (Note: This will take a while to run.
