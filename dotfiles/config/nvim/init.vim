@@ -1,5 +1,8 @@
 set shell=bash
 
+" ==== Comment out the line below if your terminal does not support true color
+set termguicolors
+
 set rtp+=~/.config/nvim/colors/dracula
 
 set hidden
