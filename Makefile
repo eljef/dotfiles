@@ -61,6 +61,34 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.2k.conf" "${HOME}/.tmux.split.2k.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
 
+	install -d -m 0700 "${HOME}/.fonts"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Caskaydia Cove Nerd Font Complete Mono.ttf" \
+			"${HOME}/.fonts/Caskaydia Cove Nerd Font Complete Mono.ttf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Caskaydia Cove Nerd Font Complete.ttf" \
+			"${HOME}/.fonts/Caskaydia Cove Nerd Font Complete.ttf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Bold Nerd Font Complete Mono.otf" \
+			"${HOME}/.fonts/Fira Code Bold Nerd Font Complete Mono.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Bold Nerd Font Complete.otf" \
+			"${HOME}/.fonts/Fira Code Bold Nerd Font Complete.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Light Nerd Font Complete Mono.otf" \
+			"${HOME}/.fonts/Fira Code Light Nerd Font Complete Mono.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Light Nerd Font Complete.otf" \
+			"${HOME}/.fonts/Fira Code Light Nerd Font Complete.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Medium Nerd Font Complete Mono.otf" \
+			"${HOME}/.fonts/Fira Code Medium Nerd Font Complete Mono.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Medium Nerd Font Complete.otf" \
+			"${HOME}/.fonts/Fira Code Medium Nerd Font Complete.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Regular Nerd Font Complete Mono.otf" \
+			"${HOME}/.fonts/Fira Code Regular Nerd Font Complete Mono.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Regular Nerd Font Complete.otf" \
+			"${HOME}/.fonts/Fira Code Regular Nerd Font Complete.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Retina Nerd Font Complete Mono.otf" \
+			"${HOME}/.fonts/Fira Code Retina Nerd Font Complete Mono.otf"
+	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Fira Code Retina Nerd Font Complete.otf" \
+			"${HOME}/.fonts/Fira Code Retina Nerd Font Complete.otf"
+
+	fc-cache ~/.fonts
+
 	install -d -m 0700 "${HOME}/.local/share/konsole"
 	install -m 0600 "$(TOPDIR)/dotfiles/local/share/konsole/dracula.colorscheme" \
 			"${HOME}/.local/share/konsole/dracula.colorscheme"
