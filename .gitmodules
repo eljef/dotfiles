@@ -29,3 +29,6 @@
 [submodule "dotfiles/vim/pack/jef/start/vim-devicons"]
 	path = dotfiles/vim/pack/jef/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "dotfiles/vim/pack/jef/start/vim-fugitive"]
+	path = dotfiles/vim/pack/jef/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
