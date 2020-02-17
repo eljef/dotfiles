@@ -1,6 +1,6 @@
 .PHONY: all help init install install_real update
 
-VERSION := 1.2.0
+VERSION := 1.3.0
 
 NULL :=
 TOPDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
