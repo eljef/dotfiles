@@ -67,7 +67,7 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
 for getpath in "${GO_GET_PATHS[@]}"
 do
     echo "go get -u ${getpath}"
-    go get -u "${getpath}"
+    GO111MODULE=off go get -u "${getpath}"
 done
 
 # install gopls
