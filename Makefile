@@ -52,6 +52,8 @@ install_real :
 	install -m 0700 "$(TOPDIR)/Bin/install-go-tools" "${HOME}/Bin/install-go-tools"
 	install -m 0700 "$(TOPDIR)/Bin/read-md" "${HOME}/Bin/read-md"
 	install -m 0700 "$(TOPDIR)/Bin/tmux-git-branch" "${HOME}/Bin/tmux-git-branch"
+	install -m 0700 "$(TOPDIR)/Bin/yakuake-init-session" "${HOME}/Bin/yakuake-init-session"
+	install -m 0700 "$(TOPDIR)/Bin/yakuake-split-dev-2k" "${HOME}/Bin/yakuake-split-dev-2k"
 
 	install -m 0600 "$(TOPDIR)/dotfiles/bash_profile" "${HOME}/.bash_profile"
 	install -m 0600 "$(TOPDIR)/dotfiles/bashrc" "${HOME}/.bashrc"
