@@ -40,8 +40,8 @@ set nowritebackup
 
 set mouse=a
 
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
+noremap <Leader>y "+y
+noremap <Leader>p "+p
 
 set colorcolumn=80,120
 
