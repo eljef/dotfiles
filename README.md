@@ -22,6 +22,7 @@ them up-to-date for my development purposes.
 ### git
 
 Install your distributions packages for:
+
 * diff-so-fancy
 
 ### neovim/vim
@@ -53,3 +54,12 @@ You'll need to install your distributions packages for:
 * flake8
 * pylint
 
+## Customization
+
+### yakuake
+
+To configure the width of the main pain in the 2k split, you will need to export
+`YAKUAKE_DEV_TERM_X` set to the width you desire. (In pixels)
+
+To configure the height of the top right pain in the 2k split, you will need to
+export `YAKUAKE_DEV_TERM_Y` set to the height you desire. (In pixels)

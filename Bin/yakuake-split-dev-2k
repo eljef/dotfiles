@@ -15,11 +15,14 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+DEVTERMX=${YAKUAKE_DEV_TERM_X:-500}
+DEVTERMY=${YAKUAKE_DEV_TERM_Y:-240}
+
 ACTIVE_SESSION=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.activeSessionId)
 qdbus org.kde.yakuake /yakuake/tabs org.kde.yakuake.setTabTitle "${ACTIVE_SESSION}" dev > /dev/null 2>&1
 ACTIVE_TERM=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.activeTerminalId)
 TOP_RIGHT=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.splitTerminalLeftRight "${ACTIVE_TERM}")
-qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.tryGrowTerminalRight "${ACTIVE_TERM}" 500 > /dev/null 2>&1
+qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.tryGrowTerminalRight "${ACTIVE_TERM}" "${DEVTERMX}" > /dev/null 2>&1
 MID_RIGHT=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.splitTerminalTopBottom "${TOP_RIGHT}")
-qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.tryGrowTerminalTop "${MID_RIGHT}" 240 > /dev/null 2>&1
+qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.tryGrowTerminalTop "${MID_RIGHT}" "${DEVTERMY}" > /dev/null 2>&1
 qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.splitTerminalTopBottom "${MID_RIGHT}" > /dev/null 2>&1
