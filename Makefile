@@ -99,6 +99,10 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/local/share/konsole/Main.Profile" \
 			"${HOME}/.local/share/konsole/Main.profile"
 
+	install -d -m 0700 "${HOME}/.local/share/yakuake/kns_skins"
+	cp -R "$(TOPDIR)/dotfiles/local/share/yakuake/kns_skins/pixelnine" \
+			"${HOME}/.local/share/yakuake/kns_skins/"
+
 	install -d -m 0700 "${HOME}/.vim"
 	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
 	@if [ -d "${HOME}/.vim/colors" ]; then \
