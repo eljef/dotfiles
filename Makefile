@@ -96,6 +96,8 @@ install_real :
 	install -d -m 0700 "${HOME}/.local/share/konsole"
 	install -m 0600 "$(TOPDIR)/dotfiles/local/share/konsole/dracula.colorscheme" \
 			"${HOME}/.local/share/konsole/dracula.colorscheme"
+	install -m 0600 "$(TOPDIR)/dotfiles/local/share/konsole/Main.Profile" \
+			"${HOME}/.local/share/konsole/Main.profile"
 
 	install -d -m 0700 "${HOME}/.vim"
 	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
