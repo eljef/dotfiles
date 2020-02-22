@@ -1,4 +1,4 @@
-.PHONY: all help init install install_real update
+.PHONY: all help init install install_real update vim vim_alias
 
 VERSION := 1.5.0
 
@@ -18,6 +18,8 @@ help :
 	$(info $(NULL)	init	- initializes the submodules)
 	$(info $(NULL)	install	- installs dotfiles)
 	$(info $(NULL)	update	- updates submodules)
+	$(info $(NULL)	vim	- installs vim configuration files (default is neovim only))
+	$(info $(NULL)	vim_alias	- aliases vim to nvim)
 	$(info $(NULL))
 	@:
 
@@ -63,7 +65,6 @@ install_real :
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.dev.conf" "${HOME}/.tmux.dev.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.conf" "${HOME}/.tmux.split.conf"
 	install -m 0600 "$(TOPDIR)/dotfiles/tmux.split.2k.conf" "${HOME}/.tmux.split.2k.conf"
-	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
 
 	install -d -m 0700 "${HOME}/.fonts"
 	install -m 0600 "$(TOPDIR)/dotfiles/fonts/Caskaydia Cove Nerd Font Complete Mono.ttf" \
@@ -103,19 +104,6 @@ install_real :
 	cp -R "$(TOPDIR)/dotfiles/local/share/yakuake/kns_skins/pixelnine" \
 			"${HOME}/.local/share/yakuake/kns_skins/"
 
-	install -d -m 0700 "${HOME}/.vim"
-	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
-	@if [ -d "${HOME}/.vim/colors" ]; then \
-			echo "rm -rf ${HOME}/.vim/colors"; \
-			rm -rf "${HOME}/.vim/colors"; \
-			fi
-	@if [ -d "${HOME}/.vim/pack" ]; then \
-			echo "rm -rf ${HOME}/.vim/pack"; \
-			rm -rf "${HOME}/.vim/pack"; \
-			fi
-	cp -R "$(TOPDIR)/dotfiles/vim/colors" "${HOME}/.vim"
-	cp -R "$(TOPDIR)/dotfiles/vim/pack" "${HOME}/.vim"
-
 	install -d -m 0700 "${HOME}/.config/nvim"
 	install -m 0600 "$(TOPDIR)/dotfiles/config/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
 	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.config/nvim/coc-settings.json"
@@ -130,11 +118,37 @@ install_real :
 	cp -R "$(TOPDIR)/dotfiles/vim/colors" "${HOME}/.config/nvim"
 	cp -R "$(TOPDIR)/dotfiles/vim/pack" "${HOME}/.config/nvim"
 
-
 	@echo
 
 # Update submodules
 update :
 	$(info $(NULL))
 	git submodule update --recursive --remote
+	@echo
+
+# Install configurations for vim
+vim :
+	$(info $(NULL))
+
+	install -m 0600 "$(TOPDIR)/dotfiles/vimrc" "${HOME}/.vimrc"
+
+	install -d -m 0700 "${HOME}/.vim"
+	install -m 0600 "$(TOPDIR)/dotfiles/coc-settings.json" "${HOME}/.vim/coc-settings.json"
+	@if [ -d "${HOME}/.vim/colors" ]; then \
+			echo "rm -rf ${HOME}/.vim/colors"; \
+			rm -rf "${HOME}/.vim/colors"; \
+			fi
+	@if [ -d "${HOME}/.vim/pack" ]; then \
+			echo "rm -rf ${HOME}/.vim/pack"; \
+			rm -rf "${HOME}/.vim/pack"; \
+			fi
+	cp -R "$(TOPDIR)/dotfiles/vim/colors" "${HOME}/.vim"
+	cp -R "$(TOPDIR)/dotfiles/vim/pack" "${HOME}/.vim"
+
+	@echo
+
+# Installs vim alias
+vim_alias : install_real
+	$(info $(NULL))
+	install -m 0600 "$(TOPDIR)/dotfiles/bash_exports/alias_vim" "${HOME}/.bash_exports/alias_vim"
 	@echo
