@@ -69,6 +69,8 @@ let g:dracula_colorterm=1
 " color settings after dracula
 hi! Normal ctermbg=NONE
 hi! NonText ctermbg=NONE
+hi! Normal guibg=NONE
+hi! NonText guibg=NONE
 
 " coc settings
 let g:coc_node_path='/usr/bin/node'
