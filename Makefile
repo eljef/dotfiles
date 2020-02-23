@@ -1,6 +1,6 @@
 .PHONY: all help init install update vim vim_alias
 
-VERSION := 1.5.0
+VERSION := 1.6.0
 
 NULL :=
 TOPDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
