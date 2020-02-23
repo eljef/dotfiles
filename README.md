@@ -12,6 +12,9 @@ Run `make init` to pull dependencies.
 I don't use anything to manage my dotfiles. I'm simple and uncultured. I use a
 Makefile to install them. You can too with `make install`.
 
+Installing will overwrite any current dotfiles you have. Make sure to backup
+anything important.
+
 ## scripts
 
 I've also included some scripts that I use for setting up systems and keeping

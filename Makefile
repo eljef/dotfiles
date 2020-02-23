@@ -1,4 +1,4 @@
-.PHONY: all help init install install_real update vim vim_alias
+.PHONY: all help init install update vim vim_alias
 
 VERSION := 1.5.0
 
@@ -29,15 +29,8 @@ init :
 	git submodule update --init --recursive
 	@echo
 
-# install spits out a warning message
+# install installs the dotfiles
 install :
-	$(info $(NULL))
-	@echo "Installing will overwrite any current dotfiles."
-	@echo "Backup anything important and then run 'make install_real'"
-	@echo
-
-# install_real installs the dotfiles
-install_real :
 	$(info $(NULL))
 
 	install -d -m 0700 "${HOME}/.bash_exports"
@@ -148,7 +141,7 @@ vim :
 	@echo
 
 # Installs vim alias
-vim_alias : install_real
+vim_alias : install
 	$(info $(NULL))
 	install -m 0600 "$(TOPDIR)/dotfiles/bash_exports/alias_vim" "${HOME}/.bash_exports/alias_vim"
 	@echo
