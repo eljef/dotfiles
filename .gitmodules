@@ -32,3 +32,6 @@
 [submodule "dotfiles/vim/pack/jef/start/vim-fugitive"]
 	path = dotfiles/vim/pack/jef/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
+[submodule "conky/config/conky/conky-vision"]
+	path = conky/config/conky/conky-vision
+	url = https://github.com/zagortenay333/conky-Vision.git

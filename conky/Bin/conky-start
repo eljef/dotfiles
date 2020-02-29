@@ -15,9 +15,5 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-conky -d -o -b -p 5 -c ~/.config/conky/hostinfo.conf &
-conky -d -o -b -p 5 -c ~/.config/conky/meminfo.conf &
-conky -d -o -b -p 5 -c ~/.config/conky/cpu_percentages.conf &
-conky -d -o -b -p 5 -c ~/.config/conky/diskinfo.conf &
-conky -d -o -b -p 5 -c ~/.config/conky/network.conf &
-conky -d -o -b -p 5 -c ~/.config/conky/temps.conf &
+conky -d -o -b -p 5 -c ~/.config/conky/conky1/conky.conf &
+conky -d -o -b -p 5 -c ~/.config/conky/conky2/conky.conf &
