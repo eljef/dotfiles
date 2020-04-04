@@ -94,3 +94,10 @@ To configure the width of the main pain in the 2k split, you will need to export
 
 To configure the height of the top right pain in the 2k split, you will need to
 export `YAKUAKE_DEV_TERM_Y` set to the height you desire. (In pixels)
+
+## Extras
+
+### Scripts
+
+Extra random scripts that can be used for various tasks. These must be manually
+copied into the $PATH. (~/Bin)

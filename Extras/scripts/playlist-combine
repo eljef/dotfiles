@@ -1,0 +1,50 @@
+#!/bin/bash
+# Copyright (C) 2020 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<- EOF
+
+    playlist-combine new_playlist old_playlist1 old_playlist2 ...
+
+       playlist-combine combines m3u playlists into a single playlist
+
+EOF
+)
+
+check_help_and_empty "${1}"
+
+new_playlist="${1}"
+shift
+
+if [ -f "${new_playlist}" ]; then
+    print_leader "${new_playlist} exists, renaming to ${new_playlist}.bak"
+    mv "${new_playlist}" "${new_playlist}.bak"
+fi
+
+echo "#EXTM3U" >> "${new_playlist}.new"
+
+for old_file in "${@}"
+do
+    grep -v "#EXTM3U" < "${old_file}" >> "${new_playlist}.new"
+done
+
+uniq < "${new_playlist}.new" > "${new_playlist}"
+
+rm "${new_playlist}.new"
+

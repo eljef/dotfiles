@@ -1,0 +1,51 @@
+#!/bin/bash
+# Copyright (C) 2020 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<- EOF
+
+    youtube-get-audio url [savelink]
+
+        url: URL to youtube video to download audio from
+        savelink: If specified, the url for the downloaded audio will be saved
+                  to a text file of the same name of the new mp3 file and
+                  .url extension
+EOF
+)
+
+check_help_and_empty "${1}"
+
+CWD=$(pwd)
+
+TEMP_DIR=$(mktemp -d)
+cd_or_error "${TEMP_DIR}"
+youtube-dl -x --audio-format mp3 --audio-quality 320K "$1" || exit 1
+
+MP3FILE=$(ls -1 ./*.mp3 2>/dev/null)
+if [ -z "${MP3FILE}" ]; then
+    error_print_exit "New MP3 file not found after download."
+fi
+mv "${MP3FILE}" "${CWD}"
+
+cd_or_error "${CWD}"
+if [ "${2}" == "savelink" ]; then
+    echo "${1}" > "${MP3FILE}.url"
+fi
+
+rm -rf "${TEMP_DIR}"

@@ -76,11 +76,23 @@ function print_copy_move() {
     echo -e " ${SYM_START} ${INFO_START}${1}${RESET} ${START}->${RESET} ${INFO_START}${2}${RESET} ${SYM_END}"
 }
 
-function print_leader_full() {
-    echo -e " ${SYM_START} ${SYM_DLM}${SYM_SEG}${SYM_DLM} ${SYM_END} ${INFO_START}${1}${RESET}"
+function print_copy_move_with_seg() {
+    echo -e " ${SYM_START}    ${SYM_SEG} ${INFO_START}${1}${RESET} ${START}->${RESET} ${INFO_START}${2}${RESET}"
 }
 
 function print_help() {
     echo -e "${HELPSTATEMENT}"
+}
+
+function print_leader() {
+    echo -e " ${SYM_START}    ${SYM_SEG} ${1}"
+}
+
+function print_leader_full() {
+    echo -e " ${SYM_START} ${SYM_DLM}${SYM_SEG}${SYM_DLM} ${SYM_END} ${INFO_START}${1}${RESET}"
+}
+
+function print_warn() {
+    print_leader "${WARN_START}${1}${RESET}"
 }
 
