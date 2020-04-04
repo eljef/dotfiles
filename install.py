@@ -29,7 +29,7 @@ import subprocess
 
 from pathlib import Path
 
-_VERSION = '1.6.0'
+_VERSION = '1.7.0'
 _HOME = str(Path.home())
 
 _CMD_LINE_ARGS = [
