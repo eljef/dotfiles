@@ -30,7 +30,7 @@
 function prep_mp3s() {
     for MP3FILE in *.mp3
     do
-        print_leader "${MP3FILE}"
+        print_leader "${SYM_DLM} ${INFO_START}${MP3FILE}${RESET}"
         artist=$(ffprobe "${MP3FILE}" 2>&1 | sed -E -n 's/^ *album_artist *: (.*)/\1/p';)
         eyeD3 -Q -l error --remove-all-images "${MP3FILE}" > /dev/null
         if [ -n "${artist}" ]; then
@@ -42,7 +42,7 @@ function prep_mp3s() {
 }
 
 function start_prep() {
-    print_leader "cover.jpg"
+    print_copy_move_with_seg "${1}" "cover.jpg"
     convert "${1}" -resize 600x600\> cover.new.jpg
     rm "${1}"
     mv cover.new.jpg cover.jpg
@@ -54,12 +54,12 @@ CWD="$(pwd)"
 IFS=$'\n'
 for MP3DIR in $(find . -type f -name '*.mp3' | sed -r 's|/[^/]+$||' | sort -u)
 do
-    print_leader "${MP3DIR}"
+    print_leader "${INFO_START}${MP3DIR}${RESET}"
     cd_or_error "${MP3DIR}"
     if [ -f "folder.jpg" ]; then
-        print_leader " ${WARN_START}EXISTS${RESET} ${SYM_SEG}"
-        print_leader " ${WARN_START}EXISTS${RESET} ${SYM_SEG} ${SYM_END} ${WARN_START}FOLDER.JPG EXISTS${RESET} ${SYM_DLM} ${WARN_START}SKIPPING${RESET}"
-        print_leader " ${WARN_START}EXISTS${RESET} ${SYM_SEG}"
+        print_leader "${WARN_START}EXISTS${RESET} ${SYM_SEG}"
+        print_leader "${WARN_START}EXISTS${RESET} ${SYM_SEG} ${SYM_END} ${WARN_START}FOLDER.JPG EXISTS${RESET} ${SYM_DLM} ${WARN_START}SKIPPING${RESET}"
+        print_leader "${WARN_START}EXISTS${RESET} ${SYM_SEG}"
     elif [ -f "cover.jpg" ]; then
         start_prep cover.jpg
         prep_mp3s
@@ -67,9 +67,9 @@ do
         start_prep cover.png
         prep_mp3s
     else
-        print_leader " ${ERROR_START}ERROR${RESET} ${SYM_SEG}"
-        print_leader " ${ERROR_START}ERROR${RESET} ${SYM_SEG} ${SYM_END} ${ERROR_START}NO COVER FOUND${RESET} ${SYM_DLM} ${ERROR_START}SKIPPING${RESET}"
-        print_leader " ${ERROR_START}ERROR${RESET} ${SYM_SEG}"
+        print_leader "${ERROR_START}ERROR${RESET} ${SYM_SEG}"
+        print_leader "${ERROR_START}ERROR${RESET} ${SYM_SEG} ${SYM_END} ${ERROR_START}NO COVER FOUND${RESET} ${SYM_DLM} ${ERROR_START}SKIPPING${RESET}"
+        print_leader "${ERROR_START}ERROR${RESET} ${SYM_SEG}"
     fi
     cd_or_error "${CWD}"
 done
