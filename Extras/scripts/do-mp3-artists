@@ -42,7 +42,7 @@ function prep_mp3s() {
 }
 
 function start_prep() {
-    print_leader "conver.jpg"
+    print_leader "cover.jpg"
     convert "${1}" -resize 600x600\> cover.new.jpg
     rm "${1}"
     mv cover.new.jpg cover.jpg
