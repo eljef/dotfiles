@@ -15,14 +15,17 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
 if [[ -n "${1}" ]]; then
-	cd "${1}" || exit 1
+    cd_or_error "${1}"
 fi
 
 OUTPUT=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
 if [[ -z ${OUTPUT} ]]; then
-	echo "(git: none)"
+    echo "(git: none)"
 else
-	echo "(git: ${OUTPUT})"
+    echo "(git: ${OUTPUT})"
 fi
 

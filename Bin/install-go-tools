@@ -15,6 +15,19 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<- EOF
+
+    install-go-tools
+
+    Installs various golang utilities to be used in development.
+EOF
+)
+
+check_help "${1}"
+
 # override the current GOPATH to protect source trees
 mkdir -p /tmp/go/{bin,src,pkg}
 OLD_GO_PATH="${GOPATH}"
@@ -66,34 +79,34 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
 do
-    echo "go get -u ${getpath}"
+    print_leader_full "go get -u ${getpath}"
     GO111MODULE=off go get -u "${getpath}"
 done
 
 # install gopls
-echo "go get golang.org/x/tools/gopls@latest"
+print_leader_full "go get golang.org/x/tools/gopls@latest"
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 # build gocritic because it has to be different from all of the other tools...
-echo "Building gocritic"
-cd "${GOPATH}/src/github.com/go-critic/go-critic" || exit 1
+print_leader_full "Building gocritic"
+cd_or_error "${GOPATH}/src/github.com/go-critic/go-critic"
 PATH="${GOPATH}/bin:${PATH}" make gocritic
 mv gocritic "${GOPATH}/bin"
 
 # copy the build binaries to the real GOPATH
-cd "${GOPATH}/bin" || exit 1
+cd_or_error "${GOPATH}/bin"
 export GOPATH="${OLD_GO_PATH}"
 for i in *
 do
-    echo "Installing => ${i}"
+    print_copy_move "Installing" "${i}"
     mv "${i}" "${GOPATH}/bin"
 done
 
 # cleanup, which includes fixing permissions because the source download
 # sets weird permissions
-cd /tmp/go || exit 1
+cd_or_error /tmp/go
 find . -type d -print0 | xargs -0 chmod 0755
 find . -type f -print0 | xargs -0 chmod 0644
-cd /tmp || exit 1
+cd_or_error /tmp
 rm -rf go
 

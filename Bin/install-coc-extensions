@@ -17,5 +17,22 @@
 #
 # Installs COC packages for both neovim and vim.
 
-nvim -c 'CocInstall -sync coc-css coc-diagnostic coc-docker coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-sh coc-tsserver coc-vetur coc-yaml|q'
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<-EOF
+    install-coc-extensions [nvim|vim]
+
+        nvim: installs coc extensions for neovim
+        vim:  installs coc extensions for vim
+EOF
+)
+
+check_help_and_empty "${1}"
+
+if [ "${1}" == "nvim" ]; then
+    nvim -c 'CocInstall -sync coc-css coc-diagnostic coc-docker coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-sh coc-tsserver coc-vetur coc-yaml|q'
+elif [ "${1}" == "vim" ]; then
+    vim -c 'CocInstall -sync coc-css coc-diagnostic coc-docker coc-highlight coc-html coc-json coc-markdownlint coc-python coc-rls coc-sh coc-tsserver coc-vetur coc-yaml|q'
+fi
 

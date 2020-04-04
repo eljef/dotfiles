@@ -15,4 +15,17 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<- EOF
+
+    read-md file.md
+
+        file.md: markdown file to display
+EOF
+)
+
+check_help_and_empty "${1}"
+
 glow -s dark -p "${1}"

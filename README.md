@@ -5,20 +5,39 @@ Nothing special or out of the ordinary.
 
 ## Initialization
 
-Run `make init` to pull dependencies.
+Run `./install.py --modules-init` to pull dependencies.
 
 ## Installing
 
 I don't use anything to manage my dotfiles. I'm simple and uncultured. I use a
-Makefile to install them. You can too with `make install`.
+Python script to install them. You can too with `./install.py --install`.
+
+The install script requires Python 3.6 or newer.
 
 Installing will overwrite any current dotfiles you have. Make sure to backup
 anything important.
+
+After installing, you will need to log out and log back in.
 
 ## scripts
 
 I've also included some scripts that I use for setting up systems and keeping
 them up-to-date for my development purposes.
+
+## vim alias
+
+By default, dotfiles assumes you are using neovim. If you would like to alias
+vim to always open neovim, run `./install.py --install-vim-alias`
+
+## vim
+
+If you are using vim instead of neovim, you can setup vim for usage by running
+`./install.py --install-vim`
+
+## Arch Linux Repository Maintenance
+
+I've included some scripts to help with maintaining an Arch Linux repository.
+To install them, run `./install.py --install-archrepo`
 
 ## dependencies
 
@@ -28,10 +47,9 @@ Install your distributions packages for:
 
 * diff-so-fancy
 
-### neovim/vim
+Run `install-git-options`
 
-Run the `install-coc-extensions` script. (Note: This will take a while to run.
-During running, the screen will appear blank.)
+### Conquer of Completion
 
 Install your distributions packages for:
 
@@ -45,17 +63,27 @@ Install your distributions packages or use node/npm to install:
 * markdownlint
 * write-good
 
-### golang
+#### golang
 
-Run the `install-go-tools` script.
+Run `install-go-tools`
 
-### python
+#### python
 
 You'll need to install your distributions packages for:
 
 * python-black
 * flake8
 * pylint
+
+#### neovim-coc
+
+Run `install-coc-extensions nvim`
+
+#### vim-coc
+
+Run `install-coc-extensions vim`
+
+Note: This will take a while to run. During running, the screen will appear blank.
 
 ## Customization
 

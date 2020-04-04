@@ -15,22 +15,35 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<- EOF
+
+    convert-to-mp3
+
+    Converts m4a, mp4, and flac files to 320k mp3 files.
+EOF
+)
+
+check_help "${1}"
+
 if [ -n "$(ls -1 ./*.m4a 2>/dev/null)" ]; then
     for i in *.m4a
     do
-        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.m4a}.mp3\""
+        print_leader_full "ffmpeg -i \"${i}\" -ab 320k \"${i%.m4a}.mp3\""
         ffmpeg -i "${i}" -ab 320k "${i%.m4a}.mp3" > /dev/null 2>&1
     done
 elif [ -n "$(ls -1 ./*.mp4 2>/dev/null)" ]; then
     for i in *.mp4
     do
-        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.mp4}.mp3\""
+        print_leader_full "ffmpeg -i \"${i}\" -ab 320k \"${i%.mp4}.mp3\""
         ffmpeg -i "${i}" -ab 320k "${i%.mp4}.mp3" > /dev/null 2>&1
     done
 elif [ -n "$(ls -1 ./*.flac 2>/dev/null)" ]; then
     for i in *.flac
     do
-        echo "ffmpeg -i \"${i}\" -ab 320k \"${i%.flac}.mp3\""
+        print_leader_full "ffmpeg -i \"${i}\" -ab 320k \"${i%.flac}.mp3\""
         ffmpeg -i "${i}" -ab 320k "${i%.flac}.mp3" > /dev/null 2>&1
     done
 fi

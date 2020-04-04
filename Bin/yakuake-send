@@ -15,25 +15,24 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function print_help() {
-    echo ""
-    echo "yakuake-send [commands]"
-    echo ""
-    echo "    yakuake-send sends a command to all splits in the active session"
-    echo ""
-    echo "    eg:"
-    echo "        yakuake-send cd ~"
-    echo ""
-    echo "    Help:"
-    echo "        If the first argument is '-h', '--help', or 'help', this"
-    echo "        help message is printed."
-    echo ""
-    exit 0
-}
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
 
-if [[ -z "$*" || "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
-    print_help
-fi
+HELPSTATEMENT=$(cat <<- EOF
+
+    yakuake-send [commands]
+
+    yakuake-send sends a command to all splits in the active session
+        eg:
+            yakuake-send cd ~
+
+        Help:
+            If the first argument is '-h', '--help', or 'help', this
+            help message is printed.
+EOF
+)
+
+check_help_and_empty "${1}"
 
 ACTIVE_SESSION=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.activeSessionId)
 
