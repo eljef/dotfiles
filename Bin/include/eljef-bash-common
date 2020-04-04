@@ -1,0 +1,86 @@
+#!/bin/bash
+# Copyright (C) 2020 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+RESET="\033[0m"
+START="\033[1;32m"
+
+SYM_DLM="${START}--${RESET}"
+SYM_END="${START}|-${RESET}"
+SYM_SEG="${START}**${RESET}"
+SYM_START="${START}-|${RESET}"
+
+ERROR_START="\033[1;31m"
+INFO_START="\033[1;36m"
+WARN_START="\033[1;33m"
+
+function cd_or_error() {
+    cd "${1}" || error_print_exit "failed to change directory to ${1}"
+}
+
+function check_help() {
+    if [[ "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
+        print_help
+        exit 0
+    fi
+}
+
+function check_help_and_empty() {
+    if [[ -z "${1}" || "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
+        print_help
+        exit 0
+    fi
+}
+
+function check_env() {
+    VAR_CHECK="${!1}"
+    if [ -z "${VAR_CHECK}" ]; then
+        error_print_exit "environment variable not set: ${1}"
+    fi
+}
+
+function error_help() {
+    print_help
+    exit 1
+}
+
+function error_print() {
+    echo ""
+    echo -e "${ERROR_START}ERROR: ${1}${RESET}"
+    echo ""
+}
+
+function error_print_exit() {
+    error_print "${1}"
+    exit 1
+}
+
+function error_no_exist() {
+    error_print_exit "${1} does not exist"
+}
+
+function print_copy_move() {
+    echo -e " ${SYM_START} ${INFO_START}${1}${RESET} ${START}->${RESET} ${INFO_START}${2}${RESET} ${SYM_END}"
+}
+
+function print_leader_full() {
+    echo -e " ${SYM_START} ${SYM_DLM}${SYM_SEG}${SYM_DLM} ${SYM_END} ${INFO_START}${1}${RESET}"
+}
+
+function print_help() {
+    echo -e "${HELPSTATEMENT}"
+}
+
