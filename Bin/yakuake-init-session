@@ -16,6 +16,7 @@
 # Jef Oliver <jef@eljef.me>
 
 ACTIVE_SESSION=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.activeSessionId)
+DEF_SESSION="${ACTIVE_SESSION}"
 qdbus org.kde.yakuake /yakuake/tabs org.kde.yakuake.setTabTitle "${ACTIVE_SESSION}" home > /dev/null 2>&1
 LOCAL_SESSION=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.addSession)
 qdbus org.kde.yakuake /yakuake/tabs org.kde.yakuake.setTabTitle "${LOCAL_SESSION}" local > /dev/null 2>&1
@@ -25,3 +26,8 @@ DEV_SESSION=$(qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.addSession
 qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.raseSession "${DEV_SESSION}" > /dev/null 2>&1
 
 yakuake-split-dev-2k
+
+qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.raiseSession "${LOCAL_SESSION}"
+qdbus org.kde.yakuake /yakuake/sessions org.kde.yakuake.raiseSession "${DEF_SESSION}"
+
+yakuake-send clear
