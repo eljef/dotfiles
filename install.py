@@ -426,7 +426,7 @@ def _do_modules_update() -> None:
 
 def _do_version() -> None:
     """Prints version and exists."""
-    print("ElJef Dotfiles - {1!s}\n".format(_VERSION))
+    print("ElJef Dotfiles - {0!s}\n".format(_VERSION))
     raise SystemExit(0)
 
 
