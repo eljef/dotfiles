@@ -1,2 +1,5 @@
 * text eol=lf
 *.otf binary
+*.CurXPTheme binary
+*.mmip binary
+*.wba binary
