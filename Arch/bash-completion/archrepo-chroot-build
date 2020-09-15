@@ -1,0 +1,36 @@
+#!/bin/bash
+# Copyright (C) 2020 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+_archrepo_chroot_build()
+{
+    if [ -z "${ARCHREPO_GITS}" ]; then
+        COMPREPLY=("'ARCHREPO_GITS NOT SET'")
+        return
+    fi
+
+    # shellcheck disable=2034
+    local cur prev words cword
+    _init_completion || return
+
+    if ((cword == 1)); then
+        # shellcheck disable=2086,2207
+        COMPREPLY=($(compgen -W "$(ls -1 ${ARCHREPO_GITS})" -- "${cur}"))
+    fi
+
+} &&
+    complete -F _archrepo_chroot_build archrepo-chroot-build
+

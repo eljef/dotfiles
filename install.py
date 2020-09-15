@@ -70,12 +70,17 @@ _INSTALL_GROUPS = {
              'exec': True},
             {'dot': 'Arch/repo/archrepo-update-aur-gits',
              'target': os.path.join(_HOME, 'Bin/archrepo-update-aur-gits'),
-             'exec': True}
+             'exec': True},
+            {'dot': 'Arch/bash-completion/archrepo-chroot-build',
+             'target': os.path.join(_HOME, '.local/share/bash-completion/completions/archrepo-chroot-build')},
+            {'dot': 'Arch/bash-completion/archrepo-sign-and-move',
+             'target': os.path.join(_HOME, '.local/share/bash-completion/completions/archrepo-sign-and-move')}
         ]
     },
     'bashcommon': {
         'create_dirs': [
             os.path.join(_HOME, '.bash_exports'),
+            os.path.join(_HOME, '.local/share/bash-completion/completions'),
             os.path.join(_HOME, 'Bin/include')
         ],
         'install_files': [

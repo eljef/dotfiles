@@ -20,6 +20,10 @@ if [[ ":$PATH:" != *":$GOPATH/bin:"* ]]; then
     export PATH="${PATH}:${GOPATH}/bin"
 fi
 
+if [[ "$BASH_COMPLETION_USER_DIR" != "${HOME}/.local/share/bash-completion" ]]; then
+    export BASH_COMPLETION_USER_DIR="${HOME}/.local/share/bash-completion"
+fi
+
 # include files in .bash_exports
 if [ -d .bash_exports ]; then
     pushd .bash_exports > /dev/null
