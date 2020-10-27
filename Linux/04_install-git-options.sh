@@ -15,19 +15,7 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-# shellcheck source=/home/dev/Bin/include/eljef-bash-common
-. "${HOME}/Bin/include/eljef-bash-common"
-
-HELPSTATEMENT=$(cat <<- EOF
-
-    install-git-options
-
-    Installs git options to be used with diff-so-fancy.
-EOF
-)
-
-check_help "${1}"
-
+git config --global core.editor "nvim"
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
 
 git config --global color.ui true

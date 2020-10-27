@@ -1,9 +1,22 @@
 set shell=bash
 
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'jiangmiao/auto-pairs'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug '907th/vim-auto-save'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-fugitive'
+Plug 'fatih/vim-go'
+Plug 'tpope/vim-surround'
+Plug 'cespare/vim-toml'
+call plug#end()
+
+
 " ==== Comment out the line below if your terminal does not support true color
 set termguicolors
-
-set rtp+=~/.config/nvim/colors/dracula
 
 set hidden
 

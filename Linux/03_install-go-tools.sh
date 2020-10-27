@@ -15,21 +15,17 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-# shellcheck source=/home/dev/Bin/include/eljef-bash-common
-. "${HOME}/Bin/include/eljef-bash-common"
+. common
 
-HELPSTATEMENT=$(cat <<- EOF
+# Create directories
 
-    install-go-tools
+make_directory "${GOPATH}/bin"
+make_directory "/tmp/go/bin"
+make_directory "/tmp/go/pkg"
+make_directory "/tmp/go/src"
 
-    Installs various golang utilities to be used in development.
-EOF
-)
+# Override the current GOPATH to protect source trees
 
-check_help "${1}"
-
-# override the current GOPATH to protect source trees
-mkdir -p /tmp/go/{bin,src,pkg}
 OLD_GO_PATH="${GOPATH}"
 export GOPATH="/tmp/go"
 
@@ -78,38 +74,38 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
 do
-    print_leader_full "go get -u ${getpath}"
-    GO111MODULE=off go get -u "${getpath}"
+    echo " --==-- go get -u ${getpath}"
+    GO111MODULE=off go get -u "${getpath}" || echo_error "Failed to install ${getpath}"
 done
 
 # install golangci-lint
-print_leader_full "go get github.com/golangci/golangci-lint/cmd/golangci-lint"
-GO111MODULE=on go get 'github.com/golangci/golangci-lint/cmd/golangci-lint'
+echo " --==-- go get github.com/golangci/golangci-lint/cmd/golangci-lint"
+GO111MODULE=on go get 'github.com/golangci/golangci-lint/cmd/golangci-lint' || echo_error "Failed to install golangci-lint"
 
 # install gopls
-print_leader_full "go get golang.org/x/tools/gopls@latest"
-GO111MODULE=on go get golang.org/x/tools/gopls@latest
+echo " --==-- GO111MODULE=on go get golang.org/x/tools/gopls@latest"
+GO111MODULE=on go get golang.org/x/tools/gopls@latest || echo_error "Failed to install gopls"
 
 # build gocritic because it has to be different from all of the other tools...
-print_leader_full "Building gocritic"
-cd_or_error "${GOPATH}/src/github.com/go-critic/go-critic"
-PATH="${GOPATH}/bin:${PATH}" make gocritic
-mv gocritic "${GOPATH}/bin"
+echo " --==-- Building gocritic"
+cd "${GOPATH}/src/github.com/go-critic/go-critic" || echo_error "Failed to change to go-critic directory"
+PATH="${GOPATH}/bin:${PATH}" make gocritic || echo_error "Failed to build gocritic"
+mv gocritic "${GOPATH}/bin" || echo_error "Failed to install gocritic"
 
 # copy the build binaries to the real GOPATH
-cd_or_error "${GOPATH}/bin"
+cd "${GOPATH}/bin" || echo_error "Failed to change directory to GOPATH/bin"
 export GOPATH="${OLD_GO_PATH}"
 for i in *
 do
-    print_copy_move "Installing" "${i}"
-    mv "${i}" "${GOPATH}/bin"
+    echo " --==-- Installing ${i}"
+    mv "${i}" "${GOPATH}/bin" || echo_error "Failed to install ${i}"
 done
 
 # cleanup, which includes fixing permissions because the source download
 # sets weird permissions
-cd_or_error /tmp/go
+cd /tmp/go || echo_error "Failed to change to temporary go directory"
 find . -type d -print0 | xargs -0 chmod 0755
 find . -type f -print0 | xargs -0 chmod 0644
-cd_or_error /tmp
-rm -rf go
+cd /tmp || echo_error "Failed to change to tmp directory"
+rm -rf go || echo_error "Failed to delete temporary go directory"
 
