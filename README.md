@@ -14,10 +14,6 @@ anything important.
 
 After installing, you will need to log out and log back in.
 
-## Installers
-
-Installation scripts are located in the Linux and Windows directories.
-
 ## Extras
 
 Some scripts and program configs I use on systems are stored in the `Extras`
