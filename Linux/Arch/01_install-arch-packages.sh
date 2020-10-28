@@ -56,6 +56,7 @@ pacman -Syu bash-completion \
             ttf-droid \
             ttf-google-fonts \
             ttf-liberation \
+            typora \
             vim \
             write-good \
             xcursor-gt3 \
