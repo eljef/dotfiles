@@ -27,6 +27,7 @@ pacman -Syu bash-completion \
             fira-code-git \
             firefox \
             flake8 \
+            fuse2 \
             gnu-free-fonts \
             google-chrome-dev \
             gstreamer-vaapi \
