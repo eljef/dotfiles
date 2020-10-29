@@ -21,6 +21,7 @@ SDIR=$(check_location "/../../")
 
 # Create Directories
 
+make_directory "${HOME}/Bin"
 make_directory "${HOME}/.local/share/bash-completion/completions"
 
 # Install Bin Scripts

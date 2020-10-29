@@ -7,17 +7,33 @@ Nothing special or out of the ordinary.
 
 I don't use anything to manage my dotfiles. I'm simple and uncultured. I use
 scripts native to an OS to do my installs for me. You can read more about
-each this in each installer script.
+this below.
 
-Installing will overwrite any current dotfiles you have. Make sure to backup
+### Notes
+
+* Installing will overwrite any current dotfiles you have. Make sure to backup
 anything important.
 
-After installing, you will need to log out and log back in.
+* After installing, you will need to log out and log back in.
+
+## Installers
+
+Installation scripts are located in the `Linux` and `Windows` directories. More
+info for these scripts is located in the `README.md` in those directories.
 
 ## Extras
 
 Some scripts and program configs I use on systems are stored in the `Extras`
 directory.
+
+### Scripts
+
+Extra scripts will need to be manually copied to a directory within your `$PATH`.
+
+### Conky
+
+More information for installing and configuring Conky is contained in the
+`README.md` in the `Extras/conky` directory.
 
 ## Arch Linux Repository Maintenance
 
@@ -62,8 +78,12 @@ You'll need to install your distributions packages for:
 
 #### neovim / vim
 
-Run the associated script for configure neovim or vim, and the the associated
+Run the associated script to configure neovim or vim, and the the associated
 script to install the plugins.
+
+* eg:
+  * `Linux/01_config-neovim.sh`
+  * `Linux/02_install-neovim-plugins.sh`
 
 ## Customization
 

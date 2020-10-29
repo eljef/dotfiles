@@ -15,6 +15,8 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+# Common functionality for the various installers.
+
 function check_location() {
     SCRIPT=$(dirname "$0")
     SDIR=$(realpath "${SCRIPT}${1}")
