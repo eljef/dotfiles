@@ -22,6 +22,7 @@ check_root
 pacman -Syu --noconfirm \
             bash-completion \
             bash-language-server \
+            beets \
             cronie \
             diff-so-fancy \
             flake8 \
