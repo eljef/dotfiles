@@ -24,6 +24,7 @@ apt -y install black \
                fontconfig \
                fuse2fs \
                git \
+               golang-go \
                make \
                neovim \
                nodejs \
