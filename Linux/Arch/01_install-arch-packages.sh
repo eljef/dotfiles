@@ -47,7 +47,14 @@ pacman -Syu bash-completion \
             plasma-meta \
             python-black \
             python-colorama \
+            python-colorlog \
+            python-pip \
+            python-pyaml \
             python-pylint \
+            python-pytest \
+            python-pytest-cov \
+            python-unidecode \
+            python-xmltodict \
             sddm-theme-archpaint2-breeze \
             shellcheck \
             sudo \
