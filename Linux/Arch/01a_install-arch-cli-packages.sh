@@ -41,6 +41,7 @@ pacman -Syu --noconfirm \
             python-black \
             python-colorama \
             python-colorlog \
+            python-discogs-client \
             python-pip \
             python-pyaml \
             python-pylint \
