@@ -19,7 +19,8 @@
 
 check_root
 
-pacman -Syu bitwarden-bin \
+pacman -Syu --noconfirm \
+            bitwarden-bin \
             fira-code-git \
             firefox \
             gnu-free-fonts \

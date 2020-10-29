@@ -17,6 +17,8 @@
 
 . ../common
 
-echo "export DESKTOP_SESSION=plasma" >> ~/.xinitrc || echo_error "failed desktop session echo"
-echo "exec startplasma-x11" >> ~/.xinitrc || echo_error "failed startplasma echo"
+check_root
+
+pacman -Syu --noconfirm virtualbox-guest-utils || echo_error "failed install guest utils"
+systemctl enable vboxservice.service || echo_error "failed to enable vbox service"
 

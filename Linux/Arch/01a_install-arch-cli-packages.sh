@@ -19,7 +19,8 @@
 
 check_root
 
-pacman -Syu bash-completion \
+pacman -Syu --noconfirm \
+            bash-completion \
             bash-language-server \
             cronie \
             diff-so-fancy \
@@ -33,7 +34,7 @@ pacman -Syu bash-completion \
             nodejs \
             nodejs-markdownlint-cli \
             npm \
-            nvim \
+            neovim \
             nvm \
             openssh \
             python-black \

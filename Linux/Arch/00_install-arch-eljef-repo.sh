@@ -24,12 +24,12 @@ echo "keyserver hkp://pool.sks-keyservers.net" >> /etc/pacman.d/gnupg/gpg.conf |
 
 pacman-key --recv-keys 12F0B2A79BFE57E580B6C91A56989CA26462201F || echo_error "failed to grab key"
 pacman-key --lsign-key 12F0B2A79BFE57E580B6C91A56989CA26462201F || echo_error "failed to sign key"
-pacman -U https://eljef.me/arch/core/eljef-keyring-20191024-1-any.pkg.tar.xz || echo_error "failed to install keyring"
-pacman -U https://eljef.me/arch/core/eljef-repo-core-20161118-1-any.pkg.tar.xz || echo_error "failed to install core repo"
+pacman -U --noconfirm https://eljef.me/arch/core/eljef-keyring-20191024-1-any.pkg.tar.xz || echo_error "failed to install keyring"
+pacman -U --noconfirm https://eljef.me/arch/core/eljef-repo-core-20161118-1-any.pkg.tar.xz || echo_error "failed to install core repo"
 
 echo "Include = /etc/pacman.d/eljef-repo-*.conf" >> /etc/pacman.conf || echo_error "failed to add repo configs"
 
 pacman -Sy || echo_error "failed to update pacman"
-pacman -S eljef-repo-apps eljef-repo-devel eljef-repo-media eljef-repo-misc || echo_error "failed to install eljef repos"
+pacman -S --noconfirm eljef-repo-apps eljef-repo-devel eljef-repo-media eljef-repo-misc || echo_error "failed to install eljef repos"
 pacman -Sy || echo_error "failed to update pacman 2"
 
