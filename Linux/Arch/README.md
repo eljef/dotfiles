@@ -7,9 +7,12 @@ scripts.
 * `00_install-arch-eljef-repo.sh`
   * **Required**
   * Installs necessary packages to add the ElJef Arch Linux Repository.
-* `01_install-arch-packages.sh`
+* `01a_install-arch-cli-packages.sh`
   * **Required**
-  * Installs software packages necessary to use Arch Linux.
+  * Installs software packages necessary to use Arch Linux CLI functionality.
+* `01b_install-arch-gui-packages.sh`
+  * **Optional**
+  * Installs software packages necessary to use Arch Linux GUI functionality.
 * `02_install-arch-pip-modules.sh`
   * **Required**
   * Installs pip modules that do not have an official or unofficial package.
