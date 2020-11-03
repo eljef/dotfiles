@@ -12,6 +12,7 @@ if ($host.Name -eq 'ConsoleHost') {
     Import-Module -name eljef
     Import-Module -name Get-ChildItemColor
     Import-Module -name PSReadLine
+	Import-Module posh-git
 
     # Disable the bell
     Set-PSReadlineOption -BellStyle None
@@ -62,6 +63,27 @@ if ($host.Name -eq 'ConsoleHost') {
 }
 
 function prompt {
-    Write-Host (GetPromptString) -nonewline
-	return " "
+	$origLastExitCode = $LASTEXITCODE
+
+    $prompt = "[$ENV:USERNAME@$ENV:COMPUTERNAME $($ExecutionContext.SessionState.Path.CurrentLocation)]`n"
+
+    if ($status = Get-GitStatus -Force) {
+        $prompt += "["
+        if ($status.HasWorking) {
+            $prompt += (Write-GitWorkingDirStatusSummary $status -NoLeadingSpace) +
+                       "$(Write-GitWorkingDirStatus $status) "
+        }
+        if ($status.HasWorking -and $status.HasIndex) {
+            $prompt += "| "
+        }
+        if ($status.HasIndex) {
+            $prompt += "$(Write-GitIndexStatus $status -NoLeadingSpace) "
+        }
+        $prompt += "$(Write-GitBranchStatus $status -NoLeadingSpace)$(Write-GitBranchName $status)]"
+    }
+
+    $prompt += "$(if ($PsDebugContext) {' [DBG]:'} else {''})$('$>' * ($nestedPromptLevel + 1)) "
+
+    $LASTEXITCODE = $origLastExitCode
+    $prompt
 }

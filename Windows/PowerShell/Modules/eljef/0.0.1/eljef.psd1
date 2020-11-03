@@ -7,14 +7,13 @@
 
     Author = 'Jef Oliver'
 
-    Copyright = '(c) 2017 Jef Oliver. All rights reserved.'
+    Copyright = '(c) 2017-2020 Jef Oliver. All rights reserved.'
 
     Description = 'Provides functions ElJef uses on a common basis.'
 
     PowerShellVersion = '2.0'
 
     FunctionsToExport = @(
-        'GetPromptString',
         'Test-Administrator'
     )
 
