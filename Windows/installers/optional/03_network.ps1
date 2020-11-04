@@ -1,5 +1,6 @@
 choco install -y `
-				barrier `
-				bitwarden `
-				signal `
-				winscp
+                barrier `
+                bitwarden `
+                signal `
+                winscp
+

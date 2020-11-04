@@ -11,3 +11,4 @@ choco install -y `
                  python3 `
                  shellcheck `
                  typora
+

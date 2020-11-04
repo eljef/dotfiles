@@ -1,4 +1,5 @@
 choco install -y `
                  7zip `
-				 checksum `
-				 sed
+                 checksum `
+                 sed
+

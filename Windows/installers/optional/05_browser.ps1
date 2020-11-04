@@ -1,3 +1,4 @@
 choco install -y `
-				firefox `
-				googlechrome
+                firefox `
+                googlechrome
+

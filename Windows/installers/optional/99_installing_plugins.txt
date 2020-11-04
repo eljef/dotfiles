@@ -1,0 +1,4 @@
+Installing Plugins
+Please manually close neovim when done.
+:qa
+
