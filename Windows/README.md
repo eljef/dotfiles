@@ -39,16 +39,6 @@ This folder holds scripts to enable Windows features that might be wanted.
 
 This folder holds Windows specific versions of the fonts I like to use.
 
-## PowerShell
-
-This folder holds PowerShell modules and the profile I use in powershell. This
-folder is for use with powershell-core / powershell-7.
-
-* To install:
-  * Run `installers/01_powershell_modules.ps1` in
-    powershell-core / powershell-7.
-  * Copy folder to `<%USERPROFILE%>\Documents\`
-
 ## Registry
 
 This folder holds registry to enable or disable features in Windows.
