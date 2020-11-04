@@ -14,34 +14,15 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-##### Variables needed throughout the script ###################################
+. ..\common.ps1
+
+Requires-Install nvim neovim | Out-Null
+Requires-Install git git | Out-Null
 
 $sDir = Split-Path $MyInvocation.MyCommand.Source -Parent
 $installFile = Join-Path -Path "$sDIR" -ChildPath "99_installing_plugins.txt"
 $cocDir = Join-Path -Path "$env:LOCALAPPDATA" -ChildPath "nvim\plugged\coc.nvim"
 
-<#
-.SYNOPSIS
-Writes an error and exits.
-#>
-function Error-Exit {
-    Param (
-        # Error String 1
-        [string]$errorStringOne,
-        # Error String 2
-        [string]$errorStringTwo
-    )
-
-    $HOST.UI.WriteErrorLine($errorStringOne)
-    if ($errorStringTwo -ne '') {
-        $HOST.UI.WriteErrorLine($errorStringTwo)
-    }
-    Exit
-}
-
-##### Actual script functionality ##############################################
-
-# Install initial set of pluggins
 try {
     nvim -c "e $installFile" -c "PlugInstall"
     $cwd = Get-Location
@@ -62,6 +43,7 @@ try {
                                                 "coc-html",
                                                 "coc-json",
                                                 "coc-markdownlint",
+                                                "coc-powershell",
                                                 "coc-python",
                                                 "coc-rls",
                                                 "coc-sh",

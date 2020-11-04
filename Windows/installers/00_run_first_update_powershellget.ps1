@@ -14,7 +14,26 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-Install-PackageProvider Nuget -Force
-Install-Module -Name PowerShellGet -Force -AllowClobber
-Update-Module -Name PowerShellGet
+. .\common.ps1
+
+try {
+    Install-PackageProvider Nuget -Force
+}
+catch {
+    Error-Exit "Could not install Nuget" $Error.Exception.Message
+}
+
+try {
+    Install-Module -Name PowerShellGet -Force -AllowClobber
+}
+catch {
+    Error-Exit "Could not install PowerShellGet" $Error.Exception.Message
+}
+
+try {
+    Update-Module -Name PowerShellGet
+}
+catch {
+    Error-Exit "Could not update PowerShellGet" $Error.Exception.Message
+}
 

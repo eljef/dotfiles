@@ -14,4 +14,9 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+. ..\common.ps1
+
+Requires-Install choco chocolatey | Out-Null
+
 choco install -y obs-studio
+
