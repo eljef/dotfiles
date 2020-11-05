@@ -111,6 +111,39 @@ function Exit-Error {
 
 <#
 .SYNOPSIS
+    Downloads a file to a destination.
+
+.DESCRIPTION
+    Downloads a file from the provied URI and saves it to the provided location.
+
+.PARAMETER downloadURI
+    URI to download file from.
+
+.PARAMETER destinationFile
+    Destination to save the downloaded file to.
+
+.PARAMETER errorName
+    Name of downloaded file to use in the error statement if an error is encountered.
+
+.EXAMPLE
+    Get-Download 'https://some.place/a/file.ext' 'c:\somefile.txt' 'some-file'
+#>
+function Get-Download {
+    Param (
+        [string]$downloadURI,
+        [string]$destinationFile,
+        [string]$errorName
+    )
+    try {
+        (New-Object Net.WebClient).DownloadFile($downloadURI, $destinationFile)
+    }
+    catch {
+        Exit-Error "Could not download $errorName" $Error.Exception.Message
+    }
+}
+
+<#
+.SYNOPSIS
     Creates a new directory.
 
 .DESCRIPTION
@@ -132,6 +165,36 @@ function New-Directory {
     }
     catch {
         Exit-Error "Could not create directory: $newPath" $Error.Exception.Message
+    }
+}
+
+<#
+.SYNOPSIS
+    Reads JSON from a file.
+
+.DESCRIPTION
+    Reads JSON from a file, and returns it as a Hash Table.
+
+.PARAMETER jsonPath
+    Path to JSON file to read.
+
+.EXAMPLE
+    Read-JSON 'c:\somefile.json'
+
+.OUTPUTS
+    A Hash Table containing parsed JSON.
+#>
+function Read-JSON {
+    Param (
+        [string]$jsonPath
+    )
+
+    try {
+        $jsonData = Get-Content -Raw -Path $jsonPath | ConvertFrom-Json -AsHashtable
+        return $jsonData
+    }
+    catch {
+        Exit-Error "Could not read $jsonPath" $Error.Exception.Message
     }
 }
 
@@ -177,5 +240,35 @@ function Search-Dotfiles {
     }
 
     return $Return
+}
+
+<#
+.SYNOPSIS
+    Writes JSON to a file.
+
+.DESCRIPTION
+    Writes the provided Hash Table as JSON to a file.
+
+.PARAMETER jsonData
+    JSON Data, as a hash map.
+
+.PARAMETER jsonPath
+    Path to file to write JSON to.
+
+.EXAMPLE
+    Write-JSON @{'test'='test'} "C:\somefile.json"
+#>
+function Write-JSON {
+    Param (
+        [hashtable]$jsonData,
+        [string]$jsonPath
+    )
+
+    try {
+        $jsonData | ConvertTo-Json -depth 100 | Out-File $jsonPath
+    }
+    catch {
+        Exit-Error "Could not save JSON to $jsonPath" $Error.Exception.Message
+    }
 }
 

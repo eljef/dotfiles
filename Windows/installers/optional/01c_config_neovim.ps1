@@ -30,34 +30,13 @@ $pythonExec = $(Confirm-Install python.exe python) -replace "\\", "\/"
 
 $nvimDir = Join-Path -Path "$env:LOCALAPPDATA" -ChildPath "nvim"
 
-##### Functions needed in the script ###########################################
-
-<#
-.SYNOPSIS
-    Downloads the vim-plug plugin from github.
-
-.DESCRIPTION
-    Downloads the vim-plug plugin from github.
-#>
-function Install-Vim-Plug {
-    try {
-        (New-Object Net.WebClient).DownloadFile(
-            $vimPlugURI,
-            $(Join-Path -Path "$nvimDir" -ChildPath "autoload\plug.vim")
-        )
-    }
-    catch {
-        Exit-Error "Could not download vim-plug" $Error.Exception.Message
-    }
-}
-
 ##### Actual script functionality ##############################################
 
 New-Directory $nvimDir
 New-Directory $(Join-Path -Path "$nvimDir" -ChildPath "autoload")
 New-Directory $(Join-Path -Path "$nvimDir" -ChildPath "plugged")
 
-Install-Vim-Plug
+Get-Download $vimPlugURI $(Join-Path -Path "$nvimDir" -ChildPath "autoload\plug.vim") "vim-plug"
 
 Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPath "config\nvim\init.vim") $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
 Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPat "coc-settings.json") $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
