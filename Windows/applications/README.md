@@ -1,6 +1,7 @@
 # Windows Applications
 
-This folder holds configurations, installers, themes, etc... for applications I use on Windows.
+This folder holds configurations, installers, themes, etc... for applications I
+use on Windows.
 
 ## Applications
 
@@ -9,7 +10,7 @@ This folder holds configurations, installers, themes, etc... for applications I 
 * **MediaMonkey**
   * Skin for MediaMonkey
 * **Notepad++**
-  * Dracula theme from https://github.com/dracula/notepad-plus-plus
+  * Dracula theme from <https://github.com/dracula/notepad-plus-plus>
   * Installer script for Dracula theme
   * plugin_list.md: List of plugins to install
   * config
@@ -23,3 +24,4 @@ This folder holds configurations, installers, themes, etc... for applications I 
     * Copy folder to `<%USERPROFILE%>\Documents\`
 * **WindowsBlinds**
   * WindowsBlinds theme.
+

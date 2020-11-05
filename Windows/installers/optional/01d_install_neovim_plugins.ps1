@@ -16,8 +16,8 @@
 
 . ..\common.ps1
 
-Requires-Install nvim neovim | Out-Null
-Requires-Install git git | Out-Null
+Confirm-Install nvim neovim | Out-Null
+Confirm-Install git git | Out-Null
 
 $sDir = Split-Path $MyInvocation.MyCommand.Source -Parent
 $installFile = Join-Path -Path "$sDIR" -ChildPath "99_installing_plugins.txt"
@@ -31,7 +31,7 @@ try {
     Set-Location -Path "$cwd"
 }
 catch {
-    Error-Exit "Could not install initial plugin set" $Error.Exception.Message
+    Exit-Error "Could not install initial plugin set" $Error.Exception.Message
 }
 
 # Install COC pluggins
@@ -52,6 +52,6 @@ try {
                                                 "coc-yaml") -join " ")
 }
 catch {
-    Error-Exit "Could not install coc plugin set" $Error.Exception.Message
+    Exit-Error "Could not install coc plugin set" $Error.Exception.Message
 }
 

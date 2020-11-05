@@ -16,6 +16,40 @@
 
 <#
 .SYNOPSIS
+    Checks if executable is installed.
+
+.DESCRIPTION
+    Checks if executable is installed, printing an error and force exiting if it is not.
+
+.PARAMETER execName
+    Name of the executable to look for.
+
+.PARAMETER progName
+    Name of the program to print in error statement.
+
+.EXAMPLE
+    Confirm-Install python.exe python
+
+.OUTPUTS
+    Path to installed executable.
+#>
+function Confirm-Install {
+    Param (
+        [string]$execName,
+        [string]$progName
+    )
+
+    try {
+        $execPath = $(Get-Command $execName).Source
+        return $execPath
+    }
+    catch {
+        Exit-Error "Requirement not found or not installed: $progName"
+    }
+}
+
+<#
+.SYNOPSIS
     Copies a file into place, halting the script if copying fails.
 
 .DESCRIPTION
@@ -40,33 +74,7 @@ function Copy-File {
         Copy-Item "$origFile" -Destination "$newFile"
     }
     catch {
-        Error-Exit "Could not copy $origFile to $newFile" $Error.Exception.Message
-    }
-}
-
-<#
-.SYNOPSIS
-    Creates a new directory.
-
-.DESCRIPTION
-    Creates a new directory specified by $newPath, halting the script if directory creation fails.
-
-.PARAMETER newPath
-    Full path to directory to create.
-
-.EXAMPLE
-    Create-Directory "C:\test"
-#>
-function Create-Directory {
-    Param (
-        [string]$newPath
-    )
-
-    try {
-        $throwAwayReturn = New-Item -Path "$newPath" -ItemType Directory -Force
-    }
-    catch {
-        Error-Exit "Could not create directory: $newPath" $Error.Exception.Message
+        Exit-Error "Could not copy $origFile to $newFile" $Error.Exception.Message
     }
 }
 
@@ -77,7 +85,7 @@ function Create-Directory {
 .DESCRIPTION
     Prints an error statement to the console, plus a second one if provided,
     then exits.
- 
+
 .PARAMETER errorStringOne
     Required error string to print.
 
@@ -85,9 +93,9 @@ function Create-Directory {
     Optional second error string to print.
 
 .EXAMPLE
-    Error-Exit "Some Error" "More Descriptive Error Statement"
+    Exit-Error "Some Error" "More Descriptive Error Statement"
 #>
-function Error-Exit {
+function Exit-Error {
     Param (
         [string]$errorStringOne,
         [string]$errorStringTwo = ""
@@ -103,79 +111,71 @@ function Error-Exit {
 
 <#
 .SYNOPSIS
-    Checks if executable is installed.
+    Creates a new directory.
 
 .DESCRIPTION
-    Checks if executable is installed, printing an error and force exiting if it is not.
+    Creates a new directory specified by $newPath, halting the script if directory creation fails.
 
-.PARAMETER execName
-    Name of the executable to look for.
-
-.PARAMETER progName
-    Name of the program to print in error statement.
+.PARAMETER newPath
+    Full path to directory to create.
 
 .EXAMPLE
-    Requires-Install python.exe python
-
-.OUTPUTS
-    Path to installed executable.
+    New-Directory "C:\test"
 #>
-function Requires-Install {
+function New-Directory {
     Param (
-        [string]$execName,
-        [string]$progName
+        [string]$newPath
     )
 
     try {
-        $execPath = $(Get-Command $execName).Source
-        return $execPath
+        New-Item -Path "$newPath" -ItemType Directory -Force | Out-Null
     }
     catch {
-        Error-Exit "Requirement not found or not installed: $progName"
+        Exit-Error "Could not create directory: $newPath" $Error.Exception.Message
     }
 }
 
 <#
 .SYNOPSIS
-    Validates basic structure of dotfiles directories.
+    Finds and validates basic structure of dotfiles directories.
 
 .DESCRIPTION
-    Validates basic structure of dotfiles directories and returns full paths to
-	base and dotfiles directories.
+    Finds and validates the basic structure of dotfiles directories and returns
+    full paths to base and dotfiles directories.
 
 .PARAMETER execPath
-	Script execution path.
+    Script execution path.
 
 .PARAMETER pathDepth
     String representing the number of directories to return in the path until
-	the base git repo is hit.
+    the base git repo is hit.
 
 .EXAMPLE
-    Dotfiles-Locations "..\.."
+    Search-Dotfiles "..\.."
 
 .OUTPUTS
     Object with .Base holding location to base directory for dotfiles, and
-	.Dotfiles holding location to the dotfiles directory itself.
+    .Dotfiles holding location to the dotfiles directory itself.
 #>
-function Dotfiles-Locations {
-	Param (
-		[string]$execPath,
-		[string]$pathDepth
-	)
+function Search-Dotfiles {
+    Param (
+        [string]$execPath,
+        [string]$pathDepth
+    )
 
-	[hashtable]$Return = @{}
-	$Return.Base = Resolve-Path -LiteralPath $(Join-Path -Path $(Split-Path $execPath -Parent) -ChildPath $pathDepth)
-	$Return.Dotfiles = Join-Path -Path $Return.Base -ChildPath "dotfiles"
-	$base = Split-Path $Return.Base -Leaf
+    [hashtable]$Return = @{}
+    $Return.Base = Resolve-Path -LiteralPath $(Join-Path -Path $(Split-Path $execPath -Parent) -ChildPath $pathDepth)
+    $Return.Dotfiles = Join-Path -Path $Return.Base -ChildPath "dotfiles"
+    $base = Split-Path $Return.Base -Leaf
 
-	if ($base -ne 'dotfiles') {
-		Error-Exit "Could not determine base dotfiles directory."
-	}
+    if ($base -ne 'dotfiles') {
+        Exit-Error "Could not determine base dotfiles directory."
+    }
 
-	if (!(Test-Path $Return.Dotfiles)) {
-		Error-Exit "Could not determine base dotfiles directory."
-	}
+    if (!(Test-Path $Return.Dotfiles)) {
+        Exit-Error "Could not determine base dotfiles directory."
+    }
 
-	return $Return
+    return $Return
 }
 

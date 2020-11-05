@@ -23,6 +23,6 @@ try {
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 catch {
-    Error-Exit "Could not install chocolatey" $Error.Exception.Message
+    Exit-Error "Could not install chocolatey" $Error.Exception.Message
 }
 

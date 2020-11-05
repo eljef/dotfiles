@@ -16,17 +16,17 @@
 
 . ..\common.ps1
 
-Requires-Install nvim neovim | Out-Null
-Requires-Install sed base.sed | Out-Null
+Confirm-Install nvim neovim | Out-Null
+Confirm-Install sed base.sed | Out-Null
 
 ##### Variables needed throughout the script ###################################
 
 $vimPlugURI = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-$dirInfo = Dotfiles-Locations $MyInvocation.MyCommand.Source "..\..\.."
+$dirInfo = Search-Dotfiles $MyInvocation.MyCommand.Source "..\..\.."
 
-$nodeExec = $(Requires-Install node.exe nodejs) -replace "\\", "\/"
-$pythonExec = $(Requires-Install python.exe python) -replace "\\", "\/"
+$nodeExec = $(Confirm-Install node.exe nodejs) -replace "\\", "\/"
+$pythonExec = $(Confirm-Install python.exe python) -replace "\\", "\/"
 
 $nvimDir = Join-Path -Path "$env:LOCALAPPDATA" -ChildPath "nvim"
 
@@ -39,7 +39,7 @@ $nvimDir = Join-Path -Path "$env:LOCALAPPDATA" -ChildPath "nvim"
 .DESCRIPTION
     Downloads the vim-plug plugin from github.
 #>
-function Download-Vim-Plug {
+function Install-Vim-Plug {
     try {
         (New-Object Net.WebClient).DownloadFile(
             $vimPlugURI,
@@ -47,17 +47,17 @@ function Download-Vim-Plug {
         )
     }
     catch {
-        Error-Exit "Could not download vim-plug" $Error.Exception.Message
+        Exit-Error "Could not download vim-plug" $Error.Exception.Message
     }
 }
 
 ##### Actual script functionality ##############################################
 
-Create-Directory $nvimDir
-Create-Directory $(Join-Path -Path "$nvimDir" -ChildPath "autoload")
-Create-Directory $(Join-Path -Path "$nvimDir" -ChildPath "plugged")
+New-Directory $nvimDir
+New-Directory $(Join-Path -Path "$nvimDir" -ChildPath "autoload")
+New-Directory $(Join-Path -Path "$nvimDir" -ChildPath "plugged")
 
-Download-Vim-Plug
+Install-Vim-Plug
 
 Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPath "config\nvim\init.vim") $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
 Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPat "coc-settings.json") $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
@@ -67,7 +67,7 @@ try {
     sed -i -e "s/call plug#begin.*/call plug#begin\('~\/AppData\/local\/nvim\/plugged'\)/" $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
 }
 catch {
-    Error-Exit "Could not sed plug#begin" $Error.Exception.Message
+    Exit-Error "Could not sed plug#begin" $Error.Exception.Message
 }
 
 # Fix node executable location
@@ -75,7 +75,7 @@ try {
     sed -i -e "s/let g:coc_node_path.*/let g:coc_node_path='$nodeExec'/" $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
 }
 catch {
-    Error-Exit "Could not sed coc_node_path" $Error.Exception.Messaage
+    Exit-Error "Could not sed coc_node_path" $Error.Exception.Messaage
 }
 
 # Fix python executable location
@@ -83,6 +83,6 @@ try {
     sed -i -e "s/\/usr\/bin\/python/$pythonExec/g" $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
 }
 catch {
-    Error-Exit "Could not sed python executable location for coc-settings" $Error.Exception.Messaage
+    Exit-Error "Could not sed python executable location for coc-settings" $Error.Exception.Messaage
 }
 

@@ -20,20 +20,20 @@ try {
     Install-Module PSReadLine -AllowPrerelease -Force
 }
 catch {
-    Error-Exit "Could not install PSReadLine" $Error.Exception.Message
+    Exit-Error "Could not install PSReadLine" $Error.Exception.Message
 }
 
 try {
     Install-Module posh-git -AllowPrerelease -Force
 }
 catch {
-    Error-Exit "Could not install posh-git" $Error.Exception.Message
+    Exit-Error "Could not install posh-git" $Error.Exception.Message
 }
 
 try {
     Install-Module -AllowClobber Get-ChildItemColor
 }
 catch {
-    Error-Exit "Could not install Get-ChildItemColor" $Error.Exception.Message
+    Exit-Error "Could not install Get-ChildItemColor" $Error.Exception.Message
 }
 

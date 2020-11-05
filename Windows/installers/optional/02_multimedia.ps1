@@ -16,7 +16,7 @@
 
 . ..\common.ps1
 
-Requires-Install choco chocolatey | Out-Null
+Confirm-Install choco chocolatey | Out-Null
 
 choco install -y `
                 foobar2000 `

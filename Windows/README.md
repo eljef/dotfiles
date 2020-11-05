@@ -46,4 +46,3 @@ This folder holds registry to enable or disable features in Windows.
 ## Uninstallers
 
 This folder holds scripts to remove default applications built into Windows 10.
-

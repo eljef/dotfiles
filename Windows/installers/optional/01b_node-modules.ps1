@@ -16,7 +16,7 @@
 
 . ..\common.ps1
 
-Requires-Install npm "Node Package Manager (npm)" | Out-Null
+Confirm-Install npm "Node Package Manager (npm)" | Out-Null
 
 npm install -g bash-language-server `
                diff-so-fancy `

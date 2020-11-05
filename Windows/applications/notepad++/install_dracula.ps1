@@ -16,14 +16,14 @@
 
 . ..\..\installers\common.ps1
 
-Requires-Install notepad++ notepad++ | Out-Null
+Confirm-Install notepad++ notepad++ | Out-Null
 
-$dirInfo = Dotfiles-Locations $MyInvocation.MyCommand.Source "..\..\.."
+$dirInfo = Search-Dotfiles $MyInvocation.MyCommand.Source "..\..\.."
 $nppFolder = Join-Path -Path "$env:APPDATA" -ChildPath "Notepad++"
 $nppThemesFolder = Join-Path -Path "$nppFolder" -ChildPath "themes"
 
-Create-Directory $nppFolder
-Create-Directory $nppThemesFolder
+New-Directory $nppFolder
+New-Directory $nppThemesFolder
 
 Copy-File $(Join-Path -Path $dirInfo.Base -ChildPath "Windows\applications\notepad++\Dracula.xml") `
           $(Join-Path -Path "$nppThemesFolder" -ChildPath "Dracula.xml")
