@@ -53,7 +53,8 @@ function Confirm-Install {
     Copies a file into place, halting the script if copying fails.
 
 .DESCRIPTION
-    Copies a file into place, halting the script if copying fails.
+    Copies a file into place, halting the script if copying fails. This function
+    overwrites the destination file if it exists.
 
 .PARAMETER origFile
     Original file to be copied.
@@ -71,7 +72,7 @@ function Copy-File {
     )
 
     try {
-        Copy-Item "$origFile" -Destination "$newFile"
+        Copy-Item "$origFile" -Destination "$newFile" -Force
     }
     catch {
         Exit-Error "Could not copy $origFile to $newFile" $Error.Exception.Message
@@ -195,6 +196,34 @@ function Read-JSON {
     }
     catch {
         Exit-Error "Could not read $jsonPath" $Error.Exception.Message
+    }
+}
+
+<#
+.SYNOPSIS
+    Deletes a file if it exists.
+
+.DESCRIPTION
+    Deletes a file if it exists, exiting the script on any errors.
+
+.PARAMETER filePath
+    Path to file to delete.
+
+.EXAMPLE
+    Remove-FileIfExists C:\test.txt
+#>
+function Remove-FileIfExists {
+    Param (
+        [string]$filePath
+    )
+
+    try {
+        if (Test-Path $filePath) {
+            Remove-Item $filePath -Force
+        }
+    }
+    catch {
+        Exit-Error "Could not remove file: $filePath" $Error.Exception.Message
     }
 }
 

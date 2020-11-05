@@ -30,5 +30,6 @@ choco install -y `
                  powershell-core `
                  python3 `
                  shellcheck `
+				 strawberryperl `
                  typora
 
