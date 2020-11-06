@@ -14,7 +14,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-. ..\common.ps1
+$commonScript = Resolve-Path -LiteralPath `
+                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
+                -ChildPath "..\common.ps1")
+. $commonScript
 
 Confirm-Install choco chocolatey | Out-Null
 
@@ -30,6 +33,6 @@ choco install -y `
                  powershell-core `
                  python3 `
                  shellcheck `
-				 strawberryperl `
+                 strawberryperl `
                  typora
 

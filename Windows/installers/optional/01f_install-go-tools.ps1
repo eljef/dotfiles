@@ -14,7 +14,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-. ..\common.ps1
+$commonScript = Resolve-Path -LiteralPath `
+                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
+                -ChildPath "..\common.ps1")
+. $commonScript
 
 Confirm-Install go golang | Out-Null
 Confirm-Install make make | Out-Null
@@ -24,17 +27,14 @@ $goPath = $((go env GOPATH) | Out-String).Trim()
 $goPathBin = $(Join-Path -Path "$goPath" -ChildPath "bin")
 $newGoPath = $(Join-Path -Path "$env:TEMP" -ChildPath "go")
 $newGoBin = $(Join-Path -Path "$newGoPath" -ChildPath "bin")
-$errFile = $(Join-Path -Path "$newGoPath" -ChildPath "err.txt")
 
 # Create directories
-
 New-Directory $(Join-Path -Path "$goPath" -ChildPath "bin")
 New-Directory $(Join-Path -Path "$newGoPath" -ChildPath "bin")
 New-Directory $(Join-Path -Path "$newGoPath" -ChildPath "pkg")
 New-Directory $(Join-Path -Path "$newGoPath" -ChildPath "src")
 
 # Override the current GOPATH to protect source trees
-
 $oldGoPath = $goPath
 $env:GOPATH = $newGoPath
 
@@ -86,59 +86,24 @@ Write-Host " --==-- System GOPATH: $goPath"
 Write-Host " --==-- Temp GOPATH: $newGoPath"
 
 foreach ($getPath in $goGetPaths) {
-    Remove-FileIfExists "$errFile"
-
     Write-Host " --==-- go get -u $getpath"
-
-    $procInfo = Start-Process "go" -ArgumentList "get", "-u", "$getPath" `
-                    -wait -NoNewWindow -PassThru -RedirectStandardError "$errFile"
-
-    if ($procInfo.ExitCode -ne 0) {
-        Exit-Error "Failed to install $getpath" $(Get-Content "$errFile")
-    }
+    Invoke-Executable "go" @("get", "-u", "$getPath")
 }
 
 $env:GO111MODULE = "on"
 
 # install golangci-lint
-Remove-FileIfExists "$errFile"
-
 Write-Host " --==-- go get github.com/golangci/golangci-lint/cmd/golangci-lint"
-
-$procInfo = Start-Process "go" `
-                -ArgumentList "get", "github.com/golangci/golangci-lint/cmd/golangci-lint" `
-                -wait -NoNewWindow -PassThru -RedirectStandardError "$errFile"
-
-if ($procInfo.ExitCode -ne 0) {
-    Exit-Error "Failed to install golangci-lint" $(Get-Content "$errFile")
-}
+Invoke-Executable "go" @("get", "github.com/golangci/golangci-lint/cmd/golangci-lint")
 
 # install gopls
-Remove-FileIfExists "$errFile"
-
 Write-Host " --==-- go get golang.org/x/tools/gopls@latest"
-
-$procInfo = Start-Process "go" -ArgumentList "get", "golang.org/x/tools/gopls@latest" `
-                -wait -NoNewWindow -PassThru -RedirectStandardError "$errFile"
-
-if ($procInfo.ExitCode -ne 0) {
-    Exit-Error "Failed to install gopls" $(Get-Content "$errFile")
-}
+Invoke-Executable "go" @("get", "golang.org/x/tools/gopls@latest")
 
 # build gocritic because it has to be different from all of the other tools...
-Remove-FileIfExists "$errFile"
-
 Write-Host " --==-- Building gocritic"
-
 Set-Location $(Join-Path -Path "$newGoPath" -ChildPath "src\github.com\go-critic\go-critic") | Out-Null
-
-$procInfo = Start-Process "make" -ArgumentList "gocritic" `
-                -wait -NoNewWindow -PassThru -RedirectStandardError "$errFile"
-
-if ($procInfo.ExitCode -ne 0) {
-    Exit-Error "Failed to build gocritic" $(Get-Content "$errFile")
-}
-
+Invoke-Executable "make" @("gocritic")
 Copy-File gocritic $(Join-Path -Path "$goPath" -ChildPath "bin\gocritic.exe")
 
 # copy the build binaries to the real GOPATH
@@ -152,6 +117,8 @@ foreach ($file in $files) {
     Copy-File "$file" $(Join-Path -Path "$goPathBin" -ChildPath "$fileOnly")
 }
 
-Set-Location "$cwd"
+# cleanup the mess in the temp directory
+Set-Location "$cwd" | Out-Null
+Write-Host " --==-- Cleaning Up Temp GOPATH"
 Remove-Item "$newGoPath" -Recurse -Force
 

@@ -14,7 +14,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-. ..\..\installers\common.ps1
+$commonScript = Resolve-Path -LiteralPath `
+                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
+                -ChildPath "\..\..\installers\common.ps1")
+. $commonScript
 
 Confirm-Install wt "Windows Terminal"
 

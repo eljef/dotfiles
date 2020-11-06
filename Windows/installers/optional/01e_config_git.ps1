@@ -14,23 +14,26 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-. ..\common.ps1
+$commonScript = Resolve-Path -LiteralPath `
+                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
+                -ChildPath "..\common.ps1")
+. $commonScript
 
 Confirm-Install perl StrawberryPerl | Out-Null
 
-git config --global core.editor "nvim"
-git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+Invoke-Executable "git" @("config", "--global", "core.editor", "`"nvim`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "core.pager", "`"diff-so-fancy | less --tabs=4 -RFX`"" ) -ShowCommand
 
-git config --global color.ui true
+Invoke-Executable "git" @("config", "--global", "color.ui", "true") -ShowCommand
 
-git config --global color.diff-highlight.oldNormal    "red bold"
-git config --global color.diff-highlight.oldHighlight "red bold 52"
-git config --global color.diff-highlight.newNormal    "green bold"
-git config --global color.diff-highlight.newHighlight "green bold 22"
+Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldNormal", "`"red bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldHighlight", "`"red bold 52`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newNormal", "`"green bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newHighlight", "`"green bold 22`"") -ShowCommand
 
-git config --global color.diff.meta       "11"
-git config --global color.diff.frag       "magenta bold"
-git config --global color.diff.commit     "yellow bold"
-git config --global color.diff.old        "red bold"
-git config --global color.diff.new        "green bold"
-git config --global color.diff.whitespace "red reverse"
+Invoke-Executable "git" @("config", "--global", "color.diff.meta", "`"11`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff.frag", "`"magenta bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff.commit", "`"yellow bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff.old", "`"red bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff.new", "`"green bold`"") -ShowCommand
+Invoke-Executable "git" @("config", "--global", "color.diff.whitespace", "`"red reverse`"") -ShowCommand

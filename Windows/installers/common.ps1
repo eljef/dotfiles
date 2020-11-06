@@ -145,6 +145,86 @@ function Get-Download {
 
 <#
 .SYNOPSIS
+    Runs an executable.
+
+.DESCRIPTION
+    Runs an executable, blocking until it exits. If a non-zero return code is encountered,
+    the script is stopped with a printed error message.
+
+.PARAMETER execName
+    Name of executable to run. (Or path to executable.)
+
+.PARAMETER argList
+    List of arguments to pass to executable.
+
+.PARAMETER ShowCommand
+    Print the command to be run to the screen before running.
+
+.EXAMPLE
+    Invoke-Executable "something.exe" @("/arg1", "/arg2")
+#>
+function Invoke-Executable {
+    Param (
+        [string]$execName,
+        [string[]]$argList,
+        [switch]$ShowCommand
+    )
+
+    $outFile = Join-Path -Path "$env:TEMP" -ChildPath "$(New-Guid).Guid"
+    $errFile = Join-Path -Path "$env:TEMP" -ChildPath "$(New-Guid).Guid"
+
+    if ($ShowCommand) {
+        Write-Host "$execName" $($argList -Join " ")
+    }
+
+    $procInfo = Start-Process "$execName" -ArgumentList $argList -wait -NoNewWindow -PassThru `
+                    -RedirectStandardError "$errFile" -RedirectStandardOutput "$outFile"
+
+    $errInfo = $(Get-Content "$errFile")
+    Remove-FileIfExists "$errFile"
+    Remove-FileIfExists "$outFile"
+
+    if ($procInfo.ExitCode -ne 0) {
+        Exit-Error $("Failed: $execName " + $argList -Join " ") $errInfo
+    }
+}
+
+<#
+.SYNOPSIS
+    Runs an executable without redirects.
+
+.DESCRIPTION
+    Runs an executable without redirecting Standard Error and Standard Output. If a
+    non-zero return code is encountered, the script is stopped, printing the supplied
+    error message.
+.PARAMETER execName
+    Name of executable to run. (Or path to executable.)
+
+.PARAMETER argList
+    List of arguments to pass to executable.
+
+.PARAMETER errorMsg
+    Message to print when an error has occured.
+
+.EXAMPLE
+    Invoke-ExecutableNoRedirect "something.exe" @("/arg1", "/arg2") "An error occured in something.exe"
+#>
+function Invoke-ExecutableNoRedirect {
+    Param (
+        [string]$execName,
+        [string[]]$argList,
+        [string]$errorMsg
+    )
+
+    $procInfo = Start-Process "$execName" -ArgumentList $argList -wait -NoNewWindow -PassThru
+
+    if ($procInfo.ExitCode -ne 0) {
+        Exit-Error "$errorMsg"
+    }
+}
+
+<#
+.SYNOPSIS
     Creates a new directory.
 
 .DESCRIPTION

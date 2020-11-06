@@ -14,7 +14,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-. ..\common.ps1
+$commonScript = Resolve-Path -LiteralPath `
+                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
+                -ChildPath "..\common.ps1")
+. $commonScript
 
 Confirm-Install nvim neovim | Out-Null
 Confirm-Install sed base.sed | Out-Null
@@ -42,26 +45,17 @@ Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPath "config\nvim\init.vim")
 Copy-File $(Join-Path -Path $dirInfo.Dotfiles -ChildPat "coc-settings.json") $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
 
 # Fix plugin directory location
-try {
-    sed -i -e "s/call plug#begin.*/call plug#begin\('~\/AppData\/local\/nvim\/plugged'\)/" $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
-}
-catch {
-    Exit-Error "Could not sed plug#begin" $Error.Exception.Message
-}
+Invoke-Executable "sed" @("-i", "-e",
+                          "`"s/call plug#begin.*/call plug#begin\('~\/AppData\/local\/nvim\/plugged'\)/`"",
+                          $(Join-Path -Path "$nvimDir" -ChildPath "init.vim"))
 
 # Fix node executable location
-try {
-    sed -i -e "s/let g:coc_node_path.*/let g:coc_node_path='$nodeExec'/" $(Join-Path -Path "$nvimDir" -ChildPath "init.vim")
-}
-catch {
-    Exit-Error "Could not sed coc_node_path" $Error.Exception.Messaage
-}
+Invoke-Executable "sed" @("-i", "-e",
+                          "`"s/let g:coc_node_path.*/let g:coc_node_path='$nodeExec'/`"",
+                          $(Join-Path -Path "$nvimDir" -ChildPath "init.vim"))
 
 # Fix python executable location
-try {
-    sed -i -e "s/\/usr\/bin\/python/$pythonExec/g" $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
-}
-catch {
-    Exit-Error "Could not sed python executable location for coc-settings" $Error.Exception.Messaage
-}
+Invoke-Executable "sed" @("-i", "-e",
+                          "`"s/\/usr\/bin\/python/$pythonExec/g`"",
+                          $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
 
