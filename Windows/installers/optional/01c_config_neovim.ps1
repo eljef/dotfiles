@@ -57,5 +57,5 @@ Invoke-Executable "sed" @("-i", "-e",
 # Fix python executable location
 Invoke-Executable "sed" @("-i", "-e",
                           "`"s/\/usr\/bin\/python/$pythonExec/g`"",
-                          $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json")
+                          $(Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json"))
 
