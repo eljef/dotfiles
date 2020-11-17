@@ -1,3 +1,0 @@
-* AutoSave
-* JSON Viewer
-

@@ -10,12 +10,11 @@ use on Windows.
 * **MediaMonkey**
   * Skin for MediaMonkey
 * **Notepad++**
+  * Install script for Notepad++ plugins
+    * Must be run as an administrator
   * Dracula theme from <https://github.com/dracula/notepad-plus-plus>
   * Installer script for Dracula theme
-  * plugin_list.md: List of plugins to install
-  * config
-    * Config backup for Notepad++ that can be imported.
-    * To be imported via the backup option in Notepad++.
+  * Configuration script for Notepad++ and plugins
 * **PowerShell**
   * To be used with powershell-core.
   * To install:

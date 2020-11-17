@@ -5,7 +5,8 @@ that I use regularly in Windows.
 
 ## Installers
 
-* Installers must be run first
+* Installers must be run first.
+* Installers must be run as administrator.
 * To run the installers:
   * `Set-ExecutionPolicy RemoteSigned`
     * This requires remote scripts to be signed, but local ones to run without

@@ -16,34 +16,17 @@
 
 $commonScript = Resolve-Path -LiteralPath `
                 $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
-                -ChildPath "common.ps1")
+                -ChildPath "\..\..\installers\common.ps1")
 . $commonScript
 
-try {
-    Install-Module PSReadLine -AllowPrerelease -Force
-}
-catch {
-    Exit-Error "Could not install PSReadLine" $Error.Exception.Message
-}
+Confirm-Install notepad++ notepad++ | Out-Null
 
-try {
-    Install-Module posh-git -AllowPrerelease -Force
-}
-catch {
-    Exit-Error "Could not install posh-git" $Error.Exception.Message
-}
+$dirInfo = Search-Dotfiles $MyInvocation.MyCommand.Source "..\..\.."
+$nppFolder = Join-Path -Path "$env:APPDATA" -ChildPath "Notepad++"
+$nppThemesFolder = Join-Path -Path "$nppFolder" -ChildPath "themes"
 
-try {
-    Install-Module -AllowClobber Get-ChildItemColor -Force
-}
-catch {
-    Exit-Error "Could not install Get-ChildItemColor" $Error.Exception.Message
-}
+New-Directory $nppThemesFolder
 
-try {
-    Install-Module -AllowClobber PsIni -Force
-}
-catch {
-    Exit-Error "Could not install PsIni" $Error.Exception.Message
-}
+Copy-File $(Join-Path -Path $dirInfo.Base -ChildPath "Windows\applications\notepad++\Dracula.xml") `
+          $(Join-Path -Path "$nppThemesFolder" -ChildPath "Dracula.xml")
 
