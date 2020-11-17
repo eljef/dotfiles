@@ -19,6 +19,7 @@ $commonScript = Resolve-Path -LiteralPath `
                 -ChildPath "..\common.ps1")
 . $commonScript
 
+Confirm-Admin
 Confirm-Install npm "Node Package Manager (npm)" | Out-Null
 
 npm install -g bash-language-server `

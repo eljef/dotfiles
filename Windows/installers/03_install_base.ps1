@@ -19,6 +19,7 @@ $commonScript = Resolve-Path -LiteralPath `
                 -ChildPath "common.ps1")
 . $commonScript
 
+Confirm-Admin
 Confirm-Install choco chocolatey | Out-Null
 
 choco install -y `

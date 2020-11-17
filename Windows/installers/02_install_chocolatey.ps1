@@ -20,10 +20,12 @@ $commonScript = Resolve-Path -LiteralPath `
                 -ChildPath "common.ps1")
 . $commonScript
 
+Confirm-Admin
+
 try {
     Set-ExecutionPolicy Bypass -Scope Process -Force; `
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 catch {
     Exit-Error "Could not install chocolatey" $Error.Exception.Message

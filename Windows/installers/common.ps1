@@ -14,6 +14,23 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+
+<#
+.SYNOPSIS
+    Checks if the script is running as an administrator.
+
+.DESCRIPTION
+    Checks if the script is running as an administrator, erroring out if it is not.
+
+.EXAMPLE
+    Confirm-Admin
+#>
+function Confirm-Admin {
+  if (!([bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544"))) {
+      Exit-Error "This script must be run with administrative priviliges."
+  }
+}
+
 <#
 .SYNOPSIS
     Checks if executable is installed.

@@ -19,6 +19,8 @@ $commonScript = Resolve-Path -LiteralPath `
                 -ChildPath "common.ps1")
 . $commonScript
 
+Confirm-Admin
+
 try {
     Install-PackageProvider Nuget -Force
 }

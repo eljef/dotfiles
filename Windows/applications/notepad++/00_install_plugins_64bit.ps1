@@ -19,6 +19,7 @@ $commonScript = Resolve-Path -LiteralPath `
                 -ChildPath "\..\..\installers\common.ps1")
 . $commonScript
 
+Confirm-Admin
 Confirm-Install notepad++ notepad++ | Out-Null
 
 $nppPluginDir = Join-Path -Path $env:ProgramFiles -ChildPath "Notepad++\plugins"
