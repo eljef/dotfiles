@@ -32,7 +32,6 @@ export GOPATH="/tmp/go"
 # all of the tools to download
 GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
               'github.com/go-lintpack/lintpack/...'
-              'github.com/go-critic/go-critic/...'
               'github.com/timakin/bodyclose'
               'github.com/tsenart/deadcode'
               'github.com/mibk/dupl'
@@ -85,12 +84,6 @@ GO111MODULE=on go get 'github.com/golangci/golangci-lint/cmd/golangci-lint' || e
 # install gopls
 echo " --==-- GO111MODULE=on go get golang.org/x/tools/gopls@latest"
 GO111MODULE=on go get golang.org/x/tools/gopls@latest || echo_error "Failed to install gopls"
-
-# build gocritic because it has to be different from all of the other tools...
-echo " --==-- Building gocritic"
-cd "${GOPATH}/src/github.com/go-critic/go-critic" || echo_error "Failed to change to go-critic directory"
-PATH="${GOPATH}/bin:${PATH}" make gocritic || echo_error "Failed to build gocritic"
-mv gocritic "${GOPATH}/bin" || echo_error "Failed to install gocritic"
 
 # copy the build binaries to the real GOPATH
 cd "${GOPATH}/bin" || echo_error "Failed to change directory to GOPATH/bin"

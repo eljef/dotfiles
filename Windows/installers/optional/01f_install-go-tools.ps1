@@ -41,7 +41,6 @@ $env:GOPATH = $newGoPath
 # all of the tools to download
 $goGetPaths = @('github.com/golang/dep/cmd/dep',
                 'github.com/go-lintpack/lintpack/...',
-                'github.com/go-critic/go-critic/...',
                 'github.com/timakin/bodyclose',
                 'github.com/tsenart/deadcode',
                 'github.com/mibk/dupl',
@@ -99,12 +98,6 @@ Invoke-Executable "go" @("get", "github.com/golangci/golangci-lint/cmd/golangci-
 # install gopls
 Write-Host " --==-- go get golang.org/x/tools/gopls@latest"
 Invoke-Executable "go" @("get", "golang.org/x/tools/gopls@latest")
-
-# build gocritic because it has to be different from all of the other tools...
-Write-Host " --==-- Building gocritic"
-Set-Location $(Join-Path -Path "$newGoPath" -ChildPath "src\github.com\go-critic\go-critic") | Out-Null
-Invoke-Executable "make" @("gocritic")
-Copy-File gocritic $(Join-Path -Path "$goPath" -ChildPath "bin\gocritic.exe")
 
 # copy the build binaries to the real GOPATH
 Set-Location "$newGoBin" | Out-Null
