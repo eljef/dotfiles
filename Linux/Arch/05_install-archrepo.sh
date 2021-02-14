@@ -31,5 +31,6 @@ install_file "${SDIR}/Linux/Arch/bash-completion/archrepo-sign-and-move" "${HOME
 install_file "${SDIR}/Linux/Arch/repo/archrepo-add-aur" "${HOME}/Bin/archrepo-add-aur" 0755
 install_file "${SDIR}/Linux/Arch/repo/archrepo-chroot-build" "${HOME}/Bin/archrepo-chroot-build" 0755
 install_file "${SDIR}/Linux/Arch/repo/archrepo-sign-and-move" "${HOME}/Bin/archrepo-sign-and-move" 0755
+install_file "${SDIR}/Linux/Arch/repo/archrepo-sync" "${HOME}/Bin/archrepo-sync" 0755
 install_file "${SDIR}/Linux/Arch/repo/archrepo-update-aur-gits" "${HOME}/Bin/archrepo-update-aur-gits" 0755
 
