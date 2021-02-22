@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Jef Oliver.
+# Copyright (C) 2020-2021 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -293,6 +293,34 @@ function Read-JSON {
     }
     catch {
         Exit-Error "Could not read $jsonPath" $Error.Exception.Message
+    }
+}
+
+<#
+.SYNOPSIS
+    Deletes a directory if it exists.
+
+.DESCRIPTION
+    Deletes a direcctory if it exists, exiting the script on any errors.
+
+.PARAMETER dirPath
+    Path to directory to delete.
+
+.EXAMPLE
+    Remove-DirIfExists C:\test
+#>
+function Remove-DirIfExists {
+    Param (
+        [string]$dirPath
+    )
+
+    try {
+        if (Test-Path $dirPath) {
+            Remove-Item $dirPath -Force -Recurse
+        }
+    }
+    catch {
+        Exit-Error "Could not remove directory: $dirPath" $Error.Exception.Message
     }
 }
 
