@@ -68,8 +68,8 @@ GO_GET_PATHS=('github.com/golang/dep/cmd/dep'
               'github.com/koron/iferr'
               'github.com/josharian/impl'
               'honnef.co/go/tools/cmd/keyify'
-              'github.com/fatih/motion'
-              'github.com/charmbracelet/glow')
+              'github.com/fatih/motion')
+#              'github.com/charmbracelet/glow')
 
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
