@@ -42,13 +42,17 @@ pacman -Syu --noconfirm \
             python-colorama \
             python-colorlog \
             python-discogs-client \
+            python-msgpack \
             python-pip \
             python-pyaml \
             python-pylint \
+            python-pynvim \
             python-pytest \
             python-pytest-cov \
+            python-u-msgpack \
             python-unidecode \
             python-xmltodict \
+            rustup \
             shellcheck \
             sudo \
             tmux \
