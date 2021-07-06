@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ -d "${HOME}/Projects/go" ]]; then
+    if [[ "$GOPATH" != "$HOME/Projects/go" ]]; then
+        export GOPATH="${HOME}/Projects/go"
+    fi
+
+    if [[ ":$PATH:" != *":$GOPATH/bin:"* ]]; then
+        export PATH="${PATH}:${GOPATH}/bin"
+    fi
+fi

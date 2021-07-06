@@ -75,4 +75,3 @@ $settingsJSON.profiles.defaults.useAcrylic = $true
 $settingsJSON.profiles.defaults.acrylicOpacity = 0.5
 
 Write-JSON $settingsJSON $settingsJSONFile
-

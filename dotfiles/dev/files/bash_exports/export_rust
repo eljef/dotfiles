@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ -d "${HOME}/.cargo/bin" ]]; then
+    if [[ ":$PATH:" != *":${HOME}/.cargo/bin:"* ]]; then
+        export PATH="${PATH}:${HOME}/.cargo/bin"
+    fi
+fi

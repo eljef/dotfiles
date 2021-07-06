@@ -1,0 +1,69 @@
+#!/bin/bash
+# Copyright (C) 2020 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<-EOF
+
+  archrepo-sign-and-move project-name repo-path
+
+      project-name: name of project to build
+      repo-path:    path to repository to add package to
+
+  Required Environment Variables:
+      ARCHREPO_GITS:      path to base directory where aur git folders are stored.
+      ARCHREPO_GPG_ID:    gpg id to use for signing package.\n
+EOF
+)
+
+check_help_and_empty "${1}"
+check_env ARCHREPO_GITS
+check_env ARCHREPO_GPG_ID
+
+PKGSDIR="${ARCHREPO_GITS}/${1}/pkgs"
+PROJDIR="${ARCHREPO_GITS}/${1}"
+REPODIR="${2}"
+
+cd_or_error "${ARCHREPO_GITS}"
+cd "${1}" || error_no_exist "${1}"
+cd_or_error "${PKGSDIR}"
+
+DBFILE=""
+cd_or_error "${REPODIR}"
+if [ -z "${DBFILE}" ]; then
+    DBFILE=$(ls -1  ./*.db.tar.gz)
+fi
+if [ -z "${DBFILE}" ]; then
+    error_print_exit "could not find database file in ${REPODIR}"
+fi
+cd_or_error "${PKGSDIR}"
+
+for i in *.pkg.tar.zst
+do
+    gpg --detach-sign --use-agent -u "${ARCHREPO_GPG_ID}" "${i}" || exit 1
+    print_copy_move "${i}" "${2}"
+    mv "${i}" "${REPODIR}" || exit 1
+    print_copy_move "${i}.sig" "${2}"
+    mv "${i}.sig" "${2}" || exit 1
+    cd_or_error "${REPODIR}"
+    repo-add -n -R -s "${DBFILE}" "${i}" || exit 1
+    cd_or_error "${PKGSDIR}"
+done
+
+cd_or_error "${PROJDIR}"
+git clean -fdx

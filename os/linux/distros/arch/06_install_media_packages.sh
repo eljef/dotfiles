@@ -1,4 +1,5 @@
-# Copyright (C) 2020 Jef Oliver.
+#!/bin/bash
+# Copyright (C) 2021 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,30 +15,23 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$commonScript = Resolve-Path -LiteralPath `
-                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
-                -ChildPath "common.ps1")
-. $commonScript
+################################################################################
+# DO NOT EDIT BELOW HERE
+################################################################################
 
-Confirm-Admin
-
-try {
-    Install-PackageProvider Nuget -Force
-}
-catch {
-    Exit-Error "Could not install Nuget" $Error.Exception.Message
+function failure() {
+    echo -e "\n${1}\n" 2>&1
+    exit 1
 }
 
-try {
-    Install-Module -Name PowerShellGet -Force -AllowClobber
-}
-catch {
-    Exit-Error "Could not install PowerShellGet" $Error.Exception.Message
-}
+if [[ ${EUID} -ne 0 ]]; then
+    failure "This script must be run as root."
+fi
 
-try {
-    Update-Module -Name PowerShellGet
-}
-catch {
-    Exit-Error "Could not update PowerShellGet" $Error.Exception.Message
-}
+echo "Installing packages with pacman"
+pacman -S beets \
+          fuse2 \
+          gstreamer-vaapi \
+          gst-editing-services \
+          gst-plugins-ugly \
+          python-discogs-client || failure "failed to install packages with pacman"

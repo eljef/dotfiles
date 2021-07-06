@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright (C) 2020 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
@@ -14,30 +15,17 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$commonScript = Resolve-Path -LiteralPath `
-                $(Join-Path -Path $(Split-Path $MyInvocation.MyCommand.Source -Parent) `
-                -ChildPath "common.ps1")
-. $commonScript
+# shellcheck source=../../../../../../../dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
 
-Confirm-Admin
+HELPSTATEMENT=$(cat <<- EOF
 
-try {
-    Install-PackageProvider Nuget -Force
-}
-catch {
-    Exit-Error "Could not install Nuget" $Error.Exception.Message
-}
+    read-md file.md
 
-try {
-    Install-Module -Name PowerShellGet -Force -AllowClobber
-}
-catch {
-    Exit-Error "Could not install PowerShellGet" $Error.Exception.Message
-}
+        file.md: markdown file to display
+EOF
+)
 
-try {
-    Update-Module -Name PowerShellGet
-}
-catch {
-    Exit-Error "Could not update PowerShellGet" $Error.Exception.Message
-}
+check_help_and_empty "${1}"
+
+glow -s dark -p "${1}"

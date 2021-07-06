@@ -1,0 +1,26 @@
+# Use global profile when available
+if [ -f /usr/share/defaults/etc/profile ]; then
+    . /usr/share/defaults/etc/profile
+fi
+
+# allow admin overrides
+if [ -f /etc/profile ]; then
+    . /etc/profile
+fi
+
+if [[ ":$PATH:" != *":$HOME/Bin:"* ]]; then
+    export PATH="${PATH}:${HOME}/Bin"
+fi
+
+if [[ "$BASH_COMPLETION_USER_DIR" != "${HOME}/.local/share/bash-completion" ]]; then
+    export BASH_COMPLETION_USER_DIR="${HOME}/.local/share/bash-completion"
+fi
+
+# include files in .bash_exports
+if [ -d "${HOME}/.bash_exports" ]; then
+    for file in "${HOME}/.bash_exports"/* ; do
+        if [ -f "${file}" ]; then
+            source "$file"
+        fi
+    done
+fi

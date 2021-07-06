@@ -1,0 +1,38 @@
+#!/bin/bash
+# Copyright (C) 2021 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<-EOF
+
+  archrepo-sync
+
+  Required Environment Variables:
+      ARCHREPO_REPO_BASE:   Path to base directory where Arch repository folders are stored.
+      ARCHREPO_REPO_REMOTE: Remote user@host:/path/ to rsync local repository to.\n
+EOF
+)
+
+check_help "${1}"
+check_env ARCHREPO_REPO_BASE
+check_env ARCHREPO_REPO_REMOTE
+
+cd_or_error "${ARCHREPO_REPO_BASE}"
+
+print_leader_full "rsync -rlpDP --delete-after ${ARCHREPO_REPO_BASE} ${ARCHREPO_REPO_REMOTE}"
+rsync -rlptDP --delete-after "${ARCHREPO_REPO_BASE}" "${ARCHREPO_REPO_REMOTE}"

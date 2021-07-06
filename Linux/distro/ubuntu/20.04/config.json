@@ -1,0 +1,40 @@
+{
+    "packages": {
+        "base": ["bash-completion",
+                 "neovim",
+                 "openssh-server",
+                 "python-is-python3",
+                 "python3-colorama",
+                 "python3-colorlog",
+                 "python3-msgpack",
+                 "python3-pip",
+                 "python3-u-msgpack",
+                 "python3-unidecode",
+                 "python3-xmltodict",
+                 "python3-yaml",
+                 "ssh",
+                 "tmux",
+                 "wget"],
+        "dev": ["black",
+                "git",
+                "golang-go",
+                "make",
+                "nodejs",
+                "npm",
+                "pylint",
+                "python3-flake8",
+                "python3-pynvim",
+                "python3-pytest",
+                "python3-pytest-cov",
+                "shellcheck"]
+    },
+    "npm": {
+        "dev": ["bash-language-server",
+                "diff-so-fancy",
+                "markdownlint-cli",
+                "write-good"]
+    },
+    "pip": {
+        "dev": ["pytest-pythonpath"]
+    }
+}
