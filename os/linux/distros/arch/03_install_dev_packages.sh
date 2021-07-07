@@ -33,6 +33,7 @@ pacman -S bash-language-server \
           diff-so-fancy \
           flake8 \
           git \
+          glow \
           go \
           make \
           nodejs \

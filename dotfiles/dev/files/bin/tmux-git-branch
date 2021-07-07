@@ -28,4 +28,3 @@ if [[ -z ${OUTPUT} ]]; then
 else
     echo "(git: ${OUTPUT})"
 fi
-

@@ -62,4 +62,19 @@ curl_install_file 0644 "https://sh.rustup.rs" \
 echo "Configuring initial rust setup"
 sh "${HOME}/.cargo/rustup.sh" --no-modify-path --default-toolchain none -y -q || failure "failed to configure intial rust setup"
 
+if [[ -f  "${HOME}/.config/nvim/coc-settings.json" ]]; then
+
+    neovim_buffer_text=$(cat <<EOF
+
+    When the plugin installation is done,
+    Please close neovim with :qa!
+
+    Thanks for playing along!
+
+EOF
+)
+echo "Installing neovim coc plugins"
+echo "${neovim_buffer_text}" | nvim -c "CocInstall rls"
+fi
+
 echo "You must restart your bash session in order to run 07_install_rust_tools.sh"

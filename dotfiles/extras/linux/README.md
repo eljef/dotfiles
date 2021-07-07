@@ -1,6 +1,10 @@
-# Arch Repo
+# Extras Dot Files
 
-Run `Linux\01_install_files --extras archrepo`.
+Extras configuration files installers for Linux.
+
+## Arch Repo
+
+* Install with `00_install_archrepo.sh`
 
 This installs scripts that are used to maintain an Arch Linux repository.
 
@@ -42,9 +46,9 @@ export ARCHREPO_REPO_REMOTE="someone@somewhere.come:/path/to/http/for/arch/repo"
 * archrepo-sync
   * Sync te local repo cache with the remote repository
 
-# Conky
+## Conky
 
-Run `Linux\01_install_files --extras conky`.
+* Install with `01_configure_conky.sh`
 
 This installs all configuration files in `~/.config/conky/`
 

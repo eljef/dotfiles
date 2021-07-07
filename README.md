@@ -14,11 +14,33 @@ anything important.
 
 ### Installers
 
-Installation scripts are located in the `Linux` and `Windows` directories. More
-info for these scripts is located in the `README.md` in those directories.
+Installation scripts are separated in a way to allow for installation of
+different groups or application specific configurations. These scripts are
+operating system specific and require no extra dependencies to be installed
+in order to run.
 
-### Extras
+The operating system specific configuration scripts install packages that I
+typically use for things.
 
-Some scripts and program configs I use can also be installed. Each OS installer
-script can install the extras for you. Extras are specific to an OS. Please see
-the [EXTRAS.md](EXTRAS.md) file for more information.
+Operating System specific configuration script locations:
+
+* os/{os_type}
+  * eg:
+    * os/linux
+    * linux is further separated into distros
+    * eg:
+      * os/linux/arch
+
+Program configuration settings (dotfiles) installation scripts install the
+configurations for different programs I use. I tried to break up these
+configurations in ways that allow for both regular and development environments,
+as well as running on different operating systems.
+
+dotfiles installation script locations:
+
+* dotfiles/group/os
+  * eg:
+    * dotfiles/base/linux
+
+Each installer location contains a README.md that further explains the
+installation scripts.
