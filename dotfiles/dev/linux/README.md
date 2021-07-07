@@ -6,7 +6,7 @@ Development configuration files installers for Linux.
 
 * `00_configure_bash.sh`
   * **REQUIRED**
-  * Requires: `base/01_configure_bash.sh`
+  * Requires: `base/linux/01_configure_bash.sh`
   * Configures bash to include script
     * read-md
       * Script, backended by glow, to read md files on the command line

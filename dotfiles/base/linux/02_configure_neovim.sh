@@ -71,4 +71,4 @@ EOF
 )
 
 echo "Installing neovim plugins"
-echo "${neovim_buffer_text}" nvim -c PlugInstall
+echo "${neovim_buffer_text}" | nvim -c PlugInstall

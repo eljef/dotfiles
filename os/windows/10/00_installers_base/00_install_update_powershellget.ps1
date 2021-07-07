@@ -1,0 +1,87 @@
+# Copyright (C) 2020-2021 Jef Oliver.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+# SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+# IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Authors:
+# Jef Oliver <jef@eljef.me>
+
+param(
+    [Parameter(Mandatory=$False, ValueFromPipeline=$false)]
+    [System.String]
+    $RunStep
+)
+
+$fileName=$MyInvocation.MyCommand.Source
+$baseDir = $(Split-Path $fileName -Parent)
+$baseFound = $False
+while ($baseDir -ne "") {
+    $scPath = $(Join-Path -Path "$baseDir" -ChildPath "script_common")
+    if (Test-Path "$scPath") {
+        $baseFound = $True
+        break;
+    }
+
+    $baseDir=$(Split-Path $baseDir -Parent)
+}
+if (!($baseFound)) {
+    $HOST.UI.WriteErrorLine("Could not find base diretory or script_common")
+    Exit -1
+}
+$commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
+. $commonScript
+
+if ((!(Test-IsAdmin)) -or (Test-IsCore))
+{
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_nuget"
+}
+
+if ($RunStep -eq "install_nuget")
+{
+    Write-Host "Installing Nuget Package Provider"
+    Start-Sleep -Seconds 1
+    try {
+        Install-PackageProvider Nuget -Force
+    }
+    catch {
+        Exit-Error "Error installing Nuget" $Error[0].Exception.Message
+    }
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_powershellget"
+
+}
+elseif ($RunStep -eq "install_powershellget") {
+    Write-Host "Installing PowerShellGet"
+    Start-Sleep -Seconds 1
+    try {
+        Install-Module -Name PowerShellGet -Force -AllowClobber
+    }
+    catch {
+        Exit-Error "Error installing PowerShellGet" $Error[0].Exception.Message
+    }
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep update_powershellget"
+
+}
+elseif ($RunStep -eq "update_powershellget") {
+    Write-Host "Updating PowerShellGet"
+    Start-Sleep -Seconds 1
+    try {
+        Update-Module -Name PowerShellGet
+    }
+    catch {
+        Exit-Error "Error updating PowerShellGet" $Error[0].Exception.Message
+    }
+
+    Write-Host "Modules Successfully Installed and Updated"
+    Wait-ForExit 0
+}
+else {
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_nuget"
+}

@@ -101,7 +101,7 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
 do
-    echo " --==-- GO111MODULE=on go get -u ${getpath}"
+    echo " --==-- GO111MODULE=on go get ${getpath}"
     GO111MODULE=on go get "${getpath}" >/dev/null 2>&1 || failure "Failed to compile ${getpath}"
 done
 
