@@ -44,3 +44,14 @@ dotfiles installation script locations:
 
 Each installer location contains a README.md that further explains the
 installation scripts.
+
+### Fonts
+
+Fonts are provided by the [Nerd Fonts](https://www.nerdfonts.com/)
+project. (Not Affiliated)
+
+[Nerd Fonts on Github]((https://github.com/ryanoasis/nerd-fonts))
+
+* [Caskaydia Code](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/CascadiaCode)
+* [Fira Code](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
+* [Hack](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack)

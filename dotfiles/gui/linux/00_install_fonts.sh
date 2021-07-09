@@ -40,30 +40,32 @@ fi
 
 make_directory "${HOME}/.fonts"
 
-install_file 0644 "${FILES_PATH}/fonts/Caskaydia Cove Nerd Font Complete.ttf" \
-                  "${HOME}/.fonts/Caskaydia Cove Nerd Font Complete.ttf"
-install_file 0644 "${FILES_PATH}/fonts/Caskaydia Cove Nerd Font Complete Mono.ttf" \
-                  "${HOME}/.fonts/Caskaydia Cove Nerd Font Complete Mono.ttf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Bold Nerd Font Complete.otf" \
-                  "${HOME}/.fonts/Fira Code Bold Nerd Font Complete.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Bold Nerd Font Complete Mono.otf" \
-                  "${HOME}/.fonts/Fira Code Bold Nerd Font Complete Mono.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Light Nerd Font Complete.otf" \
-                  "${HOME}/.fonts/Fira Code Light Nerd Font Complete.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Light Nerd Font Complete Mono.otf" \
-                  "${HOME}/.fonts/Fira Code Light Nerd Font Complete Mono.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Medium Nerd Font Complete.otf" \
-                  "${HOME}/.fonts/Fira Code Medium Nerd Font Complete.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Medium Nerd Font Complete Mono.otf" \
-                  "${HOME}/.fonts/Fira Code Medium Nerd Font Complete Mono.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Regular Nerd Font Complete.otf" \
-                  "${HOME}/.fonts/Fira Code Regular Nerd Font Complete.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Regular Nerd Font Complete Mono.otf" \
-                  "${HOME}/.fonts/Fira Code Regular Nerd Font Complete Mono.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Retina Nerd Font Complete.otf" \
-                  "${HOME}/.fonts/Fira Code Retina Nerd Font Complete.otf"
-install_file 0644 "${FILES_PATH}/fonts/Fira Code Retina Nerd Font Complete Mono.otf" \
-                  "${HOME}/.fonts/Fira Code Retina Nerd Font Complete Mono.otf"
+FONT_FILES=('Caskaydia Cove Nerd Font Complete Mono.ttf'
+            'Caskaydia Cove Nerd Font Complete.ttf'
+            'Fira Code Bold Nerd Font Complete Mono.otf'
+            'Fira Code Bold Nerd Font Complete.otf'
+            'Fira Code Light Nerd Font Complete Mono.otf'
+            'Fira Code Light Nerd Font Complete.otf'
+            'Fira Code Medium Nerd Font Complete Mono.otf'
+            'Fira Code Medium Nerd Font Complete.otf'
+            'Fira Code Regular Nerd Font Complete Mono.otf'
+            'Fira Code Regular Nerd Font Complete.otf'
+            'Fira Code Retina Nerd Font Complete Mono.otf'
+            'Fira Code Retina Nerd Font Complete.otf'
+            'Hack Bold Italic Nerd Font Complete.ttf'
+            'Hack Bold Italic Nerd Font Complete Mono.ttf'
+            'Hack Bold Nerd Font Complete.ttf'
+            'Hack Bold Nerd Font Complete Mono.ttf'
+            'Hack Italic Nerd Font Complete.ttf'
+            'Hack Italic Nerd Font Complete Mono.ttf'
+            'Hack Regular Nerd Font Complete.ttf'
+            'Hack Regular Nerd Font Complete Mono.ttf')
+
+for font_file in "${FONT_FILES[@]}"
+do
+  install_file 0644 "${FILES_PATH}/fonts/$font_file" \
+                     "${HOME}/.fonts/$font_file"
+done
 
 echo "Rebuilding font cache"
 fc-cache -f "${HOME}/.fonts" || failure "failed to rebuild font cache"
