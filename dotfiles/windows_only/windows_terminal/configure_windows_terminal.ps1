@@ -105,6 +105,7 @@ if (Test-IsCore)
     $settingsJSON.profiles.defaults.colorScheme = "Dracula"
     $settingsJSON.profiles.defaults.fontFace = "FiraCode NF"
     $settingsJSON.profiles.defaults.fontSize = 10
+    $settingsJSON.profiles.defaults.bellStyle = "none"
     $settingsJSON.profiles.defaults.useAcrylic = $true
     $settingsJSON.profiles.defaults.acrylicOpacity = 0.5
 
