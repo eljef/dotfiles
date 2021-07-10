@@ -71,9 +71,6 @@ if (Test-IsCore)
     Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\plugins_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "plugins.vim" )
 
     $neovim_buffer_text | nvim -c PlugInstall
-    if ($procInfo.ExitCode -ne 0) {
-        Exit-Error "Could not install neovim plugins"
-    }
 
     Write-Host "neovim configuration complete"
     Wait-ForExit 0
