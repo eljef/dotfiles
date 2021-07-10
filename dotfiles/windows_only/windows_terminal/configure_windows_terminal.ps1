@@ -105,11 +105,17 @@ if (Test-IsCore)
 
     # set defaults
     Write-Host "Setting preferred defaults."
+
+    $settingsJSON["experimental.rendering.forceFullRepaint"] = $false
+    $settingsJSON["experimental.rendering.software"] = $false
+
     $settingsJSON.alwaysShowTabs = $true
     $settingsJSON.profiles.defaults.antialiasingMode = "cleartype"
+    $settingsJSON.profiles.defaults.closeOnExit = "never"
     $settingsJSON.profiles.defaults.colorScheme = "Dracula"
-    $settingsJSON.profiles.defaults.fontFace = "FiraCode NF"
+    $settingsJSON.profiles.defaults.fontFace = "FiraCode Nerd Font Mono"
     $settingsJSON.profiles.defaults.fontSize = 10
+    $settingsJSON.profiles.defaults.fontWeight = "medium"
     $settingsJSON.profiles.defaults.bellStyle = "none"
     $settingsJSON.profiles.defaults.useAcrylic = $true
     $settingsJSON.profiles.defaults.acrylicOpacity = 0.5
