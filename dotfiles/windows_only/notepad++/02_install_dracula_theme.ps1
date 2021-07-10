@@ -53,7 +53,7 @@ if (Test-IsCore)
     Copy-File $( Join-Path -Path $dotFileFolder -ChildPath "Dracula.xml" ) `
           $( Join-Path -Path "$nppThemesFolder" -ChildPath "Dracula.xml" )
 
-    Write-Host "Notepad++ Dracula Theme Installed"
+    Write-Host "`nNotepad++ Dracula Theme Installed"
     Wait-ForExit 0
 }
 else {

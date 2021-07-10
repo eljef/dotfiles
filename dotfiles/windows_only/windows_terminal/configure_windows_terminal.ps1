@@ -88,18 +88,23 @@ if (Test-IsCore)
     }
 
     # hide Azure Cloud Shell because I don't use it.
+    Write-Host "Hide Azure Cloud Shell from profile list."
     $azureShell.hidden = $true
 
     # reorder shells
+    Write-Host "Setting order of shells in profile list."
     $settingsJSON.profiles.list = $powershell, $winPowershell, $cmd, $azureShell
 
     # set default profile
+    Write-Host "Setting default profile to powershell-core."
     $settingsJSON.defaultProfile = $powershell.guid
 
     # add dracula theme
+    Write-Host "Adding Dracula Theme."
     $settingsJSON.schemes += $draculaJSON
 
     # set defaults
+    Write-Host "Setting preferred defaults."
     $settingsJSON.alwaysShowTabs = $true
     $settingsJSON.profiles.defaults.antialiasingMode = "cleartype"
     $settingsJSON.profiles.defaults.colorScheme = "Dracula"
@@ -110,6 +115,9 @@ if (Test-IsCore)
     $settingsJSON.profiles.defaults.acrylicOpacity = 0.5
 
     Write-JSON $settingsJSON $settingsJSONFile
+
+    Write-Host "`nWindows Terminal has been configured."
+    Wait-ForExit 0
 }
 else {
     Start-Process pwsh.exe -ArgumentList "-Command $fileName"

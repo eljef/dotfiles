@@ -90,13 +90,19 @@ if ((Test-IsAdmin) -and (Test-IsCore))
         $destZip = $( Join-Path -Path "$nppPluginDir" -ChildPath $plugin.Zip )
         $destDir = $( Join-Path -Path "$nppPluginDir" -ChildPath $plugin.Name )
 
-        Write-Host  -= = - Installing $plugin.Name
+        Write-Host  "`n-==- Installing" $plugin.Name "`n"
         Get-Download $plugin.URI "$destZip" $plugin.Name
-        Expand-Archive -Path $destZip -DestinationPath "$destDir" -Force
+        try {
+            Write-Host "Extract: $destZip -> $destDir"
+            Expand-Archive -Path $destZip -DestinationPath "$destDir" -Force -ErrorAction Stop
+        }
+        catch {
+            Exit-Error "Could not extract: $destZip -> $destDir" $Error[0].Exception.Message
+        }
         Remove-FileIfExists -Path "$destZip"
     }
 
-    Write-Host "Notepad++ $nppBits Plugins Installed"
+    Write-Host "`nNotepad++ $nppBits Plugins Installed"
     Wait-ForExit 0
 }
 else {

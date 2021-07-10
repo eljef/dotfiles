@@ -41,22 +41,25 @@ Confirm-Install perl StrawberryPerl | Out-Null
 
 if (Test-IsCore)
 {
-    Invoke-Executable "git" @("config", "--global", "core.editor", "`"nvim`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "core.pager", "`"diff-so-fancy | less --tabs=4 -RFX`"" ) -ShowCommand
+    Invoke-Executable "git" @("config", "--global", "core.editor", "`"nvim`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "core.pager", "`"diff-so-fancy | less --tabs=4 -RFX`"" ) -EchoCommand
 
-    Invoke-Executable "git" @("config", "--global", "color.ui", "true") -ShowCommand
+    Invoke-Executable "git" @("config", "--global", "color.ui", "true") -EchoCommand
 
-    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldNormal", "`"red bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldHighlight", "`"red bold 52`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newNormal", "`"green bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newHighlight", "`"green bold 22`"") -ShowCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldNormal", "`"red bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.oldHighlight", "`"red bold 52`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newNormal", "`"green bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff-highlight.newHighlight", "`"green bold 22`"") -EchoCommand
 
-    Invoke-Executable "git" @("config", "--global", "color.diff.meta", "`"11`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff.frag", "`"magenta bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff.commit", "`"yellow bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff.old", "`"red bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff.new", "`"green bold`"") -ShowCommand
-    Invoke-Executable "git" @("config", "--global", "color.diff.whitespace", "`"red reverse`"") -ShowCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.meta", "`"11`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.frag", "`"magenta bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.commit", "`"yellow bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.old", "`"red bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.new", "`"green bold`"") -EchoCommand
+    Invoke-Executable "git" @("config", "--global", "color.diff.whitespace", "`"red reverse`"") -EchoCommand
+
+    Write-Host "git is configured."
+    Wait-ForExit 0
 }
 else {
     Start-Process pwsh.exe -ArgumentList "-Command $fileName"

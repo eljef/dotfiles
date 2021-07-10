@@ -42,7 +42,7 @@ function Confirm-Install {
     )
 
     try {
-        $execPath = $(Get-Command $Executable).Source
+        $execPath = $(Get-Command $Executable -ErrorAction Stop).Source
         return $execPath
     }
     catch {
@@ -73,6 +73,7 @@ function Copy-ACL {
     )
 
     try {
+        Write-Host "Copy ACLs: $SourcePath -> $DestPath"
         Get-Acl -Path "$SourcePath" | Set-Acl -Path "$DestPath"
     } catch {
         Exit-Error -Error "Could not copy ACLs from $SourcePath to $DestPath" -Extended $Error[0].Exception.Message
@@ -105,6 +106,7 @@ function Copy-File {
     )
 
     try {
+        Write-Host "Copy: $Origin -> $Destination"
         Copy-Item "$Origin" -Destination "$Destination" -Force
     }
     catch {
@@ -163,6 +165,7 @@ function Expand-ArchiveToTemp {
     )
 
     try {
+        Write-Host "Extract: $ZipPath -> $env:temp"
         Expand-Archive -DestinationPath "$env:temp" $ZipPath
     }
     catch {
@@ -199,6 +202,7 @@ function Get-Download {
         [string]$Name
     )
     try {
+        Write-Host "Download: $URI -> $Destination"
         (New-Object Net.WebClient).DownloadFile($URI, $Destination)
     }
     catch {
@@ -354,6 +358,7 @@ function Move-Path {
     )
 
     try {
+        Write-Host "Move: $SourcePath -> $DestPath"
         Move-Item -Path "$SourcePath" -Destination "$DestPath"
     }
     catch {
@@ -381,6 +386,7 @@ function New-Directory {
     )
 
     try {
+        Write-Host "Make Directory: $Path"
         New-Item -Path "$Path" -ItemType Directory -Force | Out-Null
     }
     catch {
@@ -411,6 +417,7 @@ function Read-JSON {
     )
 
     try {
+        Write-Host "Read JSON: $Path"
         $jsonData = Get-Content -Raw -Path "$Path" | ConvertFrom-Json -AsHashtable
         return $jsonData
     }
@@ -440,6 +447,7 @@ function Remove-DirIfExists {
 
     try {
         if (Test-Path "$Path") {
+            Write-Host "Remove Directory: $Path"
             Remove-Item "$Path" -Force -Recurse
         }
     }
@@ -469,6 +477,7 @@ function Remove-FileIfExists {
 
     try {
         if (Test-Path "$Path") {
+            Write-Host "Remove File: $Path"
             Remove-Item "$Path" -Force
         }
     }
@@ -500,6 +509,7 @@ function Rename-Path {
     )
 
     try {
+        Write-Host "Rename: $SourcePath -> $DestPath"
         if (Test-Path $SourcePath) {
             Rename-Item "$SourcePath" "$DestPath"
         }
@@ -564,7 +574,7 @@ function Wait-ForExit {
         [Int32]$ExitCode
     )
 
-    Write-Host -NoNewLine "Press any key to exit..."
+    Write-Host -NoNewLine "`nPress any key to exit...`n"
     $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
 
     Exit $ExitCode
@@ -595,6 +605,7 @@ function Write-JSON {
     )
 
     try {
+        Write-Host "Write JSON: $Path"
         $Data | ConvertTo-Json -depth 100 | Out-File "$Path"
     }
     catch {

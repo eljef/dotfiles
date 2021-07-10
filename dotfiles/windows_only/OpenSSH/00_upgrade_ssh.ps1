@@ -83,7 +83,7 @@ if ((Test-IsAdmin) -and (Test-IsCore))
 
     Copy-ACL -SourcePath "$renamedOpenSSHPath" -DestPath "$currentOpenSSHPath"
 
-    Write-Host "SSH has been upgraded"
+    Write-Host "`nSSH has been upgraded"
     Wait-ForExit 0
 }
 else {

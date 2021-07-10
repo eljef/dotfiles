@@ -56,6 +56,7 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Editing core notepad++ configuration."
         $nppConfigXML.load($nppConfigFile)
     }
     catch
@@ -95,6 +96,7 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Saving core notepad++ configuration."
         $nppConfigXML.save($nppConfigFile)
     }
     catch
@@ -107,6 +109,8 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Editing notepad++ languages configuration."
+        Write-Host "Editing tab settings for bash and powershell."
         $nppLangsXML.load($nppLangsFile)
     }
     catch
@@ -124,6 +128,7 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Saving notepad++ languages configuration."
         $nppLangsXML.save($nppLangsFile)
     }
     catch
@@ -135,6 +140,7 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Editing notepad++ auto save configuration."
         $nppAutoSaveINI = Get-IniContent "$autoSaveConfigFile"
     }
     catch
@@ -148,6 +154,7 @@ if (Test-IsCore)
 
     try
     {
+        Write-Host "Saving notepad++ auto save configuration."
         Out-IniFile -InputObject $nppAutoSaveINI -FilePath "$autoSaveConfigFile" -Force
     }
     catch
@@ -155,7 +162,7 @@ if (Test-IsCore)
         Exit-Error "Could not save notepad++ autosave configuration file." $Error[0].Exception.Message
     }
 
-    Write-Host "Notepad++ is configured."
+    Write-Host "`nNotepad++ is configured."
     Wait-ForExit 0
 }
 else {
