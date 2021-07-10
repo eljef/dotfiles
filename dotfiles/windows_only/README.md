@@ -7,9 +7,6 @@ use on Windows.
 
 * **CursorFX**
   * Cursor theme for CursorFX
-* **Fonts**
-  * Fonts that can be installed
-    * (Right click -> install)
 * **MediaMonkey**
   * Skin for MediaMonkey
 * **Notepad++**
