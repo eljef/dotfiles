@@ -154,6 +154,9 @@ if (Test-IsCore)
     {
         Exit-Error "Could not save notepad++ autosave configuration file." $Error[0].Exception.Message
     }
+
+    Write-Host "Notepad++ is configured."
+    Wait-ForExit 0
 }
 else {
     Start-Process pwsh.exe -ArgumentList "-Command $fileName"

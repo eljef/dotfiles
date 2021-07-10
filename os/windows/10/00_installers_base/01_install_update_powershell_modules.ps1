@@ -39,24 +39,19 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((!(Test-IsAdmin)) -or (Test-IsCore))
-{
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psreadline"
-}
-
-if ($RunStep -eq "install_psreadline") {
+if ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psreadline")) {
     Install-ModuleByName -ModuleName PSReadLine
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_posh_git"
 }
-elseif ($RunStep -eq "install_posh_git") {
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_posh_git")) {
     Install-ModuleByName -ModuleName posh-git
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
 }
-elseif ($RunStep -eq "install_get_childitemcolor") {
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_get_childitemcolor")) {
     Install-ModuleByName -ModuleName Get-ChildItemColor
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psini"
 }
-elseif ($RunStep -eq "install_psini") {
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psini")) {
     Install-ModuleByName -ModuleName PsIni
 
     Write-Host "Modules Successfully Installed and Updated"

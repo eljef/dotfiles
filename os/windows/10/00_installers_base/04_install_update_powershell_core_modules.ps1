@@ -20,16 +20,6 @@ param(
     $RunStep
 )
 
-$groupName = "base required"
-$packages = @("7zip",
-              "checksum",
-              "powershell-core",
-              "sed")
-
-################################################################################
-# Functionality Below
-################################################################################
-
 $fileName=$MyInvocation.MyCommand.Source
 $baseDir = $(Split-Path $fileName -Parent)
 $baseFound = $False
@@ -49,19 +39,29 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((Test-IsAdmin) -and (!(Test-IsCore)))
-{
-    Confirm-Install choco chocolatey | Out-Null
+Confirm-Install pwsh powershell-core | Out-Null
 
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
-    Start-Sleep -Seconds 1
+Write-Host Test-IsAdmin
+Write-Host Test-IsCore
 
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
-    Write-Host "$groupName packages installed."
+if ((Test-IsAdmin) -and (Test-IsCore) -and ($RunStep -eq "install_psreadline")) {
+    Install-ModuleByName -ModuleName PSReadLine
+    Start-Process pwsh.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_posh_git"
+}
+elseif ((Test-IsAdmin) -and (Test-IsCore) -and ($RunStep -eq "install_posh_git")) {
+    Install-ModuleByName -ModuleName posh-git
+    Start-Process pwsh.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
+}
+elseif ((Test-IsAdmin) -and (Test-IsCore) -and ($RunStep -eq "install_get_childitemcolor")) {
+    Install-ModuleByName -ModuleName Get-ChildItemColor
+    Start-Process pwsh.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psini"
+}
+elseif ((Test-IsAdmin) -and (Test-IsCore) -and ($RunStep -eq "install_psini")) {
+    Install-ModuleByName -ModuleName PsIni
+
+    Write-Host "Modules Successfully Installed and Updated"
     Wait-ForExit 0
 }
 else {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"
+    Start-Process pwsh.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psreadline"
 }

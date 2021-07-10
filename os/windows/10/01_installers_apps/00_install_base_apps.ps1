@@ -15,8 +15,7 @@
 # Jef Oliver <jef@eljef.me>
 
 $groupName = "base apps"
-$packages = @("microsoft-windows-terminal",
-              "powershell-core")
+$packages = @("microsoft-windows-terminal")
 
 ################################################################################
 # Functionality Below

@@ -39,12 +39,7 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((!(Test-IsAdmin)) -or (Test-IsCore))
-{
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_nuget"
-}
-
-if ($RunStep -eq "install_nuget")
+if ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_nuget"))
 {
     Write-Host "Installing Nuget Package Provider"
     Start-Sleep -Seconds 1
@@ -57,7 +52,7 @@ if ($RunStep -eq "install_nuget")
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_powershellget"
 
 }
-elseif ($RunStep -eq "install_powershellget") {
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_powershellget")) {
     Write-Host "Installing PowerShellGet"
     Start-Sleep -Seconds 1
     try {
@@ -69,7 +64,7 @@ elseif ($RunStep -eq "install_powershellget") {
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep update_powershellget"
 
 }
-elseif ($RunStep -eq "update_powershellget") {
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "update_powershellget")) {
     Write-Host "Updating PowerShellGet"
     Start-Sleep -Seconds 1
     try {

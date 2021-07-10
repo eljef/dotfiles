@@ -45,7 +45,8 @@ if ((Test-IsAdmin) -and (Test-IsCore))
     Write-Host "Setting SSH_ASKPASS_REQUIRE=prefer system-wide"
     [System.Environment]::SetEnvironmentVariable('SSH_ASKPASS_REQUIRE', 'prefer', [System.EnvironmentVariableTarget]::Machine)
 
-    Read-Host "Environment Variables Set - Press Enter to Exit"
+    Write-Host "Environment Variables Set"
+	Wait-ForExit 0
 }
 else {
     Start-Process pwsh.exe -Verb RunAs -ArgumentList "-Command $fileName"
