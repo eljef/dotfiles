@@ -310,6 +310,19 @@ function print_help() {
     echo -e "${HELPSTATEMENT}"
 }
 
+# print_move: prints a move statement
+#
+#    Args:
+#         $1: Source path
+#         $2: Destination path
+#
+#    example:
+#            print_move "some/path" "new/path"
+function print_move() {
+    echo -e "$(_sprint_leader INFO) $(_sprint_wrap "${INFO_START}" "${1}") $(_sprint_wrap "${START}" "->") "\
+            "$(_sprint_wrap "${INFO_START}" "${2}")"
+}
+
 
 # print_warn: prints a warning message
 #

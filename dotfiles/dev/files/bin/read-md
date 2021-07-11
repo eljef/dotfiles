@@ -15,7 +15,7 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-# shellcheck source=../../../../../../../dev/Bin/include/eljef-bash-common
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
 . "${HOME}/Bin/include/eljef-bash-common"
 
 HELPSTATEMENT=$(cat <<- EOF
@@ -28,4 +28,4 @@ EOF
 
 check_help_and_empty "${1}"
 
-glow -s dark -p "${1}"
+exec glow -s dark -p "${1}"

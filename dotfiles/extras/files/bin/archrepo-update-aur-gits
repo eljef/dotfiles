@@ -34,7 +34,7 @@ cd_or_error "${ARCHREPO_GITS}"
 
 for i in *
 do
-    print_leader_full "${i}"
+    print_info "${i}"
     cd_or_error "${i}"
     git pull | grep -v "Already up to date"
     cd_or_error "${ARCHREPO_GITS}"

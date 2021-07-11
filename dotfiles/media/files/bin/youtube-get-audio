@@ -39,7 +39,7 @@ youtube-dl -x --audio-format mp3 --audio-quality 320K "$1" || exit 1
 
 MP3FILE=$(ls -1 ./*.mp3 2>/dev/null)
 if [ -z "${MP3FILE}" ]; then
-    error_print_exit "New MP3 file not found after download."
+    failure "New MP3 file not found after download."
 fi
 mv "${MP3FILE}" "${CWD}"
 
@@ -49,3 +49,4 @@ if [ "${2}" == "savelink" ]; then
 fi
 
 rm -rf "${TEMP_DIR}"
+

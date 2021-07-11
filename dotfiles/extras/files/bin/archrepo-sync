@@ -34,5 +34,6 @@ check_env ARCHREPO_REPO_REMOTE
 
 cd_or_error "${ARCHREPO_REPO_BASE}"
 
-print_leader_full "rsync -rlpDP --delete-after ${ARCHREPO_REPO_BASE} ${ARCHREPO_REPO_REMOTE}"
+print_info "rsync -rlpDP --delete-after ${ARCHREPO_REPO_BASE} ${ARCHREPO_REPO_REMOTE}"
 rsync -rlptDP --delete-after "${ARCHREPO_REPO_BASE}" "${ARCHREPO_REPO_REMOTE}"
+

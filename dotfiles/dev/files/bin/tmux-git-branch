@@ -15,7 +15,7 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-# shellcheck source=../../../../../../../dev/Bin/include/eljef-bash-common
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
 . "${HOME}/Bin/include/eljef-bash-common"
 
 if [[ -n "${1}" ]]; then
