@@ -45,7 +45,7 @@ $nppPluginDir = Join-Path -Path $env:ProgramFiles -ChildPath "Notepad++\plugins"
 $plugins = @(
     @{
         'Name' = "AutoSave"
-        'URI' = 'https://github.com/francostellari/NppPlugins/raw/main/AutoSave/AutoSave_dll_1v60_x64.zip'
+        'URI' = 'https://github.com/francostellari/NppPlugins/raw/main/AutoSave/AutoSave_dll_1v61_x64.zip'
         'Zip' = "AutoSave_dll_1v60_x64.zip"
     }
     @{
@@ -67,7 +67,7 @@ if (!([Environment]::Is64BitOperatingSystem))
     $plugins = @(
     @{
         'Name' = "AutoSave"
-        'URI' = 'https://github.com/francostellari/NppPlugins/raw/main/AutoSave/AutoSave_dll_1v60_x32.zip'
+        'URI' = 'https://github.com/francostellari/NppPlugins/raw/main/AutoSave/AutoSave_dll_1v61_x32.zip'
         'Zip' = "AutoSave_dll_1v60_x32.zip"
     }
     @{
