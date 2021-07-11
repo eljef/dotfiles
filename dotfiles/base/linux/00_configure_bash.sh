@@ -15,28 +15,14 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
-
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/base/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/base/files"
-fi
+FILES_PATH="${_basedir}/dotfiles/base/files"
+check_dir "${FILES_PATH}"
 
 make_directory "${HOME}/.bash_exports"
 make_directory "${HOME}/.local/share/bash-completion"
@@ -54,4 +40,4 @@ install_file 0644 "${FILES_PATH}/bash_exports/export_ps1.sh" "${HOME}/.bash_expo
 install_file 0644 "${FILES_PATH}/bash_exports/export_visual.sh" "${HOME}/.bash_exports/export_visual.sh"
 
 install_file 0755 "${FILES_PATH}/bin/fix-perms" "${HOME}/Bin/fix-perms"
-install_file 0644 "${FILES_PATH}/bin/include/eljef-bash-common" "${HOME}/Bin/include/eljef-bash-common"
+install_file 0644 "${_basedir}/script_common/common.sh" "${HOME}/Bin/include/eljef-bash-common"

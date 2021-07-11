@@ -15,29 +15,21 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
-
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-# Create directories
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
 make_directory  "${HOME}/.local/share/bash-completion/completions"
 
 # Install stable rust toolchain
-echo "Installing stable rust toolchain"
+print_info "Installing stable rust toolchain"
 rustup toolchain install stable || failure "Could not install stable rust toolchain."
 
 # Setup bash completions for rust tools
 
-echo "Setting up bash completions for rust tools"
+print_info "Setting up bash completions for rust tools"
 rustup completions bash >> ~/.local/share/bash-completion/completions/rustup || failure "Could not setup bash completions for rustup"
 rustup completions bash cargo >> ~/.local/share/bash-completion/completions/cargo || failure "Could not setup bash completions for cargo"
 
 # Install RLS
-echo "Install RLS"
+print_info "Install RLS"
 rustup component add rls rust-analysis rust-src || failure "Could not install RLS"

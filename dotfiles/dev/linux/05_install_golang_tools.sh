@@ -15,26 +15,9 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-# Create directories
-
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    if [[ "${OLD_GO_PATH}" != "" ]]; then
-        GOPATH="${OLD_GO_PATH}"
-        export GOPATH
-    fi
-    exit 1
-}
-
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
-
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
 
 if [[ $(which go >/dev/null 2>&1 && echo $?) -ne 0 ]]; then
     failure "failed to find go executable in PATH"
@@ -101,7 +84,7 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
 do
-    echo " --==-- GO111MODULE=on go get ${getpath}"
+    print_info "GO111MODULE=on go get ${getpath}"
     GO111MODULE=on go get "${getpath}" >/dev/null 2>&1 || failure "Failed to compile ${getpath}"
 done
 
@@ -110,7 +93,7 @@ GOPATH="${OLD_GO_PATH}"
 export GOPATH
 
 # copy the build binaries to the real GOPATH
-cd "/tmp/go/bin" || failure "Failed to change directory to GOPATH/bin"
+cd_or_error "/tmp/go/bin"
 for i in *
 do
     install_file 0755 "${i}" "${GOPATH}/bin/${i}"
@@ -118,10 +101,10 @@ done
 
 # cleanup, which includes fixing permissions because the source download
 # sets weird permissions
-cd /tmp/go || failure "Failed to change to temporary go directory"
+cd_or_error /tmp/go
 find . -type d -print0 | xargs -0 chmod 0755 || failure "Failed to fix directory permissions "
 find . -type f -print0 | xargs -0 chmod 0644 || failure "Failed to fix file permissions"
-cd /tmp || failure "Failed to change to tmp directory"
+cd_or_error /tmp
 rm -rf go || failure "Failed to delete temporary go directory"
 
 echo "This script can be re-run in the future to update any installed tools."

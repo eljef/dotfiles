@@ -15,13 +15,12 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+
 
 function git_config_global() {
-    echo "git config --global \"${1}\" \"${2}\""
+    print_info "git config --global \"${1}\" \"${2}\""
     git config --global "${1}" "${2}" || failure "git global configuration failed: \"${1}\" = \"${2}\""
 }
 

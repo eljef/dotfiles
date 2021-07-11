@@ -15,36 +15,25 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" \
-             "${2}" \
-             "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
+
+
+FILES_PATH="${_basedir}/dotfiles/gui/files"
+check_dir "${FILES_PATH}"
 
 function kwriteconfig() {
+    print_info "kwriteconfig5 --file \"${1}\" --group \"${2}\" --key \"${3}\" --type \"${4}\" \"${5}\""
     kwriteconfig5 --file "${1}" --group "${2}" --key "${3}" --type "${4}" \
-             "${5}" \
-                  || failure "failed to apply kde setting: ${2} ${3} ${4} ${5} to file ${1}"
+             "${5}" || failure "failed to apply kde setting"
 }
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/gui/files"
-
-
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/gui/files"
-fi
 
 install_file 0644 "${FILES_PATH}/xinitrc" "${HOME}/.xinitrc"
 
-echo "Setting KDE Defaults"
+print_info "Setting KDE Defaults"
 kwriteconfig "${HOME}/.config/mimeapps.list" \
              "Default Applications"\
              "text/html"\
@@ -86,5 +75,5 @@ kwriteconfig "${HOME}/.config/dolphinrc" \
              "bool" \
              "true"
 
-echo "Setting XDG Default Web Browser"
-xdg-settings set default-web-browser firefox.desktop
+print_info "Setting XDG Default Web Browser"
+xdg-settings set default-web-browser firefox.desktop || failure "could not set default xdg web browser"

@@ -15,70 +15,66 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+_PACKAGES=("bitwarden-bin"
+           "fira-code-git"
+           "firefox"
+           "gnu-free-fonts"
+           "google-chrome-dev"
+           "joplin"
+           "kde-applications-meta"
+           "phonon-qt5-gstreamer"
+           "plasma-meta"
+           "sddm-theme-archpaint2-breeze"
+           "ttf-dejavu"
+           "ttf-droid"
+           "ttf-google-fonts-git"
+           "ttf-liberation"
+           "typora"
+           "xcursor-gt3"
+           "xorg-bdftopcf"
+           "xorg-font-util"
+           "xorg-fonts-100dpi"
+           "xorg-fonts-75dpi"
+           "xorg-fonts-encodings"
+           "xorg-iceauth"
+           "xorg-mkfontscale"
+           "xorg-server"
+           "xorg-server-common"
+           "xorg-sessreg"
+           "xorg-setxkbmap"
+           "xorg-smproxy"
+           "xorg-x11perf"
+           "xorg-xauth"
+           "xorg-xbacklight"
+           "xorg-xcmsdb"
+           "xorg-xcursorgen"
+           "xorg-xdpyinfo"
+           "xorg-xdriinfo"
+           "xorg-xev"
+           "xorg-xgamma"
+           "xorg-xhost"
+           "xorg-xinit"
+           "xorg-xinput"
+           "xorg-xkbcomp"
+           "xorg-xkbevd"
+           "xorg-xkbutils"
+           "xorg-xrandr"
+           "xorg-xrdb"
+           "xorg-xrefresh"
+           "xorg-xset"
+           "xorg-xsetroot"
+           "xorg-xvinfo"
+           "xorg-xwd"
+           "xorg-xwininfo"
+           "xorg-xwud"
+           "yakuake")
+
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
-
-echo "Installing packages with pacman"
-pacman -S bitwarden-bin \
-          fira-code-git \
-          firefox \
-          gnu-free-fonts \
-          google-chrome-dev \
-          joplin \
-          kde-applications-meta \
-          phonon-qt5-gstreamer \
-          plasma-meta \
-          sddm-theme-archpaint2-breeze \
-          ttf-dejavu \
-          ttf-droid \
-          ttf-google-fonts-git \
-          ttf-liberation \
-          typora \
-          xcursor-gt3 \
-          xorg-bdftopcf \
-          xorg-font-util \
-          xorg-fonts-100dpi \
-          xorg-fonts-75dpi \
-          xorg-fonts-encodings \
-          xorg-iceauth \
-          xorg-mkfontscale \
-          xorg-server \
-          xorg-server-common \
-          xorg-sessreg \
-          xorg-setxkbmap \
-          xorg-smproxy \
-          xorg-x11perf \
-          xorg-xauth \
-          xorg-xbacklight \
-          xorg-xcmsdb \
-          xorg-xcursorgen \
-          xorg-xdpyinfo \
-          xorg-xdriinfo \
-          xorg-xev \
-          xorg-xgamma \
-          xorg-xhost \
-          xorg-xinit \
-          xorg-xinput \
-          xorg-xkbcomp \
-          xorg-xkbevd \
-          xorg-xkbutils \
-          xorg-xrandr \
-          xorg-xrdb \
-          xorg-xrefresh \
-          xorg-xset \
-          xorg-xsetroot \
-          xorg-xvinfo \
-          xorg-xwd \
-          xorg-xwininfo \
-          xorg-xwud \
-          yakuake || failure "failed to install packages with pacman"
+print_info "Installing packages with pacman"
+pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"

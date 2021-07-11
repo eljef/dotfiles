@@ -15,32 +15,31 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+_PACKAGES=("bash-completion"
+           "cronie"
+           "neovim"
+           "openssh"
+           "python-colorama"
+           "python-colorlog"
+           "python-msgpack"
+           "python-pip"
+           "python-pyaml"
+           "python-u-msgpack"
+           "python-unidecode"
+           "python-xmltodict"
+           "sudo"
+           "tmux"
+           "wget")
+
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
 
-echo "Installing packages with pacman"
-pacman -S bash-completion \
-          cronie \
-          neovim \
-          openssh \
-          python-colorama \
-          python-colorlog \
-          python-msgpack \
-          python-pip \
-          python-pyaml \
-          python-u-msgpack \
-          python-unidecode \
-          python-xmltodict \
-          sudo \
-          tmux \
-          wget || failure "failed to install packages with pacman"
+check_root
+
+print_info "Installing packages with pacman"
+pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"

@@ -15,21 +15,25 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+_PACKAGES=("virtualbox-guest-utils")
+
+_ENABLE_SERVICES=("vboxservice.service")
+
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
 
-echo "Installing packages with pacman"
-pacman -S virtualbox-guest-utils || failure "failed to install packages with pacman"
+check_root
 
-echo "Enabling vboxservice service"
-systemctl enable vboxservice.service || failure "failed to enable vboxservice service"
+print_info "Installing packages with pacman"
+pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"
+
+for _service in "${PACMAN_KEYS[@]}"
+do
+    print_info "Enabling ${_service}"
+    systemctl enable "${_service}" || failure "failed to enable ${_service}"
+done

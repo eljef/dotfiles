@@ -15,24 +15,14 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/media/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/media/files"
-fi
+FILES_PATH="${_basedir}/dotfiles/media/files"
+check_dir "${FILES_PATH}"
 
 install_file 0755 "${FILES_PATH}/bin/convert-to-mp3" "${HOME}/Bin/convert-to-mp3"
 install_file 0755 "${FILES_PATH}/bin/playlist-combine" "${HOME}/Bin/playlist-combine"

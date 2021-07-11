@@ -15,32 +15,14 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
-
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/extras/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/extras/files"
-fi
-
-if [[ ! -f "${HOME}/.bashrc" ]]; then
-    failure "${HOME}/.bashrc does not exist: run base bash configuration first"
-fi
+FILES_PATH="${_basedir}/dotfiles/extras/files"
+check_dir "${FILES_PATH}"
 
 make_directory "${HOME}/.config/conky/conky1"
 make_directory "${HOME}/.config/conky/conky2"
@@ -51,6 +33,6 @@ install_file 0755 "${FILES_PATH}/bin/conky-start" "${HOME}/Bin/conky-start"
 install_file 0644 "${FILES_PATH}/conky/conky1.conf" "${HOME}/.config/conky/conky1/conky.conf"
 install_file 0644 "${FILES_PATH}/conky/conky2.conf" "${HOME}/.config/conky/conky2/conky.conf"
 
-echo "Cloning Required Conky Theme Repo"
-echo "git clone https://github.com/zagortenay333/conky_themes ${HOME}/.config/conky/conky-themes"
+print_info "Cloning Required Conky Theme Repo"
+print_info "git clone https://github.com/zagortenay333/conky_themes ${HOME}/.config/conky/conky-themes"
 git clone https://github.com/zagortenay333/conky_themes "${HOME}/.config/conky/conky-themes" || failure "failed to clone required theme repo"

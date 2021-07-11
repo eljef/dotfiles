@@ -14,39 +14,41 @@
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
+_PACKAGES=("black"
+           "git"
+           "golang-go"
+           "make"
+           "nodejs"
+           "npm"
+           "pylint"
+           "python3-flake8"
+           "python3-pynvim"
+           "python3-pytest"
+           "python3-pytest-cov"
+           "shellcheck")
+
+_PIP_MODULES=("pytest-pythonpath")
+
+_NPM_MODULES=("bash-language-server"
+              "diff-so-fancy"
+              "markdownlint-cli"
+              "write-good")
 
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../../../script_common/common.sh" || exit 1
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
 
-echo "Installing packages with apt"
-apt install black \
-            git \
-            golang-go \
-            make \
-            nodejs \
-            npm \
-            pylint \
-            python3-flake8 \
-            python3-pynvim \
-            python3-pytest \
-            python3-pytest-cov \
-            shellcheck || failure "failed to install packages with apt"
+check_root
 
-echo "Installing packages with pip"
-pip3 install -U pytest-pythonpath || failure "failed to install packages with pip"
+print_info "Installing packages with apt"
+apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
 
-echo "Install packages with npm"
-npm install -g bash-language-server \
-               diff-so-fancy \
-               markdownlint-cli \
-               write-good || failure "failed to install packages with npm"
+print_info "Installing packages with pip"
+pip3 install -U "${_PIP_MODULES[@]}" || failure "failed to install packages with pip"
+
+print_info "Install packages with npm"
+npm install -g "${_NPM_MODULES[@]}" || failure "failed to install packages with npm"

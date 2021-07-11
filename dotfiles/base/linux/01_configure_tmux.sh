@@ -15,34 +15,22 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/base/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/base/files"
-fi
+FILES_PATH="${_basedir}/dotfiles/base/files"
+check_dir "${FILES_PATH}"
+
+del_file "${HOME}/.tmux.conf"
 
 make_directory "${HOME}/.config/tmux"
 
 install_file 0644 "${FILES_PATH}/tmux/2k.conf" "${HOME}/.config/tmux/2k.conf"
 install_file 0644 "${FILES_PATH}/tmux/dev.conf" "${HOME}/.config/tmux/dev.conf"
 install_file 0644 "${FILES_PATH}/tmux/half.conf" "${HOME}/.config/tmux/half.conf"
-install_file 0644 "${FILES_PATH}/tmux/main.conf" "${HOME}/.config/tmux/main.conf"
 install_file 0644 "${FILES_PATH}/tmux/pane-border-format.conf" "${HOME}/.config/tmux/pane-border-format.conf"
-install_file 0644 "${FILES_PATH}/tmux/tmux.conf" "${HOME}/.tmux.conf"
+install_file 0644 "${FILES_PATH}/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf"

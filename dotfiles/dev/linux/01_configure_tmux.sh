@@ -15,32 +15,15 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
-
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/dev/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/dev/files"
-fi
-
-if [[ ! -d "${HOME}/.config/tmux/" ]]; then
-    failure "${HOME}/.config/tmux/ does not exist: run base tmux configuration first"
-fi
+FILES_PATH="${_basedir}/dotfiles/dev/files"
+check_dir "${FILES_PATH}"
+check_dir "${HOME}/.config/tmux"
 
 install_file 0755 "${FILES_PATH}/bin/tmux-git-branch" "${HOME}/Bin/tmux-git-branch"
 install_file 0644 "${FILES_PATH}/tmux/pane-border-format.conf" "${HOME}/.config/tmux/pane-border-format.conf"

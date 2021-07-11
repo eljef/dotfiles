@@ -15,32 +15,32 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+_PACKAGES=("bash-completion"
+           "neovim"
+           "openssh-server"
+           "python-is-python3"
+           "python3-colorama"
+           "python3-colorlog"
+           "python3-msgpack"
+           "python3-pip"
+           "python3-u-msgpack"
+           "python3-unidecode"
+           "python3-xmltodict"
+           "python3-yaml"
+           "ssh"
+           "tmux"
+           "wget")
+
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../../../script_common/common.sh" || exit 1
 
-echo "Installing packages with apt"
-apt install bash-completion \
-            neovim \
-            openssh-server \
-            python-is-python3 \
-            python3-colorama \
-            python3-colorlog \
-            python3-msgpack \
-            python3-pip \
-            python3-u-msgpack \
-            python3-unidecode \
-            python3-xmltodict \
-            python3-yaml \
-            ssh \
-            tmux \
-            wget || failure "failed to install packages with apt"
+
+check_root
+
+print_info "Installing packages with apt"
+apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"

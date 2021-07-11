@@ -30,32 +30,19 @@ COC_PLUGINS=('coc-css'
              'coc-yaml'
 )
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+################################################################################
+# DO NOT EDIT BELOW HERE
+################################################################################
 
-function install_file() {
-    echo "installing ${1}:${3}"
-    install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
-function make_directory() {
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
-}
-
-PARENT_PATH="$(realpath "$(dirname "${0}")/../../../")"
-DOTFILES_PATH="${PARENT_PATH}/dotfiles"
-FILES_PATH="${DOTFILES_PATH}/dev/files"
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-if [[ ! -d "$FILES_PATH" ]]; then
-    failure "could not determine location of dotfiles/dev/files"
-fi
-
-if [[ ! -d "${HOME}/.config/nvim/" ]]; then
-    failure "${HOME}/.config/nvim/ does not exist: run base neovim configuration first"
-fi
+FILES_PATH="${_basedir}/dotfiles/base/files"
+check_dir "${FILES_PATH}"
+check_dir "${HOME}/.config/nvim/"
 
 install_file 0644 "${FILES_PATH}/nvim/coc.vim" "${HOME}/.config/nvim/coc.vim"
 install_file 0644 "${FILES_PATH}/nvim/coc-node-path.vim" "${HOME}/.config/nvim/coc-node-path.vim"
@@ -75,8 +62,8 @@ neovim_buffer_text=$(cat <<EOF
 EOF
 )
 
-echo "Installing neovim plugins"
+print_info "Installing neovim plugins"
 echo "${neovim_buffer_text}" | nvim -c PlugInstall
 
-echo "Installing neovim coc plugins"
+print_info "Installing neovim coc plugins"
 echo "${neovim_buffer_text}" | nvim -c "CocInstall ${COC_PLUGINS[*]}"

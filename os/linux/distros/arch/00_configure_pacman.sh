@@ -34,38 +34,35 @@ PACMAN_PARALLEL_DOWNLOADS=5
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-function failure() {
-    echo -e "\n${1}\n" 2>&1
-    exit 1
-}
+_scriptdir="$(dirname "${0}")"
+. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
-if [[ ${EUID} -ne 0 ]]; then
-    failure "This script must be run as root."
-fi
 
-echo "Adding keyserver to pacman"
+check_root
+
+print_info "Adding keyserver to pacman"
 sed -i '/^keyserver /d' /etc/pacman.d/gnupg/gpg.conf || failure "failed to remove old keyserver line from /etc/pacman.d/gnupg/gpg.conf"
 echo "keyserver ${PACMAN_KEYSERVER}" >> /etc/pacman.d/gnupg/gpg.conf || failure "failed to add new keyserver to /etc/pacman.d/gnupg/gpg.conf"
 
 for key in "${PACMAN_KEYS[@]}"
 do
-    echo "Adding PGP key to pacman: ${key}"
+    print_info "Adding PGP key to pacman: ${key}"
     pacman-key --recv-keys "${key}" || failure "failed to retrieve pgp key ${key}"
     pacman-key --lsign-key "${key}" || failure "failed to locally sign pgp key ${key}"
 done
 
 if [[ ${PACMAN_CHECK_SPACE} -eq 1 ]]; then
-    echo "Enabling space checking during pacman install and update"
+    print_info "Enabling space checking during pacman install and update"
     sed -i 's/^#CheckSpace/CheckSpace/' /etc/pacman.conf || failure "failed to enable space checking for pacman"
 fi
 
 if [[ ${PACMAN_COLOR} -eq 1 ]]; then
-    echo "Enabling color output for pacman"
+    print_info "Enabling color output for pacman"
     sed -i 's/^#Color/Color/' /etc/pacman.conf || failure "failed to enable color output for pacman"
 fi
 
-if [[ ${PACMAN_PARALLEL_DOWNLOADS} -ne 0 ]]; then
-    echo "Enabling ${PACMAN_PARALLEL_DOWNLOADS} parallel downloads for pacman"
+if [[ ${PACMAN_PARALLEL_DOWNLOADS} -gt 1 ]]; then
+    print_info "Enabling ${PACMAN_PARALLEL_DOWNLOADS} parallel downloads for pacman"
     sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf || failure "failed to enable parallel downloads for pacman"
     sed -i "s/^ParallelDownloads.*/ParallelDownloads = ${PACMAN_PARALLEL_DOWNLOADS}/" /etc/pacman.conf || failure "failed to set number of parallel downloads for pacman"
 fi
