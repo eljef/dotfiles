@@ -147,10 +147,7 @@ function check_help_and_empty() {
         print_help
         exit 1
     fi
-    if [[ "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
-        print_help
-        exit 0
-    fi
+    check_help "${1}"
 }
 
 
@@ -193,17 +190,6 @@ function download_install_file() {
     print_install_file "${1}" "${2}" "${3}"
     curl -o "${3}" "${2}" >/dev/null 2>&1 || failure "could not download ${2}"
     chmod "${1}" "${3}" || failure "could not set mode ${1} on ${3}"
-}
-
-
-# error_help: prints the help message then exits the script
-#             with a non-zero exit code
-#
-#    example:
-#            error_help
-function error_help() {
-    print_help
-    exit 1
 }
 
 

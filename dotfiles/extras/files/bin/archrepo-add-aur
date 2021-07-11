@@ -34,4 +34,5 @@ check_env ARCHREPO_GITS
 
 cd_or_error "${ARCHREPO_GITS}"
 
-git clone "https://aur.archlinux.org/${1}.git"
+git clone "https://aur.archlinux.org/${1}.git" || failure "could not add ${1}"
+

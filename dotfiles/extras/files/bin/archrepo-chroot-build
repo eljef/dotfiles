@@ -42,3 +42,4 @@ arch-nspawn "${ARCHREPO_CHROOT}/root" pacman -Sc --noconfirm || exit 1
 makechrootpkg -c -r "${ARCHREPO_CHROOT}" || exit 1
 mkdir -p pkgs || exit 1
 mv ./*.pkg.tar.zst pkgs/ || exit 1
+

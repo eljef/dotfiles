@@ -49,22 +49,22 @@ if [ -z "${DBFILE}" ]; then
     DBFILE=$(ls -1  ./*.db.tar.gz)
 fi
 if [ -z "${DBFILE}" ]; then
-    error_print_exit "could not find database file in ${REPODIR}"
+    failure "could not find database file in ${REPODIR}"
 fi
 cd_or_error "${PKGSDIR}"
 
 for i in *.pkg.tar.zst
 do
-    gpg --detach-sign --use-agent -u "${ARCHREPO_GPG_ID}" "${i}" || exit 1
+    gpg --detach-sign --use-agent -u "${ARCHREPO_GPG_ID}" "${i}" || failure "failed to add gpg key to agent"
     print_move "${i}" "${2}"
-    mv "${i}" "${REPODIR}" || exit 1
+    mv "${i}" "${REPODIR}" || failure "could not move ${i} into ${REPODIR}"
     print_move "${i}.sig" "${2}"
-    mv "${i}.sig" "${2}" || exit 1
+    mv "${i}.sig" "${2}" || failure "could not move ${i} into ${2}"
     cd_or_error "${REPODIR}"
-    repo-add -n -R -s "${DBFILE}" "${i}" || exit 1
+    repo-add -n -R -s "${DBFILE}" "${i}" || failure "could not add ${i} to ${DBFILE}"
     cd_or_error "${PKGSDIR}"
 done
 
 cd_or_error "${PROJDIR}"
-git clean -fdx
+git clean -fdx || failure "could not git clean ${PROJDIR}"
 
