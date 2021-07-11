@@ -24,7 +24,7 @@ _basedir="$(base_dir "${_scriptdir}" "script_common")"
 FILES_PATH="${_basedir}/dotfiles/extras/files"
 check_dir "${FILES_PATH}"
 check_file "${HOME}/.bashrc"
-check_dir "${HOME}/bin"
+check_dir "${HOME}/Bin"
 
 make_directory "${HOME}/.local/share/bash-completion/completions"
 
