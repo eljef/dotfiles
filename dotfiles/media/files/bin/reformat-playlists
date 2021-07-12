@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# shellcheck source=/home/dev/Bin/include/eljef-bash-common
+. "${HOME}/Bin/include/eljef-bash-common"
+
+HELPSTATEMENT=$(cat <<-EOF
+
+    reformat-playlists
+
+    Reformats a M3U Playlist from Windows to POSIX paths.
+
+    Required Environment Variables:
+        MUSIC_PLAYLIST_DIR: Path to the base directory holding the windows
+                            folder.
+        MUSIC_PLAYLIST_POSIX_BASE: Base path to use in POSIX formatted
+                                   playlists.
+                                  Example: "/some/path/music"
+        MUSIC_PLAYLIST_WINDOWS_BASE: Base path in Windows formatted playlists
+                                     to replace. (This is after all path
+                                     separators are formatted from "\\" to "/")
+                                    Example: "../../music"
+
+EOF
+)
+
+check_help "${1}"
+check_env MUSIC_PLAYLIST_DIR
+check_env MUSIC_PLAYLIST_POSIX_BASE
+check_env MUSIC_PLAYLIST_WINDOWS_BASE
+
+cd_or_error "${MUSIC_PLAYLIST_DIR}"
+check_dir "windows"
+
+make_directory "posix"
+
+cd_or_error "windows"
+
+print_info "Reformatting M3U Playlists"
+for i in *.m3u
+do
+    posix_file="${MUSIC_PLAYLIST_DIR}/posix/${i}"
+    print_move "${i}" "${posix_file}"
+
+    rm "${posix_file}" || failure "failed to remove file: ${posix_file}"
+
+    print_info "\tReformatting..."
+    tr -d '\015' < "${i}" > "${posix_file}.tmp"
+    sed -e '1s/^\xEF\xBB\xBF//' \
+        -e 's|\\|/|g' \
+        -e "s|${MUSIC_PLAYLIST_WINDOWS_BASE}|${MUSIC_PLAYLIST_POSIX_BASE}|g" \
+        -i "${posix_file}.tmp"
+
+    print_info "\tValidating..."
+    while read line
+    do
+        clean_path="${line//[$'\t\r\n']}"
+        clean_dir="$(dirname "${clean_path}")"
+        clean_file="$(basename "${clean_path}" | sed -e 's|\[|\\\[|g' -e 's|\]|\\\]|g')"
+
+        if [[ ! -d "${clean_dir}" ]]; then
+            print_warn "File Not Found: ${clean_path}"
+            continue
+        fi
+
+        correct_file="$(find "${clean_dir}" -iname "${clean_file}")" || failure "error finding file: ${clean_path}"
+
+        if [[ -z "${correct_file}" ]]; then
+            print_warn "File Not Found: ${clean_path}"
+            continue
+        fi
+
+        echo "${correct_file}" >> "${posix_file}" || failure "could not add file to playlist: ${correct_file}"
+
+    done < "${posix_file}.tmp"
+
+    rm "${posix_file}.tmp" || failure "failed removing temp file ${posix_file}.tmp"
+
+done
+

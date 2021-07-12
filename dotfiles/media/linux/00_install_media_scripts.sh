@@ -26,4 +26,5 @@ check_dir "${FILES_PATH}"
 
 install_file 0755 "${FILES_PATH}/bin/convert-to-mp3" "${HOME}/Bin/convert-to-mp3"
 install_file 0755 "${FILES_PATH}/bin/playlist-combine" "${HOME}/Bin/playlist-combine"
+install_file 0755 "${FILES_PATH}/bin/reformat-playlists" "${HOME}/Bin/reformat-playlists"
 install_file 0755 "${FILES_PATH}/bin/youtube-get-audio" "${HOME}/Bin/youtube-get-audio"
