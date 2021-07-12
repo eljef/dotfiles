@@ -12,21 +12,19 @@ HELPSTATEMENT=$(cat <<-EOF
     Required Environment Variables:
         MUSIC_PLAYLIST_DIR: Path to the base directory holding the windows
                             folder.
-        MUSIC_PLAYLIST_POSIX_BASE: Base path to use in POSIX formatted
-                                   playlists.
-                                  Example: "/some/path/music"
-        MUSIC_PLAYLIST_WINDOWS_BASE: Base path in Windows formatted playlists
-                                     to replace. (This is after all path
-                                     separators are formatted from "\\" to "/")
-                                    Example: "../../music"
+
+    Optional Config File:
+    ~/.config/playlist/paths
+        Replacement paths on each line
+        ie: ../../orig=/some/new/path
+            ../../other=/some/other/path
 
 EOF
 )
 
 check_help "${1}"
 check_env MUSIC_PLAYLIST_DIR
-check_env MUSIC_PLAYLIST_POSIX_BASE
-check_env MUSIC_PLAYLIST_WINDOWS_BASE
+check_env MUSIC_PLAYLIST_PATH_FIXES
 
 cd_or_error "${MUSIC_PLAYLIST_DIR}"
 check_dir "windows"
@@ -41,14 +39,25 @@ do
     posix_file="${MUSIC_PLAYLIST_DIR}/posix/${i}"
     print_move "${i}" "${posix_file}"
 
-    rm "${posix_file}" || failure "failed to remove file: ${posix_file}"
+    rm -f "${posix_file}" || failure "failed to remove file: ${posix_file}"
 
     print_info "\tReformatting..."
     tr -d '\015' < "${i}" > "${posix_file}.tmp"
     sed -e '1s/^\xEF\xBB\xBF//' \
         -e 's|\\|/|g' \
-        -e "s|${MUSIC_PLAYLIST_WINDOWS_BASE}|${MUSIC_PLAYLIST_POSIX_BASE}|g" \
-        -i "${posix_file}.tmp"
+        -i "${posix_file}.tmp" || failure "could not reformat: ${posix_file}.tmp"
+
+    if [[ -f "${HOME}/.config/playlist/paths" ]]; then
+        while read line
+        do
+            clean_line="${line//[$'\t\r\n']}"
+            if [[ -z "${clean_line}" ]]; then
+                continue
+            fi
+            paths=(${clean_line//=/ })
+            sed -e "s|${paths[0]}|${paths[1]}|g" -i "${posix_file}.tmp" || failure "could not replace paths: ${posix_file}.tmp"
+        done < "${HOME}/.config/playlist/paths"
+    fi
 
     print_info "\tValidating..."
     while read line
