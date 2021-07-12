@@ -98,7 +98,7 @@ function check_dir() {
 function check_env() {
     VAR_CHECK="${!1}"
     if [ -z "${VAR_CHECK}" ]; then
-        error_print_exit "environment variable not set: ${1}"
+        failure "environment variable not set: ${1}"
     fi
 }
 

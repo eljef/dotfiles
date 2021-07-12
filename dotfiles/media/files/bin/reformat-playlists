@@ -24,7 +24,6 @@ EOF
 
 check_help "${1}"
 check_env MUSIC_PLAYLIST_DIR
-check_env MUSIC_PLAYLIST_PATH_FIXES
 
 cd_or_error "${MUSIC_PLAYLIST_DIR}"
 check_dir "windows"
