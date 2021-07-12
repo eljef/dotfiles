@@ -147,7 +147,10 @@ function check_help_and_empty() {
         print_help
         exit 1
     fi
-    check_help "${1}"
+    if [[ "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
+        print_help
+        exit 0
+    fi
 }
 
 
@@ -190,6 +193,17 @@ function download_install_file() {
     print_install_file "${1}" "${2}" "${3}"
     curl -o "${3}" "${2}" >/dev/null 2>&1 || failure "could not download ${2}"
     chmod "${1}" "${3}" || failure "could not set mode ${1} on ${3}"
+}
+
+
+# error_help: prints the help message then exits the script
+#             with a non-zero exit code
+#
+#    example:
+#            error_help
+function error_help() {
+    print_help
+    exit 1
 }
 
 
@@ -240,8 +254,10 @@ function install_file() {
 #    example:
 #            make_directory "path/to/create"
 function make_directory() {
-    print_info "mkdir -p \"${1}\""
-    mkdir -p "${1}" || failure "failed to create directory ${1}"
+    if [[ ! -d "${1}" ]]; then
+        print_info "mkdir -p \"${1}\""
+        mkdir -p "${1}" || failure "failed to create directory ${1}"
+    fi
 }
 
 
@@ -333,17 +349,23 @@ function print_warn() {
 function _sprint_leader() {
     case "${1}" in
         WARN)
-            _lvl=" $(_sprint_wrap "${WARN_START}" "WARN")  "
+            echo " $(_sprint_wrap "${START}" "-|")"\
+                 "$(_sprint_wrap "${WARN_START}" "**")"\
+                 "$(_sprint_wrap "${START}" "|-") "\
+                 "$(_sprint_wrap "${WARN_START}" "WARNING:") "
             ;;
         ERROR)
-            _lvl=" $(_sprint_wrap "${ERROR_START}" "ERROR") "
+            echo " $(_sprint_wrap "${START}" "-|")"\
+                 "$(_sprint_wrap "${ERROR_START}" "**")"\
+                 "$(_sprint_wrap "${START}" "|-")"\
+                 "$(_sprint_wrap "${ERROR_START}" "ERROR:") "
             ;;
         *)
-            _lvl=" $(_sprint_wrap "${INFO_START}" "INFO")  "
+            echo " $(_sprint_wrap "${START}" "-|")"\
+                 "$(_sprint_wrap "${INFO_START}" "**")"\
+                 "$(_sprint_wrap "${START}" "|-") "
             ;;
     esac
-
-    echo " $(_sprint_wrap "${START}" "-|")${_lvl}$(_sprint_wrap "${START}" "|-") "
 }
 
 
