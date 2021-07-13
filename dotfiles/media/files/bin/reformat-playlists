@@ -14,10 +14,8 @@ HELPSTATEMENT=$(cat <<-EOF
                             folder.
 
     Optional Config File:
-    ~/.config/playlist/paths
-        Replacement paths on each line
-        ie: ../../orig=/some/new/path
-            ../../other=/some/other/path
+    ~/.config/playlist/paths.sed
+        sed script containing commands for replacing paths in an M3U
 
 EOF
 )
@@ -46,16 +44,8 @@ do
         -e 's|\\|/|g' \
         -i "${posix_file}.tmp" || failure "could not reformat: ${posix_file}.tmp"
 
-    if [[ -f "${HOME}/.config/playlist/paths" ]]; then
-        while read line
-        do
-            clean_line="${line//[$'\t\r\n']}"
-            if [[ -z "${clean_line}" ]]; then
-                continue
-            fi
-            paths=(${clean_line//=/ })
-            sed -e "s|${paths[0]}|${paths[1]}|g" -i "${posix_file}.tmp" || failure "could not replace paths: ${posix_file}.tmp"
-        done < "${HOME}/.config/playlist/paths"
+    if [[ -f "${HOME}/.config/playlist/paths.sed" ]]; then
+        sed -f "${HOME}/.config/playlist/paths.sed" -i "${posix_file}.tmp" || failure "could not replace paths: ${posix_file}.tmp"
     fi
 
     print_info "\tValidating..."
