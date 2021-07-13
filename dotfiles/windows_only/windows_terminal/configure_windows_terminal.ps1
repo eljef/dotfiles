@@ -111,7 +111,7 @@ if (Test-IsCore)
 
     $settingsJSON.alwaysShowTabs = $true
     $settingsJSON.profiles.defaults.antialiasingMode = "cleartype"
-    $settingsJSON.profiles.defaults.closeOnExit = "never"
+    $settingsJSON.profiles.defaults.closeOnExit = "graceful"
     $settingsJSON.profiles.defaults.colorScheme = "Dracula"
     $settingsJSON.profiles.defaults.fontFace = "FiraCode Nerd Font Mono"
     $settingsJSON.profiles.defaults.fontSize = 10
