@@ -220,6 +220,9 @@ function Get-Download {
 .PARAMETER ModuleName
     Name of powershell module to install.
 
+.PARAMETER CurrentUser
+....Limit the install scope to the current user
+
 .EXAMPLE
     Install-ModuleByName -ModuleName ModuleNameHere
 #>
@@ -227,14 +230,22 @@ function Install-ModuleByName() {
     param(
         [Parameter(Mandatory=$True)]
         [System.String]
-        $ModuleName
+        $ModuleName,
+        [switch]$CurrentUser
     )
 
     Write-Host "Installing Powershell Module: $ModuleName"
+    if ($CurrentUser) {
+        Write-Host "Limited to Current User"
+    }
     Start-Sleep -Seconds 1
 
     try {
-        Install-Module $ModuleName -AllowPrerelease -AllowClobber -Force -ErrorAction Stop
+        if ($CurrentUser) {
+            Install-Module $ModuleName -AllowPrerelease -AllowClobber -Force -ErrorAction Stop -Scope CurrentUser
+        } else {
+            Install-Module $ModuleName -AllowPrerelease -AllowClobber -Force -ErrorAction Stop
+        }
     }
     catch {
         Exit-Error "Could not install powershell module: $ModuleName" $Error[0].Exception.Message
