@@ -14,6 +14,7 @@ use on Windows.
   * Dracula theme from <https://github.com/dracula/notepad-plus-plus>
   * Installer script for Dracula theme
   * Configuration script for Notepad++ and plugins
+  * Installer script to add environment variables to powershell
 * **OpenSSH**
   * `00_upgrade_ssh.ps1`
     * Updates the built-in Windows SSH client utilities
@@ -25,9 +26,9 @@ use on Windows.
   * To be used with powershell-core.
   * To install:
     * **REQUIRES**
-      * `00_isntallers_base/01_install_update_powershell_modules.ps1`
+      * `00_installers_base/04_install_update_powershell_core_modules.ps1`
         * Script might need to be run in powershell-core as well
-    * Copy folder to `<%USERPROFILE%>\Documents\`
+    * Run `configure_powershell_core.ps1`
 * **WindowsBlinds**
   * WindowsBlinds theme.
 * Windows Terminal

@@ -42,15 +42,14 @@ Confirm-Install pwsh powershell-core | Out-Null
 
 if (Test-IsCore)
 {
-    $dotFileFolder = Resolve-Path -LiteralPath `
-                 $( Split-Path $fileName -Parent )
+    $filesDir = $baseFilesDir = $(Join-Path -Path $baseDir -ChildPath "dotfiles\windows_only\notepad++\files")
 
     $nppFolder = Join-Path -Path "$env:APPDATA" -ChildPath "Notepad++"
     $nppThemesFolder = Join-Path -Path "$nppFolder" -ChildPath "themes"
 
     New-Directory $nppThemesFolder
 
-    Copy-File $( Join-Path -Path $dotFileFolder -ChildPath "Dracula.xml" ) `
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "Dracula.xml" ) `
           $( Join-Path -Path "$nppThemesFolder" -ChildPath "Dracula.xml" )
 
     Write-Host "`nNotepad++ Dracula Theme Installed"

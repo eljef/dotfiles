@@ -15,7 +15,9 @@
 # Jef Oliver <jef@eljef.me>
 
 $groupName = "base apps"
-$packages = @("microsoft-windows-terminal")
+$packages = @("microsoft-windows-terminal",
+              "less"
+              "starship")
 
 ################################################################################
 # Functionality Below
