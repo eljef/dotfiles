@@ -24,3 +24,7 @@ if [ -d "${HOME}/.bash_exports" ]; then
         fi
     done
 fi
+
+if [ ! -z "$(which starship)" ] && [ ${USE_STARSHIP} -eq 1 ]; then
+    eval "$(starship init bash)"
+fi

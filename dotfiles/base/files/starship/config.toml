@@ -1,0 +1,227 @@
+add_newline = true
+
+format = """[\\[](bold cyan)$username[@](bold purple)$hostname \
+  $directory\
+ ($cmake)\
+ ($docker_context)\
+ ($dotnet)\
+ ($golang)\
+ ($lua)\
+ ($nodejs)\
+ ($ocaml)\
+ ($perl)\
+ ($php)\
+ ($python)\
+ ($rust)\
+ ($git_branch)\
+ ($git_status)\
+ ($git_commit)\
+ ($git_state)\
+ [\\]](bold cyan)
+ $character"""
+
+[aws]
+disabled = true
+
+[battery]
+disabled = true
+
+[character]
+success_symbol = '[\$](bold green)[->](bold white)'
+error_symbol = '[\$](bold red)[->](bold white)'
+
+[cmake]
+format = ' [$symbol($version)]($style)'
+style = "bold black"
+
+[cmd_duration]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[directory]
+format = "$read_only[$path]($style)"
+home_symbol = "🏠"
+style = "bold blue"
+use_logical_path = true
+truncate_to_repo = false
+truncation_length = 1
+
+[docker_context]
+format = " [$symbol$context]($style)"
+style = "bold black"
+
+[dotnet]
+format = " [$symbol($version)( 🎯 $tfm)]($style)"
+style = "bold black"
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[env_var]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[git_branch]
+format = " [$symbol$branch]($style)"
+style = "bold yellow"
+symbol = " "
+
+[git_commit]
+format = " [$hash]($style)[$tag]($style)"
+only_detached = false
+style = "bold yellow"
+tag_disabled = false
+tag_symbol = "🏷️"
+
+[git_state]
+format = '\( [$state( $progress_current/$progress_total)]($style)\)'
+style = "bold yellow"
+
+[git_status]
+format = '( [\[$all_status$ahead_behind\]]($style))'
+style = "bold yellow"
+
+[golang]
+format = " [$symbol($version)]($style)"
+style = "bold black"
+
+[helm]
+disable = true
+
+[hg_branch]
+disable = true
+
+[hostname]
+ssh_only = false
+trim_at = '.'
+format = "[$hostname]($style)"
+style = "bold yellow"
+
+[java]
+disable = true
+
+[jobs]
+disable = true
+
+[julia]
+disable = true
+
+[kotlin]
+disable = true
+
+[kubernetes]
+disable = true
+
+[lua]
+format = " [$symbol($version)]($style)"
+style = "bold black"
+
+[memory_usage]
+disable = true
+
+[nim]
+disable = true
+
+[nix_shell]
+disable = true
+
+[nodejs]
+format = " [$symbol($version)]($style)"
+style = "bold black"
+symbol = "📜"
+
+[ocaml]
+format = " [$symbol($version)( $switch_indicator$switch_name)]($style)"
+style = "bold black"
+
+[openstack]
+disable = true
+
+[package]
+disable = true
+
+[perl]
+format = " [$symbol($version )]($style)"
+style = "bold black"
+
+[php]
+format = " [$symbol($version )]($style)"
+style = "bold black"
+
+[purescript]
+disable = true
+
+[python]
+format = ' [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+style = "bold black"
+
+[red]
+disable = true
+
+[rlang]
+disable = true
+
+[ruby]
+disable = true
+
+[rust]
+format = " [$symbol($version)]($style)"
+style = "bold black"
+
+[scala]
+disable = true
+
+[shell]
+disable = true
+
+[shlvl]
+disable = true
+
+[singularity]
+disable = true
+
+[swift]
+disable = true
+
+[terraform]
+disable = true
+
+[time]
+disable = true
+
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style)"
+
+[vagrant]
+disable = true
+
+[vlang]
+disable = true
+
+[vcsh]
+disable = true
+
+[zig]
+disable = true
+

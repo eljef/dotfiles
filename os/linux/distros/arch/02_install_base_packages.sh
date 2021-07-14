@@ -27,6 +27,7 @@ _PACKAGES=("bash-completion"
            "python-u-msgpack"
            "python-unidecode"
            "python-xmltodict"
+           "starship"
            "sudo"
            "tmux"
            "wget")
