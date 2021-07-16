@@ -108,6 +108,7 @@ if (Test-IsCore)
 
     $settingsJSON["experimental.rendering.forceFullRepaint"] = $false
     $settingsJSON["experimental.rendering.software"] = $false
+    $settingsJSON.trimBlockSelection = $false
 
     $settingsJSON.alwaysShowTabs = $true
     $settingsJSON.profiles.defaults.antialiasingMode = "cleartype"
