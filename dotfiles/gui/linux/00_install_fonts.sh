@@ -25,6 +25,7 @@ FILES_PATH="${_basedir}/dotfiles/gui/files"
 check_dir "${FILES_PATH}"
 
 make_directory "${HOME}/.fonts"
+make_directory "${HOME}/.config/fontconfig/conf.d"
 
 FONT_FILES=('Caskaydia Cove Nerd Font Complete Mono.ttf'
             'Caskaydia Cove Nerd Font Complete.ttf'
@@ -45,13 +46,17 @@ FONT_FILES=('Caskaydia Cove Nerd Font Complete Mono.ttf'
             'Hack Italic Nerd Font Complete.ttf'
             'Hack Italic Nerd Font Complete Mono.ttf'
             'Hack Regular Nerd Font Complete.ttf'
-            'Hack Regular Nerd Font Complete Mono.ttf')
+            'Hack Regular Nerd Font Complete Mono.ttf'
+            'NotoColorEmoji.ttf')
 
 for font_file in "${FONT_FILES[@]}"
 do
   install_file 0644 "${FILES_PATH}/fonts/$font_file" \
                      "${HOME}/.fonts/$font_file"
 done
+
+install_file 0644 "${FILES_PATH}/config/fontconfig/conf.d/99-noto-mono-color-emoji.conf" \
+                  "${HOME}/.config/fontconfig/conf.d/99-noto-mono-color-emoji.conf"
 
 print_info "Rebuilding font cache"
 fc-cache -f "${HOME}/.fonts" || failure "failed to rebuild font cache"
