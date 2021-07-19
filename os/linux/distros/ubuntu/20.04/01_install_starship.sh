@@ -14,41 +14,30 @@
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
-_PACKAGES=("black"
-           "git"
-           "golang-go"
-           "make"
-           "nodejs"
-           "npm"
-           "pylint"
-           "python3-flake8"
-           "python3-pynvim"
-           "python3-pytest"
-           "python3-pytest-cov"
-           "shellcheck")
-
-_PIP_MODULES=("pytest-pythonpath")
-
-_NPM_MODULES=("bash-language-server"
-              "diff-so-fancy"
-              "markdownlint-cli"
-              "write-good")
 
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
 _scriptdir="$(dirname "${0}")"
+# shellcheck source=../../../../../script_common/common.sh
 . "${_scriptdir}/../../../../../script_common/common.sh" || exit 1
 
+_starship_archive="starship-x86_64-unknown-linux-musl.tar.gz"
+_starship_tmp="/tmp/${_starship_archive}"
+_starship_url="https://github.com/starship/starship/releases/latest/download/${_starship_archive}"
 
 check_root
 
-print_info "Installing packages with apt"
-apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
+print_info "curl --fail --location ${_starship_url} --output ${_starship_tmp}"
+curl --fail --silent --location ${_starship_url} --output ${_starship_tmp} || failure "Could not download starship"
 
-print_info "Installing packages with pip"
-pip3 install -U "${_PIP_MODULES[@]}" || failure "failed to install packages with pip"
+print_info "tar -xzf \"${_starship_tmp}\" -C \"/usr/local/bin\""
+tar -xzf "${_starship_tmp}" -C "/usr/local/bin" || failure "Could not extract starship"
 
-print_info "Install packages with npm"
-npm install -g "${_NPM_MODULES[@]}" || failure "failed to install packages with npm"
+print_info "chmod 755 /usr/local/bin/starship"
+chmod 755 /usr/local/bin/starship || failure "Could not set executable mode for starship"
+
+print_info "rm ${_starship_tmp}"
+rm "${_starship_tmp}"
+

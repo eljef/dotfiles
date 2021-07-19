@@ -14,27 +14,29 @@
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
+_PACKAGES=("black"
+           "git"
+           "golang-go"
+           "make"
+           "nodejs"
+           "npm"
+           "pylint"
+           "python3-flake8"
+           "python3-pynvim"
+           "python3-pytest"
+           "python3-pytest-cov"
+           "shellcheck")
 
-_PACKAGES=("bash-completion"
-           "neovim"
-           "openssh-server"
-           "python-is-python3"
-           "python3-colorama"
-           "python3-colorlog"
-           "python3-msgpack"
-           "python3-pip"
-           "python3-u-msgpack"
-           "python3-unidecode"
-           "python3-xmltodict"
-           "python3-yaml"
-           "ssh"
-           "tmux"
-           "wget")
+_PIP_MODULES=("pytest-pythonpath")
+
+_NPM_MODULES=("bash-language-server"
+              "diff-so-fancy"
+              "markdownlint-cli"
+              "write-good")
 
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
-
 
 _scriptdir="$(dirname "${0}")"
 # shellcheck source=../../../../../script_common/common.sh
@@ -45,3 +47,9 @@ check_root
 
 print_info "Installing packages with apt"
 apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
+
+print_info "Installing packages with pip"
+pip3 install -U "${_PIP_MODULES[@]}" || failure "failed to install packages with pip"
+
+print_info "Install packages with npm"
+npm install -g "${_NPM_MODULES[@]}" || failure "failed to install packages with npm"
