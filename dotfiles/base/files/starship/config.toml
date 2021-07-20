@@ -90,7 +90,7 @@ format = " [$hash]($style)[$tag]($style)"
 only_detached = false
 style = "bold yellow"
 tag_disabled = false
-tag_symbol = "🏷️"
+tag_symbol = "🏴"
 
 [git_state]
 format = '\( [$state( $progress_current/$progress_total)]($style)\)'
