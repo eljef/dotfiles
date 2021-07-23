@@ -33,7 +33,7 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((Test-IsAdmin)) -and (!(Test-IsCore)))
+if (((Test-IsAdmin)) -and (!(Test-IsCore)))
 {
     try {
         Set-ExecutionPolicy Bypass -Scope Process -Force; `
