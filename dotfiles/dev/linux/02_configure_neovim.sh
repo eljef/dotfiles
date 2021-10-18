@@ -40,7 +40,7 @@ _scriptdir="$(dirname "${0}")"
 _basedir="$(base_dir "${_scriptdir}" "script_common")"
 
 
-FILES_PATH="${_basedir}/dotfiles/base/files"
+FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"
 check_dir "${HOME}/.config/nvim/"
 
