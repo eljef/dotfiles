@@ -46,4 +46,6 @@ EOF
   echo "${neovim_buffer_text}" | nvim -c PlugInstall
 fi
 
-echo "You must restart your bash session in order to run 05_install_golang_tools.sh"
+print_warn "-"
+print_warn "You must restart your bash session in order to run 05_install_golang_tools.sh"
+print_warn "-"

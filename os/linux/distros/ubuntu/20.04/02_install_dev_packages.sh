@@ -57,7 +57,7 @@ print_info "Updating Apt Package List"
 apt update
 
 print_info "Installing packages with apt"
-apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
+apt -y install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
 
 print_info "Installing packages with pip"
 pip3 install -U "${_PIP_MODULES[@]}" || failure "failed to install packages with pip"

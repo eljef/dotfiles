@@ -107,4 +107,6 @@ find . -type f -print0 | xargs -0 chmod 0644 || failure "Failed to fix file perm
 cd_or_error /tmp
 rm -rf go || failure "Failed to delete temporary go directory"
 
-echo "This script can be re-run in the future to update any installed tools."
+print_info "-"
+print_info "This script can be re-run in the future to update any installed tools."
+print_info "-"

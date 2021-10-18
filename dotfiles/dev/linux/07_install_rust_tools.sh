@@ -31,5 +31,5 @@ rustup completions bash >> ~/.local/share/bash-completion/completions/rustup || 
 rustup completions bash cargo >> ~/.local/share/bash-completion/completions/cargo || failure "Could not setup bash completions for cargo"
 
 # Install RLS
-print_info "Install RLS"
+print_info "Installing RLS"
 rustup component add rls rust-analysis rust-src || failure "Could not install RLS"

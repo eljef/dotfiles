@@ -46,4 +46,6 @@ print_info "Installing neovim coc plugins"
 echo "${neovim_buffer_text}" | nvim -c "CocInstall rls"
 fi
 
+print_info "-"
 print_info "You must restart your bash session in order to run 07_install_rust_tools.sh"
+print_info "-"
