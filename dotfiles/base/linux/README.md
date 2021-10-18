@@ -15,3 +15,12 @@ Base configuration files installers for Linux.
 * `02_configure_neovim.sh`
   * **OPTIONAL**
   * Configures neovim for usage.
+
+* `03_configure_starship.sh`
+  * **OPTIONAL**
+  * Configures starship prompt for usage.
+
+* `04_configure_ls_colors.sh`
+  * **OPTIONAL**
+  * Configures the colors to be displayed by the "ls --color" command.
+  * Uses a modified dracula scheme.
