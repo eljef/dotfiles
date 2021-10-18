@@ -267,7 +267,7 @@ function make_directory() {
 #         $1: Message to print
 #
 #    example:
-#            print_info() "Some Message"
+#            print_info "Some Message"
 function print_info() {
     echo -e "$(_sprint_leader INFO) $(_sprint_wrap "${INFO_START}" "${1}")"
 }
@@ -332,7 +332,7 @@ function print_move() {
 #         $1: Message to print
 #
 #    example:
-#            print_warn() "Some Message"
+#            print_warn "Some Message"
 function print_warn() {
     echo -e "$(_sprint_leader WARN) $(_sprint_wrap "${WARN_START}" "${1}")"
 }
@@ -345,7 +345,7 @@ function print_warn() {
 #             (INFO, WARN, ERROR)
 #
 #    example:
-#            $som_var=$(_sprint_leader INFO)
+#            $some_var=$(_sprint_leader INFO)
 function _sprint_leader() {
     case "${1}" in
         WARN)
@@ -376,7 +376,7 @@ function _sprint_leader() {
 #         $2: String to wrap
 #
 #    example:
-#            $som_var$(_sprint_wrap $START_INFO "text to wrap")
+#            $some_var$(_sprint_wrap $START_INFO "text to wrap")
 function _sprint_wrap() {
     echo "${1}${2}${RESET}"
 }
