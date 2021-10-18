@@ -19,7 +19,6 @@ _PACKAGES=("black"
            "golang-go"
            "make"
            "nodejs"
-           "npm"
            "pylint"
            "python3-flake8"
            "python3-pynvim"
@@ -44,6 +43,18 @@ _scriptdir="$(dirname "${0}")"
 
 
 check_root
+
+_UBUNTU_CODENAME=$(cat /etc/os-release | grep UBUNTU_CODENAME | awk '{split($0,a,"="); print a[2]}')
+
+print_info "Adding Golang PPA"
+add-apt-repository -y ppa:longsleep/golang-backports
+
+print_info "Adding NodeJS 16.x PPA"
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+echo "deb https://deb.nodesource.com/node_16.x ${_UBUNTU_CODENAME} main" > /etc/apt/sources.list.d/nodesource.list
+
+print_info "Updating Apt Package List"
+apt update
 
 print_info "Installing packages with apt"
 apt install "${_PACKAGES[@]}" || failure "failed to install packages with apt"
