@@ -12,7 +12,7 @@ To properly use these scripts, environment variables will need to be set. The
 easiest way to do this is to create a file in ~/.bash_exports with the following
 information, replacing with your own.
 
-```
+```bash
 #!/bin/bash
 
 export ARCHREPO_CHROOT="/home/dev/chroot"
