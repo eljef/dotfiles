@@ -36,15 +36,11 @@ do
 done
 
 print_info "Adding ElJef Keyring to pacman"
-pacman -U --noconfirm https://eljef.me/arch/core/eljef-keyring-20191024-1-any.pkg.tar.xz || failure "failed to install eljef-keyring"
+pacman -U --noconfirm https://eljef.me/arch/x86_64/eljef-keyring-20211018-1-any.pkg.tar.zst || failure "failed to install eljef-keyring"
 
-print_info "Adding ElJef Core Repository to pacman"
-pacman -U --noconfirm https://eljef.me/arch/core/eljef-repo-core-20161118-1-any.pkg.tar.xz || failure "failed to install eljef-repo-core"
+print_info "Adding ElJef Arch Linux Repository to pacman"
+pacman -U --noconfirm https://eljef.me/arch/x86_64/eljef-repo-20211018-2-any.pkg.tar.zst || failure "failed to install eljef-repo"
 sed -i '/eljef/d' /etc/pacman.conf || failure "failed to remove any previous eljef lines from /etc/pacman.conf"
-echo 'Include = /etc/pacman.d/eljef-repo-*.conf' >> /etc/pacman.conf || failure "failed to add eljef repos to /etc/pacman.conf"
-pacman -Sy || failure "failed to update pacman databases"
-
-print_info "Adding ElJef Repositories: apps, devel, media, misc"
-pacman -S --noconfirm eljef-repo-apps eljef-repo-devel eljef-repo-media eljef-repo-misc || failure "failed to install eljef repositories"
+echo 'Include = /etc/pacman.d/eljef-repo.conf' >> /etc/pacman.conf || failure "failed to add eljef repository to /etc/pacman.conf"
 pacman -Sy || failure "failed to update pacman databases"
 
