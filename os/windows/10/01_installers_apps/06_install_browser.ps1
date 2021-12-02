@@ -16,7 +16,8 @@
 
 $groupName = "browser"
 $packages = @("firefox"
-              "microsoft-edge")
+              "microsoft-edge"
+              "vivaldi.install")
 
 ################################################################################
 # Functionality Below
