@@ -24,8 +24,7 @@ $packages = @("git",
               "openjdk12",
               "python3",
               "shellcheck",
-              "strawberryperl",
-              "typora")
+              "strawberryperl")
 
 ################################################################################
 # Functionality Below
