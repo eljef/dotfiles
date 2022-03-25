@@ -60,7 +60,7 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
               'github.com/zmb3/gogetdoc'
               'golang.org/x/tools/cmd/goimports'
               'github.com/fatih/gomodifytags'
-              'golang.org/x/tools/gopls@latest'
+              'golang.org/x/tools/gopls'
               'golang.org/x/tools/cmd/gorename'
               'github.com/securego/gosec/cmd/gosec/...'
               'github.com/jstemmer/gotags'
@@ -84,8 +84,8 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"
 do
-    print_info "GO111MODULE=on go get ${getpath}"
-    GO111MODULE=on go get "${getpath}" >/dev/null 2>&1 || failure "Failed to compile ${getpath}"
+    print_info "go install ${getpath}@latest"
+    go install "${getpath}@latest" >/dev/null 2>&1 || failure "Failed to compile ${getpath}"
 done
 
 # reset gopath
