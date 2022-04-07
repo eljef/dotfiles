@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
