@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -39,24 +39,26 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psreadline")) {
-    Install-ModuleByName -ModuleName PSReadLine
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_posh_git"
+Confirm-Install pwsh powershell-core | Out-Null
+
+if ((Test-IsCore) -and ($RunStep -eq "install_psreadline")) {
+    Install-ModuleByName -ModuleName PSReadLine -CurrentUser
+    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_posh_git"
 }
-elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_posh_git")) {
-    Install-ModuleByName -ModuleName posh-git
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
+elseif ((Test-IsCore) -and ($RunStep -eq "install_posh_git")) {
+    Install-ModuleByName -ModuleName posh-git -CurrentUser
+    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
 }
-elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_get_childitemcolor")) {
-    Install-ModuleByName -ModuleName Get-ChildItemColor
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psini"
+elseif ((Test-IsCore) -and ($RunStep -eq "install_get_childitemcolor")) {
+    Install-ModuleByName -ModuleName Get-ChildItemColor -CurrentUser
+    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_psini"
 }
-elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psini")) {
-    Install-ModuleByName -ModuleName PsIni
+elseif ((Test-IsCore) -and ($RunStep -eq "install_psini")) {
+    Install-ModuleByName -ModuleName PsIni -CurrentUser
 
     Write-Host "Modules Successfully Installed and Updated"
     Wait-ForExit 0
 }
 else {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psreadline"
+    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_psreadline"
 }

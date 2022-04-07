@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -19,19 +19,20 @@
     Checks if executable is installed.
 
 .DESCRIPTION
-    Checks if executable is installed, printing an error and force exiting if it is not.
+    Checks if executable is installed, printing an error and force exiting if
+    it is not. If it is installed, the full path to the executable is returned.
 
 .PARAMETER Executable
-    Name of the executable to look for.
+    [string] Name of the executable to look for.
 
 .PARAMETER Name
-    Name of the program to print in error statement.
+    [string] Name of the program to print in error statement.
 
 .EXAMPLE
     Confirm-Install python.exe python
 
 .OUTPUTS
-    Path to installed executable.
+    [string] Path to installed executable.
 #>
 function Confirm-Install {
     Param (
@@ -52,23 +53,52 @@ function Confirm-Install {
 
 <#
 .SYNOPSIS
+    Checks if package has been installed by WinGet.
+
+.DESCRIPTION
+    Checks if package has been installed by WinGet, returning $True or $False.
+
+.PARAMETER PackageID
+    [string] WinGet package ID to check for installation of.
+
+.EXAMPLE
+    Confirm-InstalledWithWinGet Git.Git
+
+.OUTPUTS
+    [bool] $True if package is installed, $False otherwise.
+#>
+
+function Confirm-InstalledWithWinGet {
+    Param (
+        [Parameter(Mandatory)]
+        [string]$PackageID
+    )
+
+    $packageData = winget list --exact -q $PackageID
+    return [String]::Join("", $packageData).Contains($PackageID)
+}
+
+<#
+.SYNOPSIS
     Copies ACLs from source to destination.
 
 .DESCRIPTION
-    Copies ACLs from source to destination.
+    Copies the ACLs that are applied to source and applies them to destination.
 
 .PARAMETER SourcePath
-    Path to get ACLs from
+    [string] Path to retrieve ACLs from
 
 .PARAMETER DestPath
-    Path to apply ACLS TO
+    [string] Path to apply ACLS TO
 
 .EXAMPLE
     Copy-ACL oldfile.txt newfile.txt
 #>
 function Copy-ACL {
     Param (
+        [Parameter(Mandatory)]
         [string]$SourcePath,
+        [Parameter(Mandatory)]
         [string]$DestPath
     )
 
@@ -85,14 +115,16 @@ function Copy-ACL {
     Copies a file into place, halting the script if copying fails.
 
 .DESCRIPTION
-    Copies a file into place, halting the script if copying fails. This function
-    overwrites the destination file if it exists.
+    Copies a file into place, halting the script if copying fails.
+
+.NOTE
+    This function overwrites the destination file if it exists.
 
 .PARAMETER Origin
-    Original file to be copied.
+    [string] Path to original file to be copied.
 
 .PARAMETER Destination
-    Destination origFile will be copied to.
+    [string] Path to destination to be written.
 
 .EXAMPLE
     Copy-File oldfile.txt newfile.txt
@@ -123,10 +155,10 @@ function Copy-File {
     then exits.
 
 .PARAMETER Error
-    Required error string to print.
+    [string] Required error string to print.
 
 .PARAMETER Extended
-    Optional second error string to print.
+    [string] Optional second error string to print.
 
 .EXAMPLE
     Exit-Error "Some Error" "More Descriptive Error Statement"
@@ -154,13 +186,14 @@ function Exit-Error {
     Extracts an archive to the temporary directory.
 
 .PARAMETER ZipPath
-    Path to archive
+    [string] Path to archive
 
 .EXAMPLE
     Expand-ArchiveToTemp "C:\temp.zip"
 #>
 function Expand-ArchiveToTemp {
     Param (
+        [Parameter(Mandatory)]
         [string]$ZipPath
     )
 
@@ -181,13 +214,14 @@ function Expand-ArchiveToTemp {
     Downloads a file from the provied URI and saves it to the provided location.
 
 .PARAMETER URI
-    URI to download file from.
+    [string] URI to download file from.
 
 .PARAMETER Destination
-    Destination to save the downloaded file to.
+    [string] Destination to save the downloaded file to.
 
 .PARAMETER Name
-    Name of downloaded file to use in the error statement if an error is encountered.
+    Name of downloaded file to use in the error statement if an error is
+    encountered.
 
 .EXAMPLE
     Get-Download 'https://some.place/a/file.ext' 'c:\somefile.txt' 'some-file'
@@ -212,19 +246,104 @@ function Get-Download {
 
 <#
 .SYNOPSIS
-    Installs a powershell module.
+    Installs a group of packages using choco.
 
 .DESCRIPTION
-    Installs a powershell module.
+    Installs a group of packages using the chocolatey package manager.
+
+.PARAMETER GroupName
+    [string] Package group name to print to the console at install time.
+
+.PARAMETER GroupPackages
+    [string[]] List of packages to install.
+
+.EXAMPLE
+    Install-GroupWithChoco -GroupName "some group" -GroupPackages @("package1", "package2")
+#>
+function Install-GroupWithChoco() {
+    param(
+        [Parameter(Mandatory=$True)]
+        [string]$GroupName,
+        [Parameter(Mandatory=$True)]
+        [string[]]$GroupPackages
+    )
+
+    Confirm-Install choco chocolatey | Out-Null
+    Write-Host "Installing $GroupName packages with choco"
+    $chocoArgs = @("install", "-y") + $GroupPackages
+    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
+}
+
+<#
+.SYNOPSIS
+    Installs a group of packages using winget.
+
+.DESCRIPTION
+    Installs a group of packages using the WinGet package manager.
+
+.PARAMETER GroupName
+    [string] Package group name to print to the console at install time.
+
+.PARAMETER GroupPackages
+    [hashtable[]] List of packages to install.
+
+.NOTE
+    Package list must be an array of hashtables.
+    Hashtables must provide a name key with the value set to the package ID
+      provided by WinGet.
+    Hashtables can also provide a source key with the WinGet source to use. The
+      source key is optional.
+    Hashtables can also provide a scope key with the WinGet scope to use. The
+      scope key is optional.
+
+    The default source is "winget"
+    The default scope is "machine"
+
+.EXAMPLE
+    Install-GroupWithWinGet -GroupName "some group" -GroupPackages @(@{name = "test", source = "winget", scope = "machine"})
+#>
+function Install-GroupWithWinGet() {
+    param(
+        [Parameter(Mandatory=$True)]
+        [string]$GroupName,
+        [Parameter(Mandatory=$True)]
+        [hashtable[]]$GroupPackages
+    )
+
+    Confirm-Install winget WinGet | Out-Null
+
+    Write-Host "Installing $GroupName packages with winget"
+    ForEach ($package in $GroupPackages) {
+        $packageSource = "winget"
+        if ($package.source -ne $null) {
+            $packageSource = $package.source
+        }
+        $packageScope = "machine"
+        if ($package.scope -ne $null) {
+          $packageScope = $package.scope
+        }
+        Install-WithWinGet -PackageID $package.name -PackageSource $packageSource -Scope $packageScope
+    }
+}
+
+<#
+.SYNOPSIS
+    Installs a powershell module using it's name.
+
+.DESCRIPTION
+    Installs a powershell module using it's name.
 
 .PARAMETER ModuleName
-    Name of powershell module to install.
+    [string] Name of powershell module to install.
 
 .PARAMETER CurrentUser
-....Limit the install scope to the current user
+    [switch] Limit the install scope to the current user
 
 .EXAMPLE
     Install-ModuleByName -ModuleName ModuleNameHere
+
+.EXAMPLE
+    Install-ModuleByName -ModuleName ModuleNameHere -CurrentUser
 #>
 function Install-ModuleByName() {
     param(
@@ -254,23 +373,68 @@ function Install-ModuleByName() {
 
 <#
 .SYNOPSIS
+    Installs a WinGet package.
+
+.DESCRIPTION
+    Installs a WinGet package using its Package ID.
+
+.PARAMETER PackageID
+    [string] WinGet package ID to install.
+
+.PARAMETER PackageSource
+    [string] Package source WinGet should use to retreive the package from.
+
+.PARAMETER Scope
+    [string] Optional scope to use for installation of the package.
+
+.NOTE
+    The default scope is "machine".
+
+.EXAMPLE
+    Install-WithWinGet -PackageID Package.ID -PackageSource winget
+
+.EXAMPLE
+    Install-WithWinGet -PackageID Package.ID -PackageSource winget -Scope user
+#>
+function Install-WithWinGet {
+    Param (
+        [Parameter(Mandatory)]
+        [string]$PackageID,
+        [Parameter(Mandatory)]
+        [string]$PackageSource,
+        [string]$Scope = "machine"
+    )
+
+    if (!(Confirm-InstalledWithWinGet $PackageID)) {
+        $wingetArgs = @("install", "--source", $PackageSource, "--scope", $Scope, "--exact", $PackageID)
+        Invoke-ExecutableNoRedirect "winget" $wingetArgs "An error occured" -EchoCommand
+    } else {
+        Write-Host "WinGet package $PackageID already installed."
+    }
+}
+
+<#
+.SYNOPSIS
     Runs an executable.
 
 .DESCRIPTION
-    Runs an executable, blocking until it exits. If a non-zero return code is encountered,
-    the script is stopped with a printed error message.
+    Runs an executable, blocking until it exits. If a non-zero return code is
+    encountered, the script is stopped with a printed error message.
 
 .PARAMETER Exec
-    Name of executable to run. (Or path to executable.)
+    [string] Path to or name of executable to run.
 
 .PARAMETER Arguments
-    List of arguments to pass to executable.
+    [string[]] List of arguments to pass to executable.
 
 .PARAMETER EchoCommand
-    Print the command to be run to the screen before running.
+    [switch] Print the command to be run to the screen before running.
 
 .EXAMPLE
     Invoke-Executable "something.exe" @("/arg1", "/arg2")
+
+.EXAMPLE
+    Invoke-Executable "something.exe" @("/arg1", "/arg2") -EchoCommand
 #>
 function Invoke-Executable {
     Param (
@@ -305,24 +469,27 @@ function Invoke-Executable {
     Runs an executable without redirects.
 
 .DESCRIPTION
-    Runs an executable without redirecting Standard Error and Standard Output. If a
-    non-zero return code is encountered, the script is stopped, printing the supplied
-    error message.
+    Runs an executable without redirecting Standard Error and Standard Output.
+    If a non-zero return code is encountered, the script is stopped, printing
+    the supplied error message.
 
 .PARAMETER Exec
-    Name of executable to run. (Or path to executable.)
+    [string] Path to or name of executable to run.
 
 .PARAMETER Arguments
-    List of arguments to pass to executable.
+    [string[]] List of arguments to pass to executable.
 
 .PARAMETER ErrorMsg
-    Message to print when an error has occured.
+    [string] Message to print when an error has occured.
 
 .PARAMETER EchoCommand
-    Print the command to be run to the screen before running.
+    [switch] Print the command to be run to the screen before running.
 
 .EXAMPLE
     Invoke-ExecutableNoRedirect "something.exe" @("/arg1", "/arg2") "An error occured in something.exe"
+
+.EXAMPLE
+    Invoke-ExecutableNoRedirect "something.exe" @("/arg1", "/arg2") "An error occured in something.exe" -EchoCommand
 #>
 function Invoke-ExecutableNoRedirect {
     Param (
@@ -351,20 +518,22 @@ function Invoke-ExecutableNoRedirect {
     Moves a path to a new location.
 
 .DESCRIPTION
-    Moves a path to a new location.
+    Moves source path to destionation path.
 
 .PARAMETER SourcePath
-    Path to move.
+    [string] Path to move.
 
 .PARAMETER DestPath
-    Where to move SourcePath to.
+    [string] Where to move SourcePath to.
 
 .EXAMPLE
     Move-Path -SourcePath "someplace" -DestPath "newplace"
 #>
 function Move-Path {
     Param (
+        [Parameter(Mandatory)]
         [string]$SourcePath,
+        [Parameter(Mandatory)]
         [string]$DestPath
     )
 
@@ -382,10 +551,11 @@ function Move-Path {
     Creates a new directory.
 
 .DESCRIPTION
-    Creates a new directory specified by $newPath, halting the script if directory creation fails.
+    Creates a new directory specified by $newPath, halting the script if
+    directory creation fails.
 
 .PARAMETER Path
-    Full path to directory to create.
+    [string] Full path to directory to create.
 
 .EXAMPLE
     New-Directory "C:\test"
@@ -413,13 +583,13 @@ function New-Directory {
     Reads JSON from a file, and returns it as a Hash Table.
 
 .PARAMETER Path
-    Path to JSON file to read.
+    [string] Path to JSON file to read.
 
 .EXAMPLE
     Read-JSON 'c:\somefile.json'
 
 .OUTPUTS
-    A Hash Table containing parsed JSON.
+    [hashtable] Parsed JSON.
 #>
 function Read-JSON {
     Param (
@@ -445,7 +615,7 @@ function Read-JSON {
     Deletes a direcctory if it exists, exiting the script on any errors.
 
 .PARAMETER Path
-    Path to directory to delete.
+    [string] Path to directory to delete.
 
 .EXAMPLE
     Remove-DirIfExists C:\test
@@ -475,7 +645,7 @@ function Remove-DirIfExists {
     Deletes a file if it exists, exiting the script on any errors.
 
 .PARAMETER Path
-    Path to file to delete.
+    [string] Path to file to delete.
 
 .EXAMPLE
     Remove-FileIfExists C:\test.txt
@@ -505,17 +675,19 @@ function Remove-FileIfExists {
     Renames a path.
 
 .PARAMETER SourcePath
-    Old name.
+    [string] Old name.
 
 .PARAMETER DestPath
-    New name.
+    [string] New name.
 
 .EXAMPLE
     Rename-Path -SourcePath "someplace" -DestPath "newplace"
 #>
 function Rename-Path {
     Param(
+        [Parameter(Mandatory)]
         [string]$SourcePath,
+        [Parameter(Mandatory)]
         [string]$DestPath
     )
 
@@ -536,9 +708,14 @@ function Rename-Path {
 
 <#
 .SYNOPSIS
-    Checks if the script is running as an administrator.
+    Checks if user has administrative privleges.
+
 .DESCRIPTION
-    Checks if the script is running as an administrator.
+    Checks if user has administrative privleges.
+
+.OUTPUTS
+    [bool] $True if user has administrative privileges, $False otherwise.
+
 .EXAMPLE
     Test-IsAdmin
 #>
@@ -548,10 +725,13 @@ function Test-IsAdmin {
 
 <#
 .SYNOPSIS
-    Determines if scripts is executed in Powershell-Core.
+    Determines if execution is in Powershell-Core.
 
 .DESCRIPTION
-    Determines if scripts is executed in Powershell-Core.
+    Determines if execution is in Powershell-Core.
+
+.OUTPUTS
+    [bool] $True if execution is in Powershell-Core, $False otherwise.
 
 .EXAMPLE
     Test-IsCore
@@ -571,10 +751,11 @@ function Test-IsCore {
     Waits for a key to be pressed to exit.
 
 .DESCRIPTION
-    Waits for a key to be pressed to exit, then exits with the provided Exit Code.
+    Waits for a key to be pressed to exit, then exits with the provided
+    Exit Code.
 
 .PARAMETER ExitCode
-    Code to provide as an ExitCode / ReturnCode.
+    [Int32] Code to provide as an ExitCode / ReturnCode.
 
 .EXAMPLE
     Wait-ForExit -ExitCode 0
@@ -599,10 +780,10 @@ function Wait-ForExit {
     Writes the provided Hash Table as JSON to a file.
 
 .PARAMETER Data
-    JSON Data, as a hash map.
+    [hashtable] JSON Data.
 
 .PARAMETER Path
-    Path to file to write JSON to.
+    [string] Path to file to write JSON to.
 
 .EXAMPLE
     Write-JSON @{'test'='test'} "C:\somefile.json"

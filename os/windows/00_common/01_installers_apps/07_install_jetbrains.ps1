@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,17 +14,9 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$groupName = "development apps"
-$packages = @("git",
-              "golang",
-              "make",
-              "neovim",
-              "nodejs",
-              "notepadplusplus",
-              "openjdk12",
-              "python3",
-              "shellcheck",
-              "strawberryperl")
+$groupName = "jetbrains"
+# $chocoPackages = @()
+$wingetPackages = @(@{name = "JetBrains.Toolbox"})
 
 ################################################################################
 # Functionality Below
@@ -51,14 +43,8 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 
 if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    Confirm-Install choco chocolatey | Out-Null
-
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
-    Start-Sleep -Seconds 1
-
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
+    # Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
+    Install-GroupWithWinGet -GroupName $groupName -GroupPackages $wingetPackages
     Write-Host "$groupName packages installed."
     Wait-ForExit 0
 }

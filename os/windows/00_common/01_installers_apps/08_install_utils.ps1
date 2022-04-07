@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -13,6 +13,14 @@
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
+
+$groupName = "utils"
+$chocoPackages = @("autoruns")
+$wingetPackages = @(@{name = "CrystalRich.LockHunter"})
+
+################################################################################
+# Functionality Below
+################################################################################
 
 $fileName=$MyInvocation.MyCommand.Source
 $baseDir = $(Split-Path $fileName -Parent)
@@ -33,16 +41,12 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if (((Test-IsAdmin)) -and (!(Test-IsCore)))
+if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    try {
-        Set-ExecutionPolicy Bypass -Scope Process -Force; `
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
-        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    }
-    catch {
-        Exit-Error "Could not install chocolatey" $Error[0].Exception.Message
-    }
+    Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
+    Install-GroupWithWinGet -GroupName $groupName -GroupPackages $wingetPackages
+    Write-Host "$groupName packages installed."
+    Wait-ForExit 0
 }
 else {
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"

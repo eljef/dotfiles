@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -13,13 +13,6 @@
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
-
-$groupName = "streaming"
-$packages = @("obs-studio")
-
-################################################################################
-# Functionality Below
-################################################################################
 
 $fileName=$MyInvocation.MyCommand.Source
 $baseDir = $(Split-Path $fileName -Parent)
@@ -40,18 +33,16 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((Test-IsAdmin) -and (!(Test-IsCore)))
+if (((Test-IsAdmin)) -and (!(Test-IsCore)))
 {
-    Confirm-Install choco chocolatey | Out-Null
-
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
-    Start-Sleep -Seconds 1
-
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
-    Write-Host "$groupName packages installed."
-    Wait-ForExit 0
+    try {
+        Set-ExecutionPolicy Bypass -Scope Process -Force; `
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
+        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    }
+    catch {
+        Exit-Error "Could not install chocolatey" $Error[0].Exception.Message
+    }
 }
 else {
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"

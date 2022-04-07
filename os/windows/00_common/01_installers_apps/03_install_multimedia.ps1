@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,9 +14,27 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$groupName = "utils"
-$packages = @("autoruns",
-              "lockhunter")
+$groupName = "multimedia"
+$chocoPackages = @("gmkvextractgui",
+                   "kid3",
+                   "mediaelch",
+                   "mp3gain-gui",
+                   "tinymediamanager")
+
+$wingetPackages = @(@{name = "Foxit.FoxitReader"},
+                    @{name = "GIMP.GIMP"},
+                    @{name = "Handbrake.Handbrake"},
+                    @{name = "DuongDieuPhap.ImageGlass"},
+                    @{name = "Inkscape.Inkscape"},
+                    @{name = "GuinpinSoft.MakeMKV"},
+                    @{name = "MKVToolNix.MKVToolNix"},
+                    @{name = "Mp3tag.Mp3tag"},
+                    @{name = "VideoLAN.VLC"})
+
+# the source for a winget package can be changed by adding source = "sourceName"
+# to the package array
+# eg:
+# $wingetPackages = @(@{name = "Some.Package"; source = "msstore"})
 
 ################################################################################
 # Functionality Below
@@ -43,14 +61,8 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 
 if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    Confirm-Install choco chocolatey | Out-Null
-
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
-    Start-Sleep -Seconds 1
-
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
+    Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
+    Install-GroupWithWinGet -GroupName $groupName -GroupPackages $wingetPackages
     Write-Host "$groupName packages installed."
     Wait-ForExit 0
 }

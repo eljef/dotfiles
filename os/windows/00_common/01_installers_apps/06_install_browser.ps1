@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,11 +14,15 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-param(
-    [Parameter(Mandatory=$False, ValueFromPipeline=$false)]
-    [System.String]
-    $RunStep
-)
+$groupName = "browser"
+# $chocoPackages = @()
+$wingetPackages = @(@{name = "Google.Chrome"},
+                    @{name = "Mozilla.Firefox"},
+                    @{name = "Microsoft.Edge"})
+
+################################################################################
+# Functionality Below
+################################################################################
 
 $fileName=$MyInvocation.MyCommand.Source
 $baseDir = $(Split-Path $fileName -Parent)
@@ -39,26 +43,13 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-Confirm-Install pwsh powershell-core | Out-Null
-
-if ((Test-IsCore) -and ($RunStep -eq "install_psreadline")) {
-    Install-ModuleByName -ModuleName PSReadLine -CurrentUser
-    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_posh_git"
-}
-elseif ((Test-IsCore) -and ($RunStep -eq "install_posh_git")) {
-    Install-ModuleByName -ModuleName posh-git -CurrentUser
-    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
-}
-elseif ((Test-IsCore) -and ($RunStep -eq "install_get_childitemcolor")) {
-    Install-ModuleByName -ModuleName Get-ChildItemColor -CurrentUser
-    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_psini"
-}
-elseif ((Test-IsCore) -and ($RunStep -eq "install_psini")) {
-    Install-ModuleByName -ModuleName PsIni -CurrentUser
-
-    Write-Host "Modules Successfully Installed and Updated"
+if ((Test-IsAdmin) -and (!(Test-IsCore)))
+{
+    # Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
+    Install-GroupWithWinGet -GroupName $groupName -GroupPackages $wingetPackages
+    Write-Host "$groupName packages installed."
     Wait-ForExit 0
 }
 else {
-    Start-Process pwsh.exe -ArgumentList "-Command $fileName -RunStep install_psreadline"
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"
 }

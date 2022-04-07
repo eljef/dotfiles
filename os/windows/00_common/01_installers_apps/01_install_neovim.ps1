@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,10 +14,8 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$modules = @("bash-language-server",
-              "diff-so-fancy",
-              "markdownlint",
-              "write-good")
+$groupName = "neovim"
+$chocoPackages = @("neovim")
 
 ################################################################################
 # Functionality Below
@@ -44,16 +42,9 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 
 if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    Confirm-Install npm nodejs | Out-Null
-
-    Write-Host "Installing node modules with npm"
-    Write-Host "Modules: " @modules
-    Start-Sleep -Seconds 1
-
-    $npmArgs = @("install", "-g") + $modules
-    Invoke-ExecutableNoRedirect "npm" $npmArgs "An error occured" -EchoCommand
-    Write-Host "$nodejs development modules installed."
-    Wait-ForExit 0
+  Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
+  Write-Host "$groupName packages installed."
+  Wait-ForExit 0
 }
 else {
     Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"

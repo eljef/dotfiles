@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,12 +14,11 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$groupName = "neovim"
-$packages = @("neovim")
-
-################################################################################
-# Functionality Below
-################################################################################
+param(
+    [Parameter(Mandatory=$False, ValueFromPipeline=$false)]
+    [System.String]
+    $RunStep
+)
 
 $fileName=$MyInvocation.MyCommand.Source
 $baseDir = $(Split-Path $fileName -Parent)
@@ -40,19 +39,24 @@ if (!($baseFound)) {
 $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1")
 . $commonScript
 
-if ((Test-IsAdmin) -and (!(Test-IsCore)))
-{
-    Confirm-Install choco chocolatey | Out-Null
+if ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psreadline")) {
+    Install-ModuleByName -ModuleName PSReadLine
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_posh_git"
+}
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_posh_git")) {
+    Install-ModuleByName -ModuleName posh-git
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_get_childitemcolor"
+}
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_get_childitemcolor")) {
+    Install-ModuleByName -ModuleName Get-ChildItemColor
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psini"
+}
+elseif ((Test-IsAdmin) -and (!(Test-IsCore)) -and ($RunStep -eq "install_psini")) {
+    Install-ModuleByName -ModuleName PsIni
 
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
-    Start-Sleep -Seconds 1
-
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
-    Write-Host "$groupName packages installed."
+    Write-Host "Modules Successfully Installed and Updated"
     Wait-ForExit 0
 }
 else {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName"
+    Start-Process powershell.exe -Verb RunAs -ArgumentList "-Command $fileName -RunStep install_psreadline"
 }

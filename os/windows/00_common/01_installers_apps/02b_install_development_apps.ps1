@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -14,21 +14,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$groupName = "multimedia"
-$packages = @("foobar2000"
-              "foxitreader",
-              "gimp",
-              "gmkvextractgui",
-              "handbrake",
-              "imageglass",
-              "kid3",
-              "makemkv",
-              "mediaelch",
-              "mkvtoolnix",
-              "mp3gain-gui",
-              "mp3tag",
-              "tinymediamanager",
-              "vlc")
+$npmModules = @("bash-language-server",
+                "diff-so-fancy",
+                "markdownlint",
+                "write-good")
 
 ################################################################################
 # Functionality Below
@@ -55,15 +44,15 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 
 if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    Confirm-Install choco chocolatey | Out-Null
+    Confirm-Install npm nodejs | Out-Null
 
-    Write-Host "Installing $groupName packages with choco"
-    Write-Host "Packages: " @packages
+    Write-Host "Installing node modules with npm"
+    Write-Host "Modules: " @modules
     Start-Sleep -Seconds 1
 
-    $chocoArgs = @("install", "-y") + $packages
-    Invoke-ExecutableNoRedirect "choco" $chocoArgs "An error occured" -EchoCommand
-    Write-Host "$groupName packages installed."
+    $npmArgs = @("install", "-g") + $npmModules
+    Invoke-ExecutableNoRedirect "npm" $npmArgs "An error occured" -EchoCommand
+    Write-Host "$nodejs development modules installed."
     Wait-ForExit 0
 }
 else {
