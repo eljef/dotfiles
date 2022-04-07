@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -98,11 +98,10 @@ if (Test-IsCore)
     Write-Host " --==-- System GOPATH: $goPath"
     Write-Host " --==-- Temp GOPATH: $newGoPath"
 
-    $env:GO111MODULE = "on"
     foreach ($getPath in $goGetPaths)
     {
-        Write-Host " --==-- go get $getpath"
-        Invoke-Executable "go" @("get", "$getPath")
+        Write-Host " --==-- go install $getpath"+"@latest"
+        Invoke-Executable "go" @("install", "$getPath"+"@latest")
     }
 
     # copy the built binaries to the real GOPATH
