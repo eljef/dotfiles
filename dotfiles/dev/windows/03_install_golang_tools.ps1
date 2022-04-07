@@ -35,7 +35,7 @@ $goGetPaths = @('github.com/klauspost/asmfmt/cmd/asmfmt',
                 'github.com/zmb3/gogetdoc',
                 'golang.org/x/tools/cmd/goimports',
                 'github.com/fatih/gomodifytags',
-                'golang.org/x/tools/gopls@latest',
+                'golang.org/x/tools/gopls',
                 'golang.org/x/tools/cmd/gorename',
                 'github.com/securego/gosec/cmd/gosec/...',
                 'github.com/jstemmer/gotags',
@@ -100,8 +100,8 @@ if (Test-IsCore)
 
     foreach ($getPath in $goGetPaths)
     {
-        Write-Host " --==-- go install $getpath"+"@latest"
-        Invoke-Executable "go" @("install", "$getPath"+"@latest")
+        Write-Host " --==-- go install $getpath@latest"
+        Invoke-Executable "go" @("install", "$getPath@latest")
     }
 
     # copy the built binaries to the real GOPATH
