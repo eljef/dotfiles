@@ -15,7 +15,6 @@
 # Jef Oliver <jef@eljef.me>
 
 $groupName = "streaming"
-# $chocoPackages = @()
 $wingetPackages = @(@{name = "OBSProject.OBSStudio"})
 
 ################################################################################
@@ -43,7 +42,6 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 
 if ((Test-IsAdmin) -and (!(Test-IsCore)))
 {
-    # Install-GroupWithChoco -GroupName $groupName -GroupPackages $chocoPackages
     Install-GroupWithWinGet -GroupName $groupName -GroupPackages $wingetPackages
     Write-Host "$groupName packages installed."
     Wait-ForExit 0

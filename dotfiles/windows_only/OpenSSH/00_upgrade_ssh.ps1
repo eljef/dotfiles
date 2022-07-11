@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -40,12 +40,14 @@ $commonScript = $(Join-Path -Path $baseDir -ChildPath "script_common\common.ps1"
 Confirm-Install pwsh "Powershell Core"
 Confirm-Install ssh "Windows SSH"
 
-$opensshURI = 'https://github.com/PowerShell/Win32-OpenSSH/releases/download/V8.6.0.0p1-Beta/OpenSSH-Win64.zip'
+$opensshTargetVersion = "v8.9.1.0p1-Beta"
+
+$opensshURI = "https://github.com/PowerShell/Win32-OpenSSH/releases/download/$opensshTargetVersion/OpenSSH-Win64.zip"
 $opensshZip = $(Join-Path -Path $env:temp -ChildPath 'OpenSSH-Win64.zip')
 $opensshFolder = $(Join-Path -Path $env:temp -ChildPath 'OpenSSH-Win64')
 
 if (!([Environment]::Is64BitOperatingSystem)) {
-    $opensshURI = 'https://github.com/PowerShell/Win32-OpenSSH/releases/download/V8.6.0.0p1-Beta/OpenSSH-Win32.zip'
+    $opensshURI = "https://github.com/PowerShell/Win32-OpenSSH/releases/download/$opensshTargetVersion/OpenSSH-Win32.zip"
     $opensshZip = $(Join-Path -Path $env:temp -ChildPath 'OpenSSH-Win32.zip')
     $opensshFolder = $(Join-Path -Path $env:temp -ChildPath 'OpenSSH-Win32')
 }

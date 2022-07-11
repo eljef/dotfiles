@@ -15,7 +15,6 @@
 # Jef Oliver <jef@eljef.me>
 
 $groupName = "browser"
-# $chocoPackages = @()
 $wingetPackages = @(@{name = "Google.Chrome"},
                     @{name = "Mozilla.Firefox"},
                     @{name = "Microsoft.Edge"})

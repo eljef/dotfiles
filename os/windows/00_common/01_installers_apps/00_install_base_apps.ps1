@@ -15,10 +15,10 @@
 # Jef Oliver <jef@eljef.me>
 
 $groupName = "base apps"
-$chocoPackages = @("less"
-                   "starship")
+$chocoPackages = @("less")
 $wingetPackages = @(@{name = "Git.Git"},
-                    @{name = "Microsoft.WindowsTerminal"})
+                    @{name = "Microsoft.WindowsTerminal"},
+                    @{name = "Starship.Starship"})
 
 # the source for a winget package can be changed by adding source = "sourceName"
 # to the package array

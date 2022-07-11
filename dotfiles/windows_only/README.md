@@ -27,10 +27,7 @@ use on Windows.
   * To install:
     * **REQUIRES**
       * `00_installers_base/04_install_update_powershell_core_modules.ps1`
-        * Script might need to be run in powershell-core as well
     * Run `configure_powershell_core.ps1`
-* **WindowsBlinds**
-  * WindowsBlinds theme.
 * Windows Terminal
   * Run `configure-windows-terminal.ps1`
     * Must be run with powershell-core

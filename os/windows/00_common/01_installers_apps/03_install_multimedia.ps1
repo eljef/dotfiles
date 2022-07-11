@@ -29,6 +29,8 @@ $wingetPackages = @(@{name = "Foxit.FoxitReader"},
                     @{name = "GuinpinSoft.MakeMKV"},
                     @{name = "MKVToolNix.MKVToolNix"},
                     @{name = "Mp3tag.Mp3tag"},
+                    @{name = "OliverBetz.ExifTool"},
+                    @{name = "VentisMedia.MediaMonkey"},
                     @{name = "VideoLAN.VLC"})
 
 # the source for a winget package can be changed by adding source = "sourceName"
