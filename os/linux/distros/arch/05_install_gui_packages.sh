@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -16,10 +16,9 @@
 # Jef Oliver <jef@eljef.me>
 
 _PACKAGES=("bitwarden-bin"
-           "fira-code-git"
+           "chromium"
            "firefox"
            "gnu-free-fonts"
-           "google-chrome-dev"
            "joplin"
            "kde-applications-meta"
            "phonon-qt5-gstreamer"
@@ -27,10 +26,10 @@ _PACKAGES=("bitwarden-bin"
            "sddm-theme-archpaint2-breeze"
            "ttf-dejavu"
            "ttf-droid"
-           "ttf-google-fonts-git"
+           "ttf-fira-code"
+           "ttf-google-fonts-typewolf"
            "ttf-liberation"
-           "vivaldi"
-           "vivaldi-ffmpeg-codecs"
+           "xcursor-comix"
            "xcursor-gt3"
            "xorg-bdftopcf"
            "xorg-font-util"
@@ -75,7 +74,7 @@ _PACKAGES=("bitwarden-bin"
 ################################################################################
 
 _scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
 print_info "Installing packages with pacman"
 pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"

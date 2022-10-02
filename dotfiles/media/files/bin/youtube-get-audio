@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2020 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -30,12 +30,13 @@ EOF
 )
 
 check_help_and_empty "${1}"
+check_installed "ls" "mv" "rm" "yt-dlp"
 
 CWD=$(pwd)
 
 TEMP_DIR=$(mktemp -d)
 cd_or_error "${TEMP_DIR}"
-youtube-dl -x --audio-format mp3 --audio-quality 320K "$1" || exit 1
+yt-dlp -x --audio-format mp3 --audio-quality 320K "$1" || failure "could not download: ${1}"
 
 MP3FILE=$(ls -1 ./*.mp3 2>/dev/null)
 if [ -z "${MP3FILE}" ]; then

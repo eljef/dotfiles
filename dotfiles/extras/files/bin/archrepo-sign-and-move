@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2020 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -34,6 +34,7 @@ EOF
 check_help_and_empty "${1}"
 check_env ARCHREPO_GITS
 check_env ARCHREPO_GPG_ID
+check_installed "git" "gpg" "mv" "repo-add"
 
 PKGSDIR="${ARCHREPO_GITS}/${1}/pkgs"
 PROJDIR="${ARCHREPO_GITS}/${1}"

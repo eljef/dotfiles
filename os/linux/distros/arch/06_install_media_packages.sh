@@ -16,11 +16,15 @@
 # Jef Oliver <jef@eljef.me>
 
 _PACKAGES=("beets"
+           "easymp3gain-gtk2"
+           "ffmpeg"
            "fuse2"
            "gstreamer-vaapi"
            "gst-editing-services"
            "gst-plugins-ugly"
-           "python-discogs-client")
+           "mp3gain"
+           "python-discogs-client"
+           "yt-dlp")
 
 ################################################################################
 # DO NOT EDIT BELOW HERE

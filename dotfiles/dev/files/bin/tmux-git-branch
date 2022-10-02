@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2020 Jef Oliver.
+# Copyright (C) 2020-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -17,6 +17,8 @@
 
 # shellcheck source=/home/dev/Bin/include/eljef-bash-common
 . "${HOME}/Bin/include/eljef-bash-common"
+
+check_installed_silent "git" "(git: not installed?)"
 
 if [[ -n "${1}" ]]; then
     cd_or_error "${1}"

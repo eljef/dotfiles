@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -18,7 +18,10 @@
 _scriptdir="$(dirname "${0}")"
 . "${_scriptdir}/../../../script_common/common.sh" || exit 1
 
+_basedir="$(base_dir "${_scriptdir}" "script_common")"
 
+FILES_PATH="${_basedir}/dotfiles/dev/files"
+check_dir "${FILES_PATH}"
 check_dir "${HOME}/.bash_exports"
 
 make_directory "${HOME}/.cargo/bin"
@@ -43,7 +46,7 @@ if [[ -f  "${HOME}/.config/nvim/coc-settings.json" ]]; then
 EOF
 )
 print_info "Installing neovim coc plugins"
-echo "${neovim_buffer_text}" | nvim -c "CocInstall rls"
+echo "${neovim_buffer_text}" | nvim -c "CocInstall coc-rls"
 fi
 
 print_info "-"

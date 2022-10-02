@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -149,6 +149,43 @@ function check_help_and_empty() {
     fi
     if [[ "${1}" == "-h" || "${1}" == "--help" || "${1}" == "help" ]]; then
         print_help
+        exit 0
+    fi
+}
+
+# check_installed: Checks if required executables are installed.
+#
+#    Args:
+#         $@: Space separated list of executables to check for.
+#
+#    example:
+#            check_installed "execuable_one" "executable_two"
+function check_installed() {
+    for ename in "$@"
+    do
+        if [ -z "$(which "${ename}" 2>/dev/null)" ]; then
+            print_info "the following executables are requried for this script to run:"
+            print_info "$*"
+            failure "missing executable: ${ename}"
+        fi
+    done
+}
+
+# check_installed_silent: Checks if required executable is installed, exiting
+#                         with an unstyled message and zero status if not found.
+#                         This function is useful in scripts that will be run
+#                         by another program, such as tmux, where a non-zero
+#                         exit is not desired.
+#
+#    Args:
+#         $1: required executable
+#         $2: message to print if not found
+#
+#    example:
+#            check_installed_silent "git" "git not found"
+function check_installed_silent() {
+    if [ -z "$(which "${1}" 2>/dev/null)" ]; then
+        echo "${2}"
         exit 0
     fi
 }
