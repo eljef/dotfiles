@@ -26,7 +26,6 @@ check_dir "${FILES_PATH}"
 
 make_directory "${HOME}/.bash_exports"
 make_directory "${HOME}/.local/share/bash-completion"
-make_directory "${HOME}/Bin/include/"
 
 install_file 0644 "${FILES_PATH}/bash_profile" "${HOME}/.bash_profile"
 install_file 0644 "${FILES_PATH}/bashrc" "${HOME}/.bashrc"
@@ -46,5 +45,3 @@ install_file 0644 "${FILES_PATH}/bash_exports/alias_vim.sh" "${HOME}/.bash_expor
 install_file 0644 "${FILES_PATH}/bash_exports/export_editor.sh" "${HOME}/.bash_exports/export_editor"
 install_file 0644 "${FILES_PATH}/bash_exports/export_visual.sh" "${HOME}/.bash_exports/export_visual"
 
-install_file 0755 "${FILES_PATH}/bin/fix-perms" "${HOME}/Bin/fix-perms"
-install_file 0644 "${_basedir}/script_common/common.sh" "${HOME}/Bin/include/eljef-bash-common"

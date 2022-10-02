@@ -17,6 +17,7 @@
 
 _PACKAGES=("bash-completion"
            "cronie"
+           "eljef-bash-core"
            "neovim"
            "openssh"
            "python-colorama"
