@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -34,11 +34,10 @@ COC_PLUGINS=('coc-css'
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
+_basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-_basedir="$(base_dir "${_scriptdir}" "script_common")"
-
+check_isntalled "nvim"
 
 FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"

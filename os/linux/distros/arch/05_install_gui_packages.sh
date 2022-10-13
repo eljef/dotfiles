@@ -73,8 +73,7 @@ _PACKAGES=("bitwarden-bin"
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 
 print_info "Installing packages with pacman"
 pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"

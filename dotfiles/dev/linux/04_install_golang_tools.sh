@@ -15,13 +15,9 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 
-
-if [[ $(which go >/dev/null 2>&1 && echo $?) -ne 0 ]]; then
-    failure "failed to find go executable in PATH"
-fi
+check_installed "go"
 
 if [[ "${GOPATH}" == "" ]]; then
     GOPATH=$(go env GOPATH)

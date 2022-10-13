@@ -4,11 +4,6 @@ Development Configuration Files
 
 The `files` directory contains the actual dotfiles.
 
-## BASH
-
-* Adds `read-md` to `~/Bin`
-  * Read Markdown files on the CLI
-
 ## Neovim
 
 * Adds development plugins to neovim
@@ -27,13 +22,6 @@ The `files` directory contains the actual dotfiles.
     * tsserver
     * vetur
     * yaml
-
-## TMUX
-
-* Adds script to `~/Bin` to determine if current directory is in a git repo
-  and what branch it is set to
-* Replaces `~/.config/tmux/pane-border-format.conf`
-  * Shows git branch in border format
 
 ## Git
 

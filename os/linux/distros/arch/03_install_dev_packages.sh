@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -34,20 +34,14 @@ _PACKAGES=("bash-language-server"
            "shellcheck"
            "write-good")
 
-_PIP_MODULES=("pytest-pythonpath")
-
 ################################################################################
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
-
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 
 check_root
 
 print_info "Installing packages with pacman"
 pacman -S "${_PACKAGES[@]}" || failure "failed to install packages with pacman"
 
-print_info "Installing packages with pip"
-pip3 install -U "${_PIP_MODULES[@]}" || failure "failed to install packages with pip"

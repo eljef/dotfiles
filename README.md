@@ -50,7 +50,7 @@ installation scripts.
 Fonts are provided by the [Nerd Fonts](https://www.nerdfonts.com/)
 project. (Not Affiliated)
 
-[Nerd Fonts on Github]((https://github.com/ryanoasis/nerd-fonts))
+[Nerd Fonts on Github]((https://github.com/ryanoasis/nerd-fonts)
 
 * [Caskaydia Code](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/CascadiaCode)
 * [Fira Code](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)

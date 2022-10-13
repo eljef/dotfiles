@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -30,9 +30,7 @@ _PACKAGES=("beets"
 # DO NOT EDIT BELOW HERE
 ################################################################################
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../../script_common/common.sh" || exit 1
-
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 
 check_root
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2022 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -15,11 +15,10 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-_scriptdir="$(dirname "${0}")"
-. "${_scriptdir}/../../../script_common/common.sh" || exit 1
+. "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
+_basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-_basedir="$(base_dir "${_scriptdir}" "script_common")"
-
+check_isntalled "go" "nvim"
 
 FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"
@@ -46,6 +45,9 @@ EOF
   echo "${neovim_buffer_text}" | nvim -c PlugInstall
 fi
 
+print_warn "-"
+print_warn "Please edit ~/.bash_exports/export_golang to include the correct path"
+print_warn "  * Don't forget to create the directory as well"
 print_warn "-"
 print_warn "You must restart your bash session in order to run 05_install_golang_tools.sh"
 print_warn "-"
