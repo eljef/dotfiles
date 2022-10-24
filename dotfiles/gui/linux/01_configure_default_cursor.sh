@@ -24,3 +24,4 @@ check_dir "${FILES_PATH}"
 make_directory "${HOME}/.icons/default"
 
 install_file 0644 "${FILES_PATH}/icons/default/index.theme" "${HOME}/.icons/default/index.theme"
+install_file 0644 "${FILES_PATH}/Xresources" "${HOME}/.Xresources"
