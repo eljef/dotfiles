@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021 Jef Oliver.
+# Copyright (C) 2021-2023 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -16,7 +16,7 @@
 # Jef Oliver <jef@eljef.me>
 
 # PACMAN_KEYSERVER - keyserver pacman should use to retrieve unknown keys
-PACMAN_KEYSERVER="hkps://keys.openpgp.org"
+PACMAN_KEYSERVER="hkps://keyserver.ubuntu.com"
 
 # PACMAN_KEYS - pgp keys to add to pacman
 PACMAN_KEYS=()
