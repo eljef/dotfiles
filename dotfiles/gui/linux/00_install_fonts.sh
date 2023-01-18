@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2023 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -18,7 +18,18 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
+_NF_VERSION="2.3.1"
+_NF_DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/download"
+_NF_RELEASE_URL="${_NF_DOWNLOAD_URL}/v${_NF_VERSION}"
+_NF_ZIP_CASCADIA_CODE="CascadiaCode.zip"
+_NF_ZIP_FIRA_CODE="FiraCode.zip"
+_NF_ZIP_HACK="Hack.zip"
+
+
+check_installed "curl"
 check_installed "fc-cache"
+check_installed "unzip"
+
 
 FILES_PATH="${_basedir}/dotfiles/gui/files"
 check_dir "${FILES_PATH}"
@@ -26,61 +37,85 @@ check_dir "${FILES_PATH}"
 make_directory "${HOME}/.fonts"
 make_directory "${HOME}/.config/fontconfig/conf.d"
 
-FONT_FILES=('Caskaydia Cove Nerd Font Complete Bold Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Bold.otf'
-            'Caskaydia Cove Nerd Font Complete ExtraLight Italic.otf'
-            'Caskaydia Cove Nerd Font Complete ExtraLight.otf'
-            'Caskaydia Cove Nerd Font Complete Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Light Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Light.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Bold Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Bold.otf'
-            'Caskaydia Cove Nerd Font Complete Mono ExtraLight Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono ExtraLight.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Light Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Light.otf'
-            'Caskaydia Cove Nerd Font Complete Mono Regular.otf'
-            'Caskaydia Cove Nerd Font Complete Mono SemiBold Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono SemiBold.otf'
-            'Caskaydia Cove Nerd Font Complete Mono SemiLight Italic.otf'
-            'Caskaydia Cove Nerd Font Complete Mono SemiLight.otf'
-            'Caskaydia Cove Nerd Font Complete Regular.otf'
-            'Caskaydia Cove Nerd Font Complete SemiBold Italic.otf'
-            'Caskaydia Cove Nerd Font Complete SemiBold.otf'
-            'Caskaydia Cove Nerd Font Complete SemiLight Italic.otf'
-            'Caskaydia Cove Nerd Font Complete SemiLight.otf'
-            'Fira Code Bold Nerd Font Complete Mono.ttf'
-            'Fira Code Bold Nerd Font Complete.ttf'
-            'Fira Code Light Nerd Font Complete Mono.ttf'
-            'Fira Code Light Nerd Font Complete.ttf'
-            'Fira Code Medium Nerd Font Complete Mono.ttf'
-            'Fira Code Medium Nerd Font Complete.ttf'
-            'Fira Code Regular Nerd Font Complete Mono.ttf'
-            'Fira Code Regular Nerd Font Complete.ttf'
-            'Fira Code Retina Nerd Font Complete Mono.ttf'
-            'Fira Code Retina Nerd Font Complete.ttf'
-            'Fira Code SemiBold Nerd Font Complete Mono.ttf'
-            'Fira Code SemiBold Nerd Font Complete.ttf'
-            'Hack Bold Italic Nerd Font Complete Mono.ttf'
-            'Hack Bold Italic Nerd Font Complete.ttf'
-            'Hack Bold Nerd Font Complete Mono.ttf'
-            'Hack Bold Nerd Font Complete.ttf'
-            'Hack Italic Nerd Font Complete Mono.ttf'
-            'Hack Italic Nerd Font Complete.ttf'
-            'Hack Regular Nerd Font Complete Mono.ttf'
-            'Hack Regular Nerd Font Complete.ttf'
-            'NotoColorEmoji.ttf')
+print_info "Downloading Nerd Font Packages"
 
-for font_file in "${FONT_FILES[@]}"
-do
-  install_file 0644 "${FILES_PATH}/fonts/$font_file" \
-                     "${HOME}/.fonts/$font_file"
-done
+download_install_file 0644 \
+  "${_NF_RELEASE_URL}/${_NF_ZIP_CASCADIA_CODE}" \
+  "${HOME}/.fonts/${_NF_ZIP_CASCADIA_CODE}"
+
+download_install_file 0644 \
+  "${_NF_RELEASE_URL}/${_NF_ZIP_FIRA_CODE}" \
+  "${HOME}/.fonts/${_NF_ZIP_FIRA_CODE}"
+
+download_install_file 0644 \
+  "${_NF_RELEASE_URL}/${_NF_ZIP_HACK}" \
+  "${HOME}/.fonts/${_NF_ZIP_HACK}"
+
+
+cd_or_error "${HOME}/.fonts"
+
+
+# Caskaydia Cove Nerd Font
+print_info "Removing Old Caskaydia Code Nerd Fonts"
+rm -f -- "Caskaydia Cove Nerd Font"* || failure "Could Not Remove Old Caskaydia Cove Nerd Fonts"
+
+print_info "Installing New Caskaydia Code Nerd Fonts"
+unzip -qq -j -o "${_NF_ZIP_CASCADIA_CODE}"
+rm -f -- "${_NF_ZIP_CASCADIA_CODE}"
+rm -f -- *"Windows Compatible"* || failure "Could Not Remove Caskaydia Code Windows Compatible Fonts"
+
+make_directory "${HOME}/.fonts/doc/CascadiaCode"
+mv -f -- LICENSE "doc/CascadiaCode/LICENSE" || failure "Could Not Move Caskaydia Code License"
+mv -f -- readme.md "doc/CascadiaCode/readme.md" || failure "Could Not Move Caskaydia Code README"
+
+
+# Fira Code Nerd Font
+print_info "Removing Old Fira Code Nerd Fonts"
+rm -f -- "Fira Code"*"Nerd Font"* || failure "Could Not Remove Old Fira Code Nerd Fonts"
+
+print_info "Installing New Fira Code Nerd Fonts"
+unzip -qq -j -o "${_NF_ZIP_FIRA_CODE}"
+rm -f -- "${_NF_ZIP_FIRA_CODE}"
+rm -f -- *"Windows Compatible"* || failure "Could Not Remove Caskaydia Code Windows Compatible Fonts"
+
+make_directory "${HOME}/.fonts/doc/FiraCode"
+mv -f -- LICENSE "doc/FiraCode/LICENSE" || failure "Could Not Move Fira Code License"
+mv -f -- readme.md "doc/FiraCode/readme.md" || failure "Could Not Move Fira Code README"
+
+
+# Hack Nerd Font
+print_info "Removing Old Hack Nerd Fonts"
+rm -f -- "Hack"*"Nerd Font"* || failure "Could Not Remove Old Hack Nerd Fonts"
+
+print_info "Installing New Hack Nerd Fonts"
+unzip -qq -j -o "${_NF_ZIP_HACK}"
+rm -f -- "${_NF_ZIP_HACK}"
+rm -f -- *"Windows Compatible"* || failure "Could Not Remove Hack Windows Compatible Fonts"
+
+make_directory "${HOME}/.fonts/doc/Hack"
+mv -f -- LICENSE.md "doc/Hack/LICENSE.md" || failure "Could Not Move Hack License"
+mv -f -- readme.md "doc/Hack/readme.md" || failure "Could Not Move Hack README"
+
+
+# Noto Color Emoji
+print_info "Removing Old Noto Color Emoji Font"
+rm -f -- "NotoColorEmoji.ttf"
+
+print_info "Downloading New Noto Color Emoji Font"
+download_install_file 0644 \
+    "https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf" \
+    "${HOME}/.fonts/NotoColorEmoji.ttf"
 
 install_file 0644 "${FILES_PATH}/config/fontconfig/conf.d/99-noto-mono-color-emoji.conf" \
                   "${HOME}/.config/fontconfig/conf.d/99-noto-mono-color-emoji.conf"
 
+make_directory "${HOME}/.fonts/doc/NotoColorEmoji"
+rm -f -- "${HOME}/.fonts/doc/NotoColorEmoji/LICENSE"
+download_install_file 0644 \
+    "https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/LICENSE" \
+    "${HOME}/.fonts/doc/NotoColorEmoji/LICENSE"
+
+
+# Rebuild Font Cache
 print_info "Rebuilding font cache"
 fc-cache -f "${HOME}/.fonts" || failure "failed to rebuild font cache"
-
