@@ -2,8 +2,13 @@
 
 GUI configuration files installers for Windows.
 
-## Fonts
+## Script Purpose
 
-* Navigate to the `files/fonts` folder.
-* Right click the fonts you want to install.
-* Choose `Install`
+* `00_install_fonts.ps1`
+  * **OPTIONAL**
+  * Installs fonts I use
+
+* `99_clear_user_fonts.ps1`
+  * **OPTIONAL**
+  * Removes fonts installed by `00_install_fonts.ps1`
+
