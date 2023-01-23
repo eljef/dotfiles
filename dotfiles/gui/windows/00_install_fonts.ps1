@@ -14,7 +14,7 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
-$nfVersion = '2.3.1'
+$nfVersion = '2.3.2'
 $nfDownloadUrl = 'https://github.com/ryanoasis/nerd-fonts/releases/download'
 $nfReleaseURL = "$( $nfDownloadUrl )/v$( $nfVersion)"
 $nfZipCascadiaCode = "CascadiaCode.zip"
