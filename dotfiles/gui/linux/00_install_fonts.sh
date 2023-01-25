@@ -18,7 +18,7 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-_NF_VERSION="2.3.2"
+_NF_VERSION="2.3.3"
 _NF_DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/download"
 _NF_RELEASE_URL="${_NF_DOWNLOAD_URL}/v${_NF_VERSION}"
 _NF_ZIP_CASCADIA_CODE="CascadiaCode.zip"
