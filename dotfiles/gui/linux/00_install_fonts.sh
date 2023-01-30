@@ -106,9 +106,6 @@ download_install_file 0644 \
     "https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf" \
     "${HOME}/.fonts/NotoColorEmoji.ttf"
 
-install_file 0644 "${FILES_PATH}/config/fontconfig/conf.d/99-noto-mono-color-emoji.conf" \
-                  "${HOME}/.config/fontconfig/conf.d/99-noto-mono-color-emoji.conf"
-
 make_directory "${HOME}/.fonts/doc/NotoColorEmoji"
 rm -f -- "${HOME}/.fonts/doc/NotoColorEmoji/LICENSE"
 download_install_file 0644 \
@@ -117,5 +114,14 @@ download_install_file 0644 \
 
 
 # Rebuild Font Cache
+
+print_info "Installing Font Configuration Rules"
+
+install_file 0644 "${FILES_PATH}/config/fontconfig/conf.d/99-firacode-hack-nerd-font.conf" \
+                  "${HOME}/.config/fontconfig/conf.d/99-firacode-hack-nerd-font.conf"
+install_file 0644 "${FILES_PATH}/config/fontconfig/conf.d/99-noto-mono-color-emoji.conf" \
+                  "${HOME}/.config/fontconfig/conf.d/99-noto-mono-color-emoji.conf"
+
+
 print_info "Rebuilding font cache"
 fc-cache -f "${HOME}/.fonts" || failure "failed to rebuild font cache"

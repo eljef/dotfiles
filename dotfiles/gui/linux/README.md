@@ -7,6 +7,12 @@ GUI configuration files installers for Linux.
 * `00_install_fonts.sh`
   * **REQUIRED**
   * Installs fonts I use
+  * Installs fontconfig rules for the following:
+    * Sets FiraCode Nerd Font as the preferred font where possible
+      * The monospace variant is used for fixed width
+    * Sets Hack Nerd Font as the secondary preferred font
+      * The monospace variant is used for fixed width
+    * Make sure Noto Mono Color Emoji is enabled and usable
 
 * `01_configure_default_cursor.sh`
   * **OPTIONAL**
