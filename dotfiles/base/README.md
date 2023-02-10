@@ -6,7 +6,7 @@ The `files` directory contains the actual dotfiles.
 
 ## BASH
 
-**This is Linux only.**
+> **_NOTE:_** Linux Only
 
 Configures BASH how I like it.
 
@@ -29,11 +29,21 @@ Configures BASH how I like it.
 
 ## Neovim
 
+> **_NOTE:_** Linux and Windows
+
 Configures neovim via multiple configuration files that are sourced from
 `init.vim`. The init checks if the development config exists and loads it
 if it does.
 
 ## TMUX
 
+> **_NOTE:_** Linux Only
+
 Configures TMUX via it's main configuration file to load leaf configurations
-from `~/.config/tmux/`.
+from `~/.config/tmux/conf.d`.
+
+The configurations require the terminal emulator that is running tmux is using
+a font with powerline support. Powerline specific fonts or Nerd fonts work.
+
+Extra configurations can be added to `~/.config/tmux/conf.d/` and they will be
+loaded by the default configuration file.

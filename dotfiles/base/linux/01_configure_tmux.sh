@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2023 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -25,9 +25,28 @@ check_dir "${FILES_PATH}"
 
 del_file "${HOME}/.tmux.conf"
 
-make_directory "${HOME}/.config/tmux"
+if [ -d "${HOME}/.config/tmux" ]; then
+    print_info "Backing up current tmux configuration folder"
+    mv "${HOME}/.config/tmux" "${HOME}/.config/tmux.bak" || failure "could not backup current tmux configuration folder"
+fi
 
-install_file 0644 "${FILES_PATH}/tmux/dev.conf" "${HOME}/.config/tmux/dev.conf"
-install_file 0644 "${FILES_PATH}/tmux/half.conf" "${HOME}/.config/tmux/half.conf"
-install_file 0644 "${FILES_PATH}/tmux/pane-border-format.conf" "${HOME}/.config/tmux/pane-border-format.conf"
+make_directory "${HOME}/.config/tmux/conf.d/"
+make_directory "${HOME}/.config/tmux/split.d/"
+
 install_file 0644 "${FILES_PATH}/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/00_numbering.conf" "${HOME}/.config/tmux/conf.d/00_numbering.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/01_history.conf" "${HOME}/.config/tmux/conf.d/01_history.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/02_terminal.conf" "${HOME}/.config/tmux/conf.d/02_terminal.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/03_clipboard.conf" "${HOME}/.config/tmux/conf.d/03_clipboard.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/04_mouse.conf" "${HOME}/.config/tmux/conf.d/04_mouse.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/05_status_bar_options.conf" "${HOME}/.config/tmux/conf.d/05_status_bar_options.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/05_status_bar_position.conf" "${HOME}/.config/tmux/conf.d/05_status_bar_position.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/05_status_bar_style.conf" "${HOME}/.config/tmux/conf.d/05_status_bar_style.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/05_status_bar_style_messages.conf" "${HOME}/.config/tmux/conf.d/05_status_bar_style_messages.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/05_status_bar_window_style.conf" "${HOME}/.config/tmux/conf.d/05_status_bar_window_style.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/06_pane_style.conf" "${HOME}/.config/tmux/conf.d/06_pane_style.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/07_bell.conf" "${HOME}/.config/tmux/conf.d/07_bell.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/08_key_binds.conf" "${HOME}/.config/tmux/conf.d/08_key_binds.conf"
+install_file 0644 "${FILES_PATH}/tmux/conf.d/99_key_binds_splits.conf" "${HOME}/.config/tmux/conf.d/99_key_binds_splits.conf"
+install_file 0644 "${FILES_PATH}/tmux/split.d/dev.conf" "${HOME}/.config/tmux/split.d/dev.conf"
+install_file 0644 "${FILES_PATH}/tmux/split.d/half.conf" "${HOME}/.config/tmux/split.d/half.conf"
