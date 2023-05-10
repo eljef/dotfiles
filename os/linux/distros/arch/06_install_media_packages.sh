@@ -21,9 +21,17 @@ _PACKAGES=("beets"
            "fuse2"
            "gstreamer-vaapi"
            "gst-editing-services"
+           "gst-libav"
            "gst-plugins-ugly"
+           "gst-python"
            "mp3gain"
+           "python-beautifulsoup4"
            "python-discogs-client"
+           "python-gobject"
+           "python-pyacoustid"
+           "python-pylast"
+           "python-requests-oauthlib"
+           "python-xdg"
            "yt-dlp")
 
 ################################################################################

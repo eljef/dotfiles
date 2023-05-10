@@ -16,8 +16,8 @@
 # Jef Oliver <jef@eljef.me>
 
 _PACKAGES=("bash-completion"
+           "bash-eljef-common"
            "cronie"
-           "eljef-bash-core"
            "neovim"
            "openssh"
            "python-colorama"
