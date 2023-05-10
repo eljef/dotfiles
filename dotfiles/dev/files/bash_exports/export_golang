@@ -1,11 +1,13 @@
 #!/bin/bash
 
-if [[ -d "${HOME}/Projects/go" ]]; then
-    if [[ "$GOPATH" != "$HOME/Projects/go" ]]; then
-        export GOPATH="${HOME}/Projects/go"
+_GOBASE="${HOME}/Projects/go"
+
+if [[ -d "${_GOBASE}" ]]; then
+    if [[ "$GOPATH" != "${_GOBASE}" ]]; then
+        export GOPATH="${_GOBASE}"
     fi
 
-    if [[ ":$PATH:" != *":$GOPATH/bin:"* ]]; then
+    if [[ ":$PATH:" != *":${GOPATH}/bin:"* ]]; then
         export PATH="${PATH}:${GOPATH}/bin"
     fi
 fi
