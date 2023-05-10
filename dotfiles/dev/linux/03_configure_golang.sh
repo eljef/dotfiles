@@ -18,7 +18,7 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-check_isntalled "go" "nvim"
+check_installed "go" "nvim"
 
 FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"
