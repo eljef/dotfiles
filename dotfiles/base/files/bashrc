@@ -1,10 +1,12 @@
+#!/bin/bash
 # Use global profile when available
-if [ -f /usr/share/defaults/etc/profile ]; then
+if [[ -f /usr/share/defaults/etc/profile ]]; then
+    # shellcheck disable=SC1091
     . /usr/share/defaults/etc/profile
 fi
 
 # allow admin overrides
-if [ -f /etc/profile ]; then
+if [[ -f /etc/profile ]]; then
     . /etc/profile
 fi
 
@@ -17,14 +19,15 @@ if [[ "$BASH_COMPLETION_USER_DIR" != "${HOME}/.local/share/bash-completion" ]]; 
 fi
 
 # include files in .bash_exports
-if [ -d "${HOME}/.bash_exports" ]; then
+if [[ -d "${HOME}/.bash_exports" ]]; then
     for file in "${HOME}/.bash_exports"/* ; do
-        if [ -f "${file}" ]; then
+        if [[ -f "${file}" ]]; then
+            # shellcheck disable=SC1090
             source "$file"
         fi
     done
 fi
 
-if [ ! -z "$(which starship)" ] && [ ${USE_STARSHIP} -eq 1 ]; then
+if [[ -n "$(which starship)" ]] && [[ ${USE_STARSHIP} -eq 1 ]]; then
     eval "$(starship init bash)"
 fi
