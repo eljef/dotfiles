@@ -18,7 +18,7 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-_NF_VERSION="2.3.3"
+_NF_VERSION="3.0.0"
 _NF_DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/download"
 _NF_RELEASE_URL="${_NF_DOWNLOAD_URL}/v${_NF_VERSION}"
 _NF_ZIP_CASCADIA_CODE="CascadiaCode.zip"
@@ -58,11 +58,11 @@ cd_or_error "${HOME}/.fonts"
 # Caskaydia Cove Nerd Font
 print_info "Removing Old Caskaydia Code Nerd Fonts"
 rm -f -- "Caskaydia Cove Nerd Font"* || failure "Could Not Remove Old Caskaydia Cove Nerd Fonts"
+rm -f -- "CaskaydiaCoveNerdFont"* || failure "Could Not Remove Old Caskaydia Cove Nerd Fonts"
 
 print_info "Installing New Caskaydia Code Nerd Fonts"
-unzip -qq -j -o "${_NF_ZIP_CASCADIA_CODE}"
-rm -f -- "${_NF_ZIP_CASCADIA_CODE}"
-rm -f -- *"Windows Compatible"* || failure "Could Not Remove Caskaydia Code Windows Compatible Fonts"
+unzip -qq -j -o "${_NF_ZIP_CASCADIA_CODE}" || failure "Could Not Unzip Caskaydia Cove Nerd Fonts"
+rm -f -- "${_NF_ZIP_CASCADIA_CODE}" || failure "Could Not Remove Caskaydia Cove Zip File"
 
 make_directory "${HOME}/.fonts/doc/CascadiaCode"
 mv -f -- LICENSE "doc/CascadiaCode/LICENSE" || failure "Could Not Move Caskaydia Code License"
@@ -72,11 +72,11 @@ mv -f -- readme.md "doc/CascadiaCode/readme.md" || failure "Could Not Move Caska
 # Fira Code Nerd Font
 print_info "Removing Old Fira Code Nerd Fonts"
 rm -f -- "Fira Code"*"Nerd Font"* || failure "Could Not Remove Old Fira Code Nerd Fonts"
+rm -f -- "FiraCodeNerdFont"* || failure "Could Not Remove Old Fira Code Nerd Fonts"
 
 print_info "Installing New Fira Code Nerd Fonts"
-unzip -qq -j -o "${_NF_ZIP_FIRA_CODE}"
-rm -f -- "${_NF_ZIP_FIRA_CODE}"
-rm -f -- *"Windows Compatible"* || failure "Could Not Remove Caskaydia Code Windows Compatible Fonts"
+unzip -qq -j -o "${_NF_ZIP_FIRA_CODE}" || failure "Could Not Unzip Fira Code Nerd Fonts"
+rm -f -- "${_NF_ZIP_FIRA_CODE}" || failure "Could Not Remove Fira Code Zip File"
 
 make_directory "${HOME}/.fonts/doc/FiraCode"
 mv -f -- LICENSE "doc/FiraCode/LICENSE" || failure "Could Not Move Fira Code License"
@@ -86,11 +86,11 @@ mv -f -- readme.md "doc/FiraCode/readme.md" || failure "Could Not Move Fira Code
 # Hack Nerd Font
 print_info "Removing Old Hack Nerd Fonts"
 rm -f -- "Hack"*"Nerd Font"* || failure "Could Not Remove Old Hack Nerd Fonts"
+rm -f -- "HackNerdFont"* || failure "Could Not Remove Old Hack Nerd Fonts"
 
 print_info "Installing New Hack Nerd Fonts"
-unzip -qq -j -o "${_NF_ZIP_HACK}"
-rm -f -- "${_NF_ZIP_HACK}"
-rm -f -- *"Windows Compatible"* || failure "Could Not Remove Hack Windows Compatible Fonts"
+unzip -qq -j -o "${_NF_ZIP_HACK}" || failure "Could Not Unzip Hack Nerd Fonts"
+rm -f -- "${_NF_ZIP_HACK}" || failure "Could Not Remove Hack Zip File"
 
 make_directory "${HOME}/.fonts/doc/Hack"
 mv -f -- LICENSE.md "doc/Hack/LICENSE.md" || failure "Could Not Move Hack License"
