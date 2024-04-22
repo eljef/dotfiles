@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -26,13 +26,14 @@ _PACKAGES=("bitwarden"
            "pipewire-jack"
            "plasma-meta"
            "python-pyqt5"
-           "sddm-theme-archpaint2-breeze"
+           "sddm-theme-corners-git"
            "tesseract-data-eng"
            "ttf-dejavu"
            "ttf-droid"
            "ttf-fira-code"
            "ttf-google-fonts-typewolf"
            "ttf-liberation"
+           "ttf-jetbrains-mono-nerd"
            "wireplumber"
            "xdg-desktop-portal-kde"
            "xorg-bdftopcf"
@@ -70,7 +71,7 @@ _PACKAGES=("bitwarden"
            "xorg-xvinfo"
            "xorg-xwd"
            "xorg-xwininfo"
-	   "xorg-xwud")
+           "xorg-xwud")
 
 ################################################################################
 # DO NOT EDIT BELOW HERE
