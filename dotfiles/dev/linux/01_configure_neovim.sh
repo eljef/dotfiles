@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -22,6 +22,7 @@ COC_PLUGINS=('coc-css'
              'coc-html'
              'coc-json'
              'coc-markdownlint'
+             'coc-powershell'
              'coc-python'
              'coc-rls'
              'coc-sh'
@@ -43,13 +44,14 @@ FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"
 check_dir "${HOME}/.config/nvim/"
 
-install_file 0644 "${FILES_PATH}/nvim/coc.vim" "${HOME}/.config/nvim/coc.vim"
-install_file 0644 "${FILES_PATH}/nvim/coc-node-path.vim" "${HOME}/.config/nvim/coc-node-path.vim"
-install_file 0644 "${FILES_PATH}/nvim/dev.vim" "${HOME}/.config/nvim/dev.vim"
-install_file 0644 "${FILES_PATH}/nvim/files.vim" "${HOME}/.config/nvim/files.vim"
-install_file 0644 "${FILES_PATH}/nvim/omnifunc.vim" "${HOME}/.config/nvim/omnifunc.vim"
-install_file 0644 "${FILES_PATH}/nvim/plugins.vim" "${HOME}/.config/nvim/plugins.vim"
-install_file 0644 "${FILES_PATH}/coc-settings.json" "${HOME}/.config/nvim/coc-settings.json"
+install_file 0644 "${FILES_PATH}/nvim/coc-settings.json"     "${HOME}/.config/nvim/coc-settings.json"
+install_file 0644 "${FILES_PATH}/nvim/lua/coc-node-path.lua" "${HOME}/.config/nvim/lua/coc-node-path.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/coc.lua"           "${HOME}/.config/nvim/lua/coc.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/dev.lua"           "${HOME}/.config/nvim/lua/dev.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/files.lua"         "${HOME}/.config/nvim/lua/files.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/golang.lua"        "${HOME}/.config/nvim/lua/golang.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/omnifunc.lua"      "${HOME}/.config/nvim/lua/omnifunc.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/plugins-dev.lua"   "${HOME}/.config/nvim/lua/plugins-dev.lua"
 
 neovim_buffer_text=$(cat <<EOF
 

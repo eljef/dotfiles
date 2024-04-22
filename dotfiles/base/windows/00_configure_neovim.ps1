@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -58,17 +58,18 @@ if (Test-IsCore)
 
     New-Directory $nvimDir
     New-Directory $( Join-Path -Path "$nvimDir" -ChildPath "autoload" )
+    New-Directory $( Join-Path -Path "$nvimDir" -ChildPath "lua" )
     New-Directory $( Join-Path -Path "$nvimDir" -ChildPath "plugged" )
 
     Get-Download $vimPlugURI $( Join-Path -Path "$nvimDir" -ChildPath "autoload\plug.vim" ) "vim-plug"
 
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\init_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "init.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\airline.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "airline.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\autosave.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "autosave.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\default.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "default.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\dracula.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "dracula.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\nerdtree.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "nerdtree.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\plugins_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "plugins.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\init.lua" )                $( Join-Path -Path "$nvimDir" -ChildPath "init.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\airline.lua" )         $( Join-Path -Path "$nvimDir" -ChildPath "lua\airline.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\autosave.lua" )        $( Join-Path -Path "$nvimDir" -ChildPath "lua\autosave.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\default.lua" )         $( Join-Path -Path "$nvimDir" -ChildPath "lua\default.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\dracula.lua" )         $( Join-Path -Path "$nvimDir" -ChildPath "lua\dracula.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\nerdtree.lua" )        $( Join-Path -Path "$nvimDir" -ChildPath "lua\nerdtree.vim" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\plugins_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "lua\plugins.vim" )
 
     $neovim_buffer_text | nvim -c PlugInstall
 

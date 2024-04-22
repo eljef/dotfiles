@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -75,6 +75,7 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
               'mvdan.cc/unparam'
               'gitlab.com/opennota/check/cmd/varcheck'
               'github.com/go-critic/go-critic/cmd/gocritic'
+              'github.com/nametake/golangci-lint-langserver'
               'github.com/golangci/golangci-lint/cmd/golangci-lint')
 
 # download the tools

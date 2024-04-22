@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -23,18 +23,19 @@ check_installed "nvim"
 FILES_PATH="${_basedir}/dotfiles/base/files"
 check_dir "${FILES_PATH}"
 
-make_directory "${HOME}/.config/nvim"
+make_directory "${HOME}/.config/nvim/lua"
 make_directory "${HOME}/.local/share/nvim/plugged"
 make_directory "${HOME}/.local/share/nvim/site/autoload"
 
-install_file 0644 "${FILES_PATH}/nvim/airline.vim" "${HOME}/.config/nvim/airline.vim"
-install_file 0644 "${FILES_PATH}/nvim/autosave.vim" "${HOME}/.config/nvim/autosave.vim"
-install_file 0644 "${FILES_PATH}/nvim/default.vim" "${HOME}/.config/nvim/default.vim"
-install_file 0644 "${FILES_PATH}/nvim/dracula.vim" "${HOME}/.config/nvim/dracula.vim"
-install_file 0644 "${FILES_PATH}/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
-install_file 0644 "${FILES_PATH}/nvim/nerdtree.vim" "${HOME}/.config/nvim/nerdtree.vim"
-install_file 0644 "${FILES_PATH}/nvim/plugins.vim" "${HOME}/.config/nvim/plugins.vim"
-install_file 0644 "${FILES_PATH}/nvim/shell.vim" "${HOME}/.config/nvim/shell.vim"
+install_file 0644 "${FILES_PATH}/nvim/init.lua"           "${HOME}/.config/nvim/init.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/airline.lua"    "${HOME}/.config/nvim/lua/airline.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/autosave.lua"   "${HOME}/.config/nvim/lua/autosave.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/default.lua"    "${HOME}/.config/nvim/lua/default.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/dracula.lua"    "${HOME}/.config/nvim/lua/dracula.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/nerdtree.lua"   "${HOME}/.config/nvim/lua/nerdtree.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/plugins.lua"    "${HOME}/.config/nvim/lua/plugins.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/shell.lua"      "${HOME}/.config/nvim/lua/shell.lua"
+install_file 0644 "${FILES_PATH}/nvim/lua/treesitter.lua" "${HOME}/.config/nvim/lua/treesitter.lua"
 
 download_install_file 0644 "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
                            "${HOME}/.local/share/nvim/site/autoload/plug.vim"

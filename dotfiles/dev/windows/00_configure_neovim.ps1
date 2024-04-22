@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Jef Oliver.
+# Copyright (C) 2020-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -21,6 +21,7 @@ $cocPlugins=@('coc-css',
               'coc-html',
               'coc-json',
               'coc-markdownlint',
+              'coc-powershell',
               'coc-python',
               'coc-rls',
               'coc-sh',
@@ -74,18 +75,18 @@ if (Test-IsCore)
 
     $nvimDir = Join-Path -Path "$env:LOCALAPPDATA" -ChildPath "nvim"
 
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\coc.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "coc.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\coc-node-path.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "coc-node-path.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\dev_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "dev.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\files.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "files.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\omnifunc.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "omnifunc.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\plugins_windows.vim" ) $( Join-Path -Path "$nvimDir" -ChildPath "plugins.vim" )
-    Copy-File $( Join-Path -Path $filesDir -ChildPath "coc-settings.json" ) $( Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "coc-settings.json" )          $( Join-Path -Path "$nvimDir" -ChildPath "coc-settings.json" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\coc-node-path.lua" ) $( Join-Path -Path "$nvimDir" -ChildPath "lua\coc-node-path.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\coc.lua" )           $( Join-Path -Path "$nvimDir" -ChildPath "lua\coc.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\dev.lua" )           $( Join-Path -Path "$nvimDir" -ChildPath "lua\dev.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\files.lua" )         $( Join-Path -Path "$nvimDir" -ChildPath "lua\files.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\omnifunc.lua" )      $( Join-Path -Path "$nvimDir" -ChildPath "lua\omnifunc.lua" )
+    Copy-File $( Join-Path -Path $filesDir -ChildPath "nvim\lua\plugins-dev.lua" )   $( Join-Path -Path "$nvimDir" -ChildPath "lua\plugins-dev.lua" )
 
     # Fix node executable location
     Invoke-Executable "sed" @("-i", "-e",
     "`"s/let g:coc_node_path.*/let g:coc_node_path='$nodeExec'/`"",
-    $( Join-Path -Path "$nvimDir" -ChildPath "coc-node-path.vim" ))
+    $( Join-Path -Path "$nvimDir" -ChildPath "lua\coc-node-path.lua" ))
 
     # Fix python executable location
     Invoke-Executable "sed" @("-i", "-e",

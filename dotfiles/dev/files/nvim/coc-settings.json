@@ -28,6 +28,7 @@
             "args": [ "--text=%text", "--no-passive" ]
         }
     },
+    "powershell.integratedConsole.showOnStartup": false,
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
