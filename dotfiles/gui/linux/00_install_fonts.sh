@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -18,7 +18,7 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-_NF_VERSION="3.0.0"
+_NF_VERSION="3.2.1"
 _NF_DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/download"
 _NF_RELEASE_URL="${_NF_DOWNLOAD_URL}/v${_NF_VERSION}"
 _NF_ZIP_CASCADIA_CODE="CascadiaCode.zip"
@@ -64,9 +64,10 @@ print_info "Installing New Caskaydia Code Nerd Fonts"
 unzip -qq -j -o "${_NF_ZIP_CASCADIA_CODE}" || failure "Could Not Unzip Caskaydia Cove Nerd Fonts"
 rm -f -- "${_NF_ZIP_CASCADIA_CODE}" || failure "Could Not Remove Caskaydia Cove Zip File"
 
+rm -rf -- "doc/CascadiaCode" || failure "Could Not Remove Cascadia Code Docs"
 make_directory "${HOME}/.fonts/doc/CascadiaCode"
 mv -f -- LICENSE "doc/CascadiaCode/LICENSE" || failure "Could Not Move Caskaydia Code License"
-mv -f -- readme.md "doc/CascadiaCode/readme.md" || failure "Could Not Move Caskaydia Code README"
+mv -f -- README.md "doc/CascadiaCode/README.md" || failure "Could Not Move Caskaydia Code README"
 
 
 # Fira Code Nerd Font
@@ -78,9 +79,10 @@ print_info "Installing New Fira Code Nerd Fonts"
 unzip -qq -j -o "${_NF_ZIP_FIRA_CODE}" || failure "Could Not Unzip Fira Code Nerd Fonts"
 rm -f -- "${_NF_ZIP_FIRA_CODE}" || failure "Could Not Remove Fira Code Zip File"
 
+rm -rf -- "doc/FiraCode" || failure "Could Not Remove Fira Code Docs"
 make_directory "${HOME}/.fonts/doc/FiraCode"
 mv -f -- LICENSE "doc/FiraCode/LICENSE" || failure "Could Not Move Fira Code License"
-mv -f -- readme.md "doc/FiraCode/readme.md" || failure "Could Not Move Fira Code README"
+mv -f -- README.md "doc/FiraCode/README.md" || failure "Could Not Move Fira Code README"
 
 
 # Hack Nerd Font
@@ -92,9 +94,10 @@ print_info "Installing New Hack Nerd Fonts"
 unzip -qq -j -o "${_NF_ZIP_HACK}" || failure "Could Not Unzip Hack Nerd Fonts"
 rm -f -- "${_NF_ZIP_HACK}" || failure "Could Not Remove Hack Zip File"
 
+rm -rf -- "doc/Hack" || failure "Could Not Remove Hack Docs"
 make_directory "${HOME}/.fonts/doc/Hack"
 mv -f -- LICENSE.md "doc/Hack/LICENSE.md" || failure "Could Not Move Hack License"
-mv -f -- readme.md "doc/Hack/readme.md" || failure "Could Not Move Hack README"
+mv -f -- README.md "doc/Hack/README.md" || failure "Could Not Move Hack README"
 
 
 # Noto Color Emoji
