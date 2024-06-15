@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (C) 2021-2024 Jef Oliver.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -15,6 +15,9 @@
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
+
+# BOLD: Bold with default color
+BOLD="\033[1m"
 
 # RESET: Color reset (Reset to default)
 RESET="\033[0m"
@@ -40,6 +43,7 @@ WARN_START="\033[1;33m"
 #    example:
 #            base_dir "$(pwd)" "some_dir"
 function base_dir() {
+    local _basedir
     cd_or_error "${1}"
 
     _basedir="$(pwd -P)"
@@ -96,8 +100,9 @@ function check_dir() {
 #    example:
 #            check_env SOME_VAR_NAME
 function check_env() {
-    VAR_CHECK="${!1}"
-    if [ -z "${VAR_CHECK}" ]; then
+    local _VAR_CHECK
+    _VAR_CHECK="${!1}"
+    if [ -z "${_VAR_CHECK}" ]; then
         failure "environment variable not set: ${1}"
     fi
 }
@@ -133,6 +138,7 @@ function check_help() {
     fi
 }
 
+
 # check_help_and_empty: Checks if a provided variable is empty,
 #                       or if it is a help request.
 #                       Runs print_help if requested.
@@ -153,29 +159,32 @@ function check_help_and_empty() {
     fi
 }
 
+
 # check_installed: Checks if required executables are installed.
 #
 #    Args:
 #         $@: Space separated list of executables to check for.
 #
 #    example:
-#            check_installed "execuable_one" "executable_two"
+#            check_installed "executable_one" "executable_two"
 function check_installed() {
-    for ename in "$@"
+    local _exec_name
+    for _exec_name in "$@"
     do
-        if [ -z "$(which "${ename}" 2>/dev/null)" ]; then
-            print_info "the following executables are requried for this script to run:"
+        if ! type -P "${_exec_name}" > /dev/null; then
+            print_info "the following executables are required for this script to run:"
             print_info "$*"
-            failure "missing executable: ${ename}"
+            failure "missing executable: ${_exec_name}"
         fi
     done
 }
 
+
 # check_installed_silent: Checks if required executable is installed, exiting
-#                         with an unstyled message and zero status if not found.
-#                         This function is useful in scripts that will be run
-#                         by another program, such as tmux, where a non-zero
-#                         exit is not desired.
+#                         with an un-styled message and zero status if not
+#                         installed. This function is useful in scripts that
+#                         will be run by another program, such as tmux, where a
+#                         non-zero exit is not desired.
 #
 #    Args:
 #         $1: required executable
@@ -184,7 +193,7 @@ function check_installed() {
 #    example:
 #            check_installed_silent "git" "git not found"
 function check_installed_silent() {
-    if [ -z "$(which "${1}" 2>/dev/null)" ]; then
+    if ! type -P "${1}" > /dev/null; then
         echo "${2}"
         exit 0
     fi
@@ -206,11 +215,14 @@ function check_root() {
 #
 #    Args:
 #         $1: path to delete
+#         $2: if exists, the command will operate silently
 #
 #    example:
 #            del_file "path/to/file.txt"
 function del_file() {
-    print_info "rm \"${1}\""
+    if [ -z "${2}" ]; then
+        print_info "rm \"${1}\""
+    fi
     if [[ -f "${1}" ]]; then
         rm "${1}" || failure "could not remove ${1}"
     fi
@@ -228,7 +240,7 @@ function del_file() {
 #            download_install_file 0644 https://somewebsite.com/file.txt path/to/file.txt
 function download_install_file() {
     print_install_file "${1}" "${2}" "${3}"
-    curl -o "${3}" "${2}" >/dev/null 2>&1 || failure "could not download ${2}"
+    curl -L -o "${3}" "${2}" >/dev/null 2>&1 || failure "could not download ${2}"
     chmod "${1}" "${3}" || failure "could not set mode ${1} on ${3}"
 }
 
@@ -250,7 +262,7 @@ function error_help() {
 #         $1: path that does not exist
 #
 #    example:
-#            error_no_exist "path/that/doesnt/exist"
+#            error_no_exist "path/that/does/not/exist"
 function error_no_exist() {
     failure "${1} does not exist"
 }
@@ -275,7 +287,7 @@ function failure() {
 #         $3: destination to install file to
 #
 #    example:
-#            install_file 0644 path/to/originalfile path/to/file/at
+#            install_file 0644 path/to/original/file path/to/file/at
 function install_file() {
     print_install_file "${1}" "${2}" "${3}"
     install -m "${1}" "${2}" "${3}" || failure "failed to install ${2} -> ${3} :: ${1}"
@@ -310,6 +322,20 @@ function print_info() {
 }
 
 
+# print_info_2: prints an indented info message
+#               this should be used after print_info to provide additional
+#               context.
+#
+#    Args:
+#         $1: Message to print
+#
+#    example:
+#            print_info_2 "Some Message"
+function print_info_2() {
+    echo -e "$(_sprint_leader INFO) $(_sprint_wrap "${START}" "--") $(_sprint_wrap "${BOLD}" "${1}")"
+}
+
+
 # print_install_file: prints an install message
 #
 #    Args:
@@ -318,7 +344,7 @@ function print_info() {
 #         $3: destination file
 #
 #    example:
-#            print_install_file 0644 somefile destination/of/file
+#            print_install_file 0644 some_file destination/of/file
 function print_install_file() {
     echo -e "$(_sprint_leader INFO) $(_sprint_wrap "${INFO_START}" "Install: ${2}")\n" \
             "\t\t\t$(_sprint_wrap "${START}" "->") $(_sprint_wrap "${INFO_START}" "${1}::${3}")"
@@ -417,4 +443,3 @@ function _sprint_leader() {
 function _sprint_wrap() {
     echo "${1}${2}${RESET}"
 }
-
