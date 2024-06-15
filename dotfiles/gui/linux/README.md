@@ -33,3 +33,6 @@ GUI configuration files installers for Linux.
   * Adds the dracula theme to konsole
   * Adds a default main configuration to konsole
 
+* `04_configure_conky.sh`
+  * **OPTIONAL**
+  * Installs configurations for conky
