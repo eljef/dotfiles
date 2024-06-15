@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2022 Jef Oliver.
+# Copyright (c) 2020-2024, Jef Oliver
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -12,8 +12,10 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
+# SPDX-License-Identifier: 0BSD
+#
 # Authors:
-# Jef Oliver <jef@eljef.me>
+# Jef Oliver <jef@eljef.me>>
 
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 

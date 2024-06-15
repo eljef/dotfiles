@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2024 Jef Oliver.
+# Copyright (c) 2020-2024, Jef Oliver
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -12,6 +12,8 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
+# SPDX-License-Identifier: 0BSD
+#
 # Authors:
 # Jef Oliver <jef@eljef.me>
 
@@ -23,6 +25,7 @@ PACMAN_KEYS=('12F0B2A79BFE57E580B6C91A56989CA26462201F')
 ################################################################################
 
 _scriptdir="$(dirname "${0}")"
+# shellcheck source=../../../../script_common/common.sh
 . "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
 _KEYRING_VER="20231022"

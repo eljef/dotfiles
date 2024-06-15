@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2024 Jef Oliver.
+# Copyright (c) 2020-2024, Jef Oliver
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted.
@@ -11,6 +11,8 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# SPDX-License-Identifier: 0BSD
 #
 # Authors:
 # Jef Oliver <jef@eljef.me>
@@ -39,6 +41,7 @@ _PACKAGES=("bash-completion"
 ################################################################################
 
 _scriptdir="$(dirname "${0}")"
+# shellcheck source=../../../../script_common/common.sh
 . "${_scriptdir}/../../../../script_common/common.sh" || exit 1
 
 
