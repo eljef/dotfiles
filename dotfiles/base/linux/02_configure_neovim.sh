@@ -20,37 +20,57 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
+_CONFIG_LUAS=('bufferline.lua'
+              'colorscheme.lua'
+              'defaults.lua'
+              'filetype.lua'
+              'languages.lua'
+              'lualine.lua'
+              'markdown.lua'
+              'nvimtree.lua'
+              'pairs.lua'
+              'scroll.lua'
+              'shell.lua'
+              'todo.lua'
+              'treesitter.lua')
+
+_PLUGINS_LUAS=('autopairs.lua'
+               'bufferline.lua'
+               'cmp.lua'
+               'dracula.lua'
+               'glow.lua'
+               'go.lua'
+               'lspconfig.lua'
+               'lualine.lua'
+               'scroll.lua'
+               'todo.lua'
+               'tree.lua'
+               'treesitter.lua')
+
 check_installed "nvim"
 
 FILES_PATH="${_basedir}/dotfiles/base/files"
 check_dir "${FILES_PATH}"
 
-make_directory "${HOME}/.config/nvim/lua"
-make_directory "${HOME}/.local/share/nvim/plugged"
-make_directory "${HOME}/.local/share/nvim/site/autoload"
+make_directory "${HOME}/.config/nvim/lua/ej/config"
+make_directory "${HOME}/.config/nvim/lua/ej/modules"
+make_directory "${HOME}/.config/nvim/lua/ej/plugins"
 
-install_file 0644 "${FILES_PATH}/nvim/init.lua"           "${HOME}/.config/nvim/init.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/airline.lua"    "${HOME}/.config/nvim/lua/airline.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/autosave.lua"   "${HOME}/.config/nvim/lua/autosave.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/default.lua"    "${HOME}/.config/nvim/lua/default.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/dracula.lua"    "${HOME}/.config/nvim/lua/dracula.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/nerdtree.lua"   "${HOME}/.config/nvim/lua/nerdtree.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/plugins.lua"    "${HOME}/.config/nvim/lua/plugins.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/shell.lua"      "${HOME}/.config/nvim/lua/shell.lua"
-install_file 0644 "${FILES_PATH}/nvim/lua/treesitter.lua" "${HOME}/.config/nvim/lua/treesitter.lua"
+install_file 0640 "${FILES_PATH}/nvim/init.lua" \
+                  "${HOME}/.config/nvim/init.lua"
+install_file 0640 "${FILES_PATH}/nvim/lua/ej/modules/lazy.lua" \
+                  "${HOME}/.config/nvim/lua/ej/modules/lazy.lua"
 
-download_install_file 0644 "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
-                           "${HOME}/.local/share/nvim/site/autoload/plug.vim"
+for _c_lua in "${_CONFIG_LUAS[@]}"
+do
+    install_file 0640 "${FILES_PATH}/nvim/lua/ej/config/${_c_lua}" \
+                      "${HOME}/.config/nvim/lua/ej/config/${_c_lua}"
+done
 
-neovim_buffer_text=$(cat <<EOF
+for _p_lua in "${_PLUGINS_LUAS[@]}"
+do
+    install_file 0640 "${FILES_PATH}/nvim/lua/ej/plugins/${_p_lua}" \
+                      "${HOME}/.config/nvim/lua/ej/plugins/${_p_lua}"
+done
 
-    When the plugin installation is done,
-    Please close neovim with :qa!
-
-    Thanks for playing along!
-
-EOF
-)
-
-print_info "Installing neovim plugins"
-echo "${neovim_buffer_text}" | nvim -c PlugInstall
+print_info "Start neovim to install plugins"

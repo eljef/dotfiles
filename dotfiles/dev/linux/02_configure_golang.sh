@@ -20,7 +20,7 @@
 . "/usr/lib/eljef_bash/eljef-bash-common.sh" || exit 1
 _basedir="$(base_dir "$(dirname "${0}")" "script_common")"
 
-check_installed "go" "nvim"
+check_installed "go"
 
 FILES_PATH="${_basedir}/dotfiles/dev/files"
 check_dir "${FILES_PATH}"
@@ -33,5 +33,5 @@ print_warn "-"
 print_warn "Please edit ~/.bash_exports/export_golang to include the correct path"
 print_warn "  * Don't forget to create the directory as well"
 print_warn "-"
-print_warn "You must restart your bash session in order to run 05_install_golang_tools.sh"
+print_warn "You must restart your bash session in order to run 03_install_golang_tools.sh"
 print_warn "-"
