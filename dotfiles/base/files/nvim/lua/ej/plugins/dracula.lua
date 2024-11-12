@@ -1,6 +1,6 @@
 return {
     {
-        'dracula/vim',
+        'Mofiqul/dracula.nvim',
         lazy = false,
         priority = 1000,
     }

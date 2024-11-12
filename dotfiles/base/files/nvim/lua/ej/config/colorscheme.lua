@@ -1,5 +1,10 @@
+require('dracula').setup({
+    transparent_bg = true,
+})
 vim.cmd [[
   colorscheme dracula
+  hi NvimTreeWinSeparator guibg=none guifg=#282A36
+  set laststatus=3
 ]]
 
 vim.g.dracula_bold = 1
@@ -9,9 +14,9 @@ vim.g.dracula_undercurl = 1
 vim.g.dracula_inverse = 1
 vim.g.dracula_colorterm = 1
 
-vim.cmd [[
-  hi! Normal ctermbg=NONE
-  hi! NonText ctermbg=NONE
-  hi! Normal guibg=NONE
-  hi! NonText guibg=NONE
-]]
+--vim.cmd [[
+--  hi! Normal ctermbg=NONE
+--  hi! NonText ctermbg=NONE
+--  hi! Normal guibg=NONE
+--  hi! NonText guibg=NONE
+--]]

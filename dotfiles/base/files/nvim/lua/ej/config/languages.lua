@@ -6,6 +6,11 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   require('cmp_nvim_lsp').default_capabilities()
 )
 
+-- ansible
+if vim.fn.executable('ansible-language-server') == 1 then
+  require('lspconfig').ansiblels.setup{}
+end
+
 -- bash
 if vim.fn.executable('bash-language-server') == 1 then
   require('lspconfig').bashls.setup{}
