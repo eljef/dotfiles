@@ -1,11 +1,15 @@
 require('dracula').setup({
     transparent_bg = true,
 })
+
+local colors = require('dracula').colors()
+
 vim.cmd [[
   colorscheme dracula
-  hi NvimTreeWinSeparator guibg=none guifg=#282A36
-  set laststatus=3
 ]]
+
+vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { bg = colors.bg, fg = colors.menu })
+vim.api.nvim_set_hl(0, 'ColorColumn', { bg = colors.menu })
 
 vim.g.dracula_bold = 1
 vim.g.dracula_italic = 1

@@ -9,14 +9,14 @@ require('bufferline').setup({
                 filetype = 'NvimTree',
                 text = '',
                 text_align = 'center',
-                separator = true,
+                separator = false,
             },
         },
         separator_style = "slope",
     },
     highlights = {
         fill = {
-            bg = colors.selection,
+            bg = colors.bg,
         },
         background = {
             bg = colors.comment,
@@ -24,7 +24,7 @@ require('bufferline').setup({
         },
         buffer_selected = {
             bg = colors.purple,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         buffer_visible = {
             bg = colors.comment,
@@ -40,19 +40,19 @@ require('bufferline').setup({
         },
         close_button_selected = {
             bg = colors.purple,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         separator = {
             bg = colors.comment,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         separator_visible = {
             bg = colors.comment,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         separator_selected = {
             bg = colors.purple,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         indicator_visible = {
             bg = colors.comment,
@@ -60,7 +60,7 @@ require('bufferline').setup({
         },
         indicator_selected = {
             bg = colors.purple,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         diagnostic = {
             bg = colors.comment,
@@ -180,10 +180,10 @@ require('bufferline').setup({
         },
         numbers_selected = {
             bg = colors.purple,
-            fg = colors.selection,
+            fg = colors.bg,
         },
         trunc_marker = {
-            bg = colors.selection,
+            bg = colors.bg,
         },
     },
 })

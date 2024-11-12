@@ -44,4 +44,5 @@ vim.opt.cmdheight = 2
 vim.opt.updatetime = 300
 vim.opt.shortmess:append {c = true}
 vim.opt.signcolumn = 'yes'
+vim.opt.laststatus = 3
 
