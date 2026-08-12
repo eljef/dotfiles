@@ -42,6 +42,18 @@ require('bufferline').setup({
             bg = colors.purple,
             fg = colors.bg,
         },
+        duplicate = {
+            bg = colors.comment,
+            fg = colors.fg,
+        },
+        duplicate_selected = {
+            bg = colors.purple,
+            fg = colors.bg,
+        },
+        duplicate_visible = {
+            bg = colors.comment,
+            fg = colors.fg,
+        },
         separator = {
             bg = colors.comment,
             fg = colors.bg,
