@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd("QuitPre", {
 })
 
 -- Open nvim tree when neovim is opened
-require("nvim-tree.api").tree.toggle({ find_file = true })
+-- require("nvim-tree.api").tree.toggle({ find_file = true })
 
 -- Open a file when it is created
 local api = require("nvim-tree.api")

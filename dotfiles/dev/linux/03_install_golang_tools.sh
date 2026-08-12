@@ -73,8 +73,9 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
               'github.com/gordonklaus/ineffassign'
               'github.com/josharian/impl'
               'github.com/go-lintpack/lintpack/...'
+              'go.uber.org/mock/mockgen'
               'github.com/fatih/motion'
-              'github.com/alexkohler/nakedret/cmd/nakedret'
+              'github.com/alexkohler/nakedret/v2/cmd/nakedret'
               'github.com/mgechev/revive'
               'gitlab.com/opennota/check/cmd/structcheck'
               'github.com/mdempsky/unconvert'
@@ -82,7 +83,7 @@ GO_GET_PATHS=('github.com/klauspost/asmfmt/cmd/asmfmt'
               'gitlab.com/opennota/check/cmd/varcheck'
               'github.com/go-critic/go-critic/cmd/gocritic'
               'github.com/nametake/golangci-lint-langserver'
-              'github.com/golangci/golangci-lint/cmd/golangci-lint')
+              'github.com/golangci/golangci-lint/v2/cmd/golangci-lint')
 
 # download the tools
 for getpath in "${GO_GET_PATHS[@]}"

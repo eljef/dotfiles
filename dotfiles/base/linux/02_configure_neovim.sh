@@ -44,6 +44,8 @@ _PLUGINS_LUAS=('autopairs.lua'
                'lualine.lua'
                'scroll.lua'
                'todo.lua'
+               'telescope.lua'
+               'todo.lua'
                'tree.lua'
                'treesitter.lua')
 

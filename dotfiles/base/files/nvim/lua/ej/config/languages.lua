@@ -8,18 +8,18 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 
 -- ansible
 if vim.fn.executable('ansible-language-server') == 1 then
-  require('lspconfig').ansiblels.setup{}
+  vim.lsp.enable('ansiblels')
 end
 
 -- bash
 if vim.fn.executable('bash-language-server') == 1 then
-  require('lspconfig').bashls.setup{}
+  vim.lsp.enable('bashls')
 end
 
 -- golang
 if vim.fn.executable('go') == 1 then
   require('go').setup()
-  require('lspconfig').gopls.setup{}
+  vim.lsp.enable('gopls')
   require('goplements').setup( {
     prefix = {
       interface = ":by -> ",
@@ -39,20 +39,20 @@ if vim.fn.executable('go') == 1 then
 
 end
 
---python
 if vim.fn.executable('pylsp') == 1 then
-require'lspconfig'.pylsp.setup{
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = {'W391'},
-          maxLineLength = 120
+  vim.lsp.config('pylsp', {
+    settings = {
+      pylsp = {
+        plugins = {
+          pycodestyle = {
+            ignore = {'W391'},
+            maxLineLength = 120
+          }
         }
       }
     }
-  }
-}
+  })
+  vim.lsp.enable('pylsp')
 end
 
 -- completion (must be last)
